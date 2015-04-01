@@ -6,7 +6,8 @@ Converts raw thermal data into temperature (oC)
 }
 \description{
 Converts a raw value obtained from binary thermal image video file into estimated
-temperature using standard equations used in infrared thermography.  
+temperature using standard equations used in infrared thermography.
+Standard equation: temperature<-PB/log(PR1/(PR2*(raw+PO))+PF)-273.15
 }
 \usage{
 raw2temp(raw, E = 1, OD = 1, RTemp = 20, ATemp = RTemp, IRWTemp = RTemp, IRT = 1,
