@@ -127,7 +127,7 @@ r<-17000:25000
 t1.0<-raw2temp(r,1,0,20,20,20,0.96,50)
 t0.9<-raw2temp(r,0.9,0,20,20,20,0.96,50)
 
-
+dev.off()
 plot(r,t1.0,type="l",col="red")
 lines(r,t0.9,col="black")
 legend("topleft", bty = "n", c("E=1.0", "E=0.9"), lty=c(1,1), col=c("red", "black"))
