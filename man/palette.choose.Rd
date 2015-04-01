@@ -4,28 +4,32 @@
 Choose a colour palette for gradient filling thermal image files.
 }
 \description{
-Choose from among three the following colour palettes: flir, glowblow, grey120, grey10, greyred, hotiron, ironbow, medical, midgreen, midgrey, mikronprism, mikroscan, rain, and yellow.
+Choose from among three the following colour palettes: flir, glowblow, grey120, grey10,
+greyred, hotiron, ironbow, medical, midgreen, midgrey, mikronprism, mikroscan, rain, and
+yellow.
 }
 \usage{
 palette.choose(colscheme)
 }
 \arguments{
   \item{colscheme}{
-A colour palette from the following: flir, glowblow, grey, grey10, greyred, hotiron, ironbow, medical, midgreen, midgrey, mikronprism, mikroscan, rain, and yellow.
+A colour palette from the following: flir, glowblow, grey, grey10, greyred, hotiron, ironbow,
+medical, midgreen, midgrey, mikronprism, mikroscan, rain, and yellow.
 }
 }
 \details{
 Colscheme is a character description drawn from the following list: 
-("flir", "glowblow", "grey120", "grey10", "greyred", "hotiron", "ironbow", "medical", "midgreen",
-"midgrey", "mikronprism", "mikroscan", "rain", "yellow")
+("flir", "glowblow", "grey120", "grey10", "greyred", "hotiron", "ironbow", "medical",
+"midgreen", "midgrey", "mikronprism", "mikroscan", "rain", "yellow")
 
-palnames<-c("flir", "glowblow", "grey120", "grey10", "greyred", "hotiron", "ironbow", "medical",
-"midgreen", "midgrey", "mikronprism", "mikroscan", "rainbowpal", "yellowpal")
+palnames<-c("flir", "glowblow", "grey120", "grey10", "greyred", "hotiron", "ironbow",
+"medical", "midgreen", "midgrey", "mikronprism", "mikroscan", "rainbowpal", "yellowpal")
 
 where "flir" is palnames[1], "rain" is palnames[13]
 }
 \value{
-Returns a palette to be used in various graphics functions where 'col=palette' is requested. The palette vector is formatted for use as gradient fills in plotting functions.
+Returns a palette to be used in various graphics functions where 'col=palette' is requested. 
+The palette vector is formatted for use as gradient fills in plotting functions.
 }
 \author{
 Glenn J. Tattersall
@@ -46,7 +50,8 @@ m<-matrix(r,500)
 
 ## Show palettes
 image(m, axes=FALSE, col=flirpal, main="Flir Standard Palette")
-image(m, axes=FALSE, col=ironbowpal, main="Ironbow Palette") # smaller palette for faster plotting
+image(m, axes=FALSE, col=ironbowpal, main="Ironbow Palette") 
+# smaller palette for faster plotting
 image(m, axes=FALSE, col=mikronprismpal, main="Mikron Prism Palette")
 image(m, axes=FALSE, col=glowbowpal, main="Glowbow Palette")
 image(m, axes=FALSE, col=grey120pal, main="Grey120 Palette")
@@ -63,7 +68,6 @@ image(m, axes=FALSE, col=yellowpal, main="Yellow Palette")
 par(mfrow=c(2,1),mar=c(1,0.3,1,0.3))
 image(m, axes=FALSE, col=flirpal, main="Flir Standard Palette")
 image(m, axes=FALSE, col=rev(flirpal), main="Reverse Flir Standard Palette")
-
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

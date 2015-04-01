@@ -5,7 +5,8 @@
 Converts raw thermal data into temperature (oC)
 }
 \description{
-Converts a raw value obtained from binary thermal image video file into estimated temperature using standard equations used in infrared thermography.  
+Converts a raw value obtained from binary thermal image video file into estimated
+temperature using standard equations used in infrared thermography.  
 Standard equation: temperature<-PB/log(PR1/(PR2*(raw+PO))+PF)-273.15
 }
 \usage{
@@ -54,10 +55,10 @@ PlanckR2 - a calibration constant for FLIR cameras
 }
 }
 \details{
-Note: PR1, PR2, PB, PF, and PO are specific to each camera and result from the calibration at
-factory of the camera's Raw data signal recording from a blackbody radiation source.  Sample
-calibration constants for three different cameras (FLIR SC660 with 24x18 degree lens, FLIR T300
-with 25x19 degree lens, FLIR T300 with 2xtelephoto.
+Note: PR1, PR2, PB, PF, and PO are specific to each camera and result from the calibration 
+at factory of the camera's Raw data signal recording from a blackbody radiation source.  
+Sample calibration constants for three different cameras (FLIR SC660 with 24x18 degree lens,
+FLIR T300 with 25x19 degree lens, FLIR T300 with 2xtelephoto.
 
 Calibration Constants by cameras:  SC660, T300(25o), T300(25o with telephoto)
 \tabular{lccc}{
@@ -75,8 +76,8 @@ PF: PlanckF calibration constant
 PO: PlanckO calibration constant
 PR2: PlanckR2 calibration constant
 
-The calibration constants allow for the raw digital signal conversion to and from the predicted
-radiance of a blackbody, using the standard equation: 
+The calibration constants allow for the raw digital signal conversion to and from the 
+predicted radiance of a blackbody, using the standard equation: 
 
 temperature<-PB/log(PR1/(PR2*(raw+PO))+PF)-273.15
 
@@ -98,7 +99,8 @@ Returns numeric value in oC.  Can handle vector or matrix objects
 \references{
 1. http://130.15.24.88/exiftool/forum/index.php/topic,4898.60.html
 
-2. Minkina, W. and Dudzik, S. 2009. Infrared Thermography: Errors and Uncertainties.  Wiley Press, 192 pp.
+2. Minkina, W. and Dudzik, S. 2009. Infrared Thermography: Errors and Uncertainties.  
+Wiley Press, 192 pp.
 }
 \author{
 Glenn J. Tattersall

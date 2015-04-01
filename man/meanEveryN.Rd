@@ -5,9 +5,14 @@
 Calculate the mean every nth data point.
 }
 \description{
-meanEveryN calculates the mean of a vectorised data set (x) at N intervals.  Means are calculated by centring around every nth data point in the vector.  Upon running the function, it attempts to subdivide the vector into n discrete intervals.  If the vector length is not fully divisible by n, then the remainder elements are forced to NA values and the final mean calculated.  
+meanEveryN calculates the mean of a vectorised data set (x) at N intervals.  Means are
+calculated by centring around every nth data point in the vector.  Upon running the function,
+it attempts to subdivide the vector into n discrete intervals.  If the vector length is not
+fully divisible by n, then the remainder elements are forced to NA values and the final mean
+calculated.  
 
-The function returns a labelled matrix, with the average index as the first column and the mean over that range of data.
+The function returns a labelled matrix, with the average index as the first column and the
+mean over that range of data.
 }
 \usage{
 meanEveryN(x, n = 2, lag = round(n/2))

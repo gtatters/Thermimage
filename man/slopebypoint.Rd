@@ -15,7 +15,9 @@ Returns the slope from linear regression with x values as equally spaced 1:lengt
 }
 }
 \details{
-Returns the slope (i.e. localised tangent) from linear regression with x values as equally spaced 1:length.  The usefulness of this function is to reduce a time series type of data collected at equal time intervals.  N=number of data points over which to calculate the slope.
+Returns the slope (i.e. localised tangent) from linear regression with x values as equally spaced 1:length.  The usefulness of this function is to reduce a time series type of data collected at equal time intervals. 
+
+N=number of data points over which to calculate the slope.
 }
 \value{
 An object of type numeric.  

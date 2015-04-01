@@ -4,9 +4,14 @@
 Calculate the slope every nth data point.
 }
 \description{
-slopeEveryN calculates the slope of a vectorised data set (x) at N intervals.  Slopes are calculated using the lm() function centred around every nth data point in the vector.  Upon running the function, it attempts to subdivide the vector into n discrete intervals.  If the vector length is not fully divisible by n, then the remainder elements are forced to NA values and the final slope calculated.  
+slopeEveryN calculates the slope of a vectorised data set (x) at N intervals.  Slopes are
+calculated using the lm() function centred around every nth data point in the vector.  Upon
+running the function, it attempts to subdivide the vector into n discrete intervals.  If the
+vector length is not fully divisible by n, then the remainder elements are forced to NA
+values and the final slope calculated.  
 
-The function returns a labelled matrix, with the average index as the first column and the slope over that range of data.  Units for slope then are technically in un
+The function returns a labelled matrix, with the average index as the first column and the
+slope over that range of data.  Units for slope then are technically in un
 }
 \usage{
 slopeEveryN(x, n = 2, lag = round(n/2))
