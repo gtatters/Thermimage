@@ -1,7 +1,7 @@
 Package: Thermimage
 Type: Package
 Title: Functions for Handling Thermal Images
-Version: 1.0
+Version: 1.0.1
 Date: 2015-03-26
 Author: Glenn J. Tattersall, PhD
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
