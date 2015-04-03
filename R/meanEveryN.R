@@ -1,5 +1,5 @@
 meanEveryN <-
-  function(x, n=2, lag=round(n/2)) {
+  function(x, n=2, lag=round(n/2),showsamples=FALSE) {
     # only to be applied to a vector (x) of data 
     # will first convert vector to a matrix of n rows by length/n columns
     # thus allowing for apply to be invoked across a specific column of values
@@ -25,7 +25,15 @@ meanEveryN <-
     y<-apply(retim,2,mean)
     z<-apply(resam,2,mean)
     }
-    zz<-cbind(y,z)
-    colnames(zz)<-c("Sample","Mean")
+    if(showsamples==FALSE) 
+    { 
+      zz<-z
+    }
+    else if(showsamples==TRUE)
+    {
+      zz<-cbind(y,z)
+      colnames(zz)<-c("Sample","Mean")
+    }
+    
     zz<-zz
   }
