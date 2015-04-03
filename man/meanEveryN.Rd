@@ -34,7 +34,7 @@ default value is false.  Determines whether to output a matrix where the first c
 }
 }
 \details{
-The general purpose of this function is to provide a moving average of a data stream typically sampled at evenly recorded time intervals common computerised data acquisition systems.  Akin to a moving average function, except that it also resamples the data.
+The general purpose of this function is to assist with time based averaging a data stream typically sampled at evenly recorded time intervals common to computerised data acquisition systems.  Akin to a moving average function, except that it also resamples the data.
 }
 \value{
 A matrix object returned
