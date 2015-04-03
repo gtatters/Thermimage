@@ -7,11 +7,7 @@ Returns the index locations that match vector fid within data vector.
 Returns the index locations that match vector fid within data vector.
 }
 \usage{
-<<<<<<< HEAD
-locate.fid(fid, vect, long = TRUE)
-=======
 locate.fid(fid, vect, long = FALSE)
->>>>>>> 31515bc3ddb2daa4bb50fad316b16989632048fe
 }
 \arguments{
   \item{fid}{
