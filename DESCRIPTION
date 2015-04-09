@@ -10,5 +10,6 @@ License: GPL-2
 Depends: R (>= 2.10)
 LazyData: TRUE
 Repository: CRAN
+Date/Publication: 2015-03-26
 URL: http://github.com/gtatters/Thermimage
 BugReports: http://github.com/gtatters/Thermimage/issues
