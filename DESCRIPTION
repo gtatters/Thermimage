@@ -2,7 +2,7 @@ Package: Thermimage
 Type: Package
 Title: Functions for Handling Thermal Images
 Version: 1.0.1
-Date: 2015-03-26
+Date: 2015-04-09
 Author: Glenn J. Tattersall, PhD
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal image video files, plotting and converting binary raw data into estimates of temperature.
