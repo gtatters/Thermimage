@@ -68,6 +68,8 @@ function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
   tau1<-ATX*exp(-sqrt(OD/2)*(ATA1+ATB1*sqrt(h2o)))+(1-ATX)*exp(-sqrt(OD/2)*(ATA2+ATB2*sqrt(h2o)))
   tau2<-ATX*exp(-sqrt(OD/2)*(ATA1+ATB1*sqrt(h2o)))+(1-ATX)*exp(-sqrt(OD/2)*(ATA2+ATB2*sqrt(h2o)))
   # transmission through atmosphere - equations from Minkina and Dudzik's Infrared Thermography Book
+  # Note: for this script, we assume the thermal window is at the mid-point (OD/2) between the source
+  # and the camera sensor
   
   raw.refl1<-PR1/(PR2*(exp(PB/(RTemp+273.15))-PF))-PO   # radiance reflecting off the object before the window
   raw.refl1.attn<-(1-E)/E*raw.refl1   # attn = the attenuated radiance (in raw units) 
