@@ -6,7 +6,8 @@ function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
   # raw2temp(raw,E,OD,RTemp,ATemp,IRWTemp,IRT,RH,PR1,PB,PF,PO,PR2)
   # Example with all settings at default/blackbody levels
   # raw2temp(18109,1,0,20,20,20,1,50,PR1,PB,PF,PO,PR2)
-  # example with emissivity=0.95, distance=1m, window transmission=0.96, all temperatures=20C, 50% relative hum
+  # example with emissivity=0.95, distance=1m, window transmission=0.96, all temperatures=20C, 
+  # 50% relative humidity
   # raw2temp(18109,0.95,1,20,20,20,0.96,50) 
   # default calibration constants for my FLIR camera will be used if you leave out the calibration data
   
