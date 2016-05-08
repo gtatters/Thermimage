@@ -39,7 +39,7 @@ function (x)
     t(mirror.matrix(x))
   }
   
-# Example
+
 flir<-palette.choose("flir")
 set.seed(5)
 par(mfrow=c(1,2),mar=c(1,1,1,1))

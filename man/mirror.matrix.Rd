@@ -38,17 +38,17 @@ function (x)
     xx
   }
   
-# Example
-flir<-palette.choose("flir")
-par(mfrow=c(2,1),mar=c(1,1,1,1))
-r<-c(1:100,rnorm(1:100)*10,1:100)
-m<-matrix(r,50)
-image(m, axes=FALSE, col=flir)
-box()
-text(.5,.5,"Matrix",col="white")
-mf<-mirror.matrix(m)
-image(mf,axes=FALSE,col=flir)
-box()
-text(.5,.5,"Mirror",col="white")
+
+# flir<-palette.choose("flir")
+# par(mfrow=c(2,1),mar=c(1,1,1,1))
+# r<-c(1:100,rnorm(1:100)*10,1:100)
+# m<-matrix(r,50)
+# image(m, axes=FALSE, col=flir)
+# box()
+# text(.5,.5,"Matrix",col="white")
+# mf<-mirror.matrix(m)
+# image(mf,axes=FALSE,col=flir)
+# box()
+# text(.5,.5,"Mirror",col="white")
 }
 

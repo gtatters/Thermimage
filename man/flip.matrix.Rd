@@ -36,21 +36,16 @@ function (x)
     mirror.matrix(rotate180.matrix(x))
   }
 
-# Example
-flir<-palette.choose("flir")
+
 par(mfrow=c(1,2),mar=c(1,1,1,1))
 r<-c(1:100,rnorm(1:100)*10,1:100)
 m<-matrix(r,20)
-image(m, axes=FALSE, col=flir)
+image(m, axes=FALSE)
 box()
 text(.5,.5,"Matrix",col="white")
 mf<-flip.matrix(m)
-image(mf,axes=FALSE,col=flir)
+image(mf,axes=FALSE)
 box()
 text(.5,.5,"Flipped",col="white")
   
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

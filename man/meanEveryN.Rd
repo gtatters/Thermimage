@@ -47,15 +47,11 @@ Glenn J. Tattersall
 \examples{
 
 ## Define a vector of 50 random numbers from 1 to 100
-s<-ceiling(runif(50, 0, 100))
-x<-seq(1,50,1)
-# Calculate the mean value every 4th point
-s10<-meanEveryN(s,4)
+#s<-ceiling(runif(50, 0, 100))
+#x<-seq(1,50,1)
+## Calculate the mean value every 4th point
+#s10<-meanEveryN(s,4)
 
-plot(x,s,type="l",col="red")
-lines(s10,col="black")
+#plot(x,s,type="l",col="red")
+#lines(s10,col="black")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

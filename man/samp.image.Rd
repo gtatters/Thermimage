@@ -19,7 +19,7 @@ palnames<-c("flir", "ironbow", "mikronprism", "glowbow", "grey120", "grey10", "g
 "hotiron",  "medical", "midgreen", "midgrey", "mikroscan", "yellowpal", "rainbowpal")
 
 m<-rotate90.matrix(samp.image)
-par(mfrow=c(2,1),mar=c(0.3,2,1,2), pin=c(3,2.25))
+par(mfrow=c(2,1),mar=c(0.3,2,1,2))
 
 ## Show palettes
 image(m, axes=FALSE, useRaster=TRUE, col=flirpal, main="Flir Standard Palette")
