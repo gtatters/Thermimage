@@ -12,8 +12,6 @@ Assists in converting raw thermal imaging data files into temperature values.
 \tabular{ll}{
 Package: \tab Thermimage\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2015-03-26\cr
 License: \tab GPL-2\cr
 }
 Primary purpose of the package is to assist with manipulating raw data extracted from thermal image files.  These raw data are stored in a raw data format and require inforamtion about various environmental variables to estimate surface temperatures accurately.  raw2temp is the primary function of use.  Other functions included involve simple scripts for data handling.  

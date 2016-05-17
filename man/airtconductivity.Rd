@@ -12,7 +12,7 @@ airtconductivity(Ta = 20)
 
 \arguments{
   \item{Ta}{
-Air temperature in degrees Celsius.
+Air temperature in degrees Celsius.  Default value is 20.
 }
 }
 
@@ -31,4 +31,7 @@ function (Ta = 20)
     k <- Intercept + Slope * Ta
     k
   }
+# Example calculation:
+Ta<-20
+airtconductivity(Ta)
 }

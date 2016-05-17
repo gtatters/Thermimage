@@ -1,5 +1,5 @@
-Grasshof<-function(L=1, Ts=20, Ta=20){
-  # Grasshof number
+Grashof<-function(L=1, Ts=20, Ta=20){
+  # Grashof number
   # Source: Blaxter, K. 1989.  Energy Metabolism in Animals and Man.
   # Gr=agL^3(Ts-Ta)/v^2
   # L is the characteristic dimension, usually the vertical dimension.  For reference, 
@@ -13,4 +13,5 @@ Grasshof<-function(L=1, Ts=20, Ta=20){
   g<- 9.81                     # acceleration due to gravity (Units: m/s2)
   v<- airviscosity(Ta)
   Gr<-a*g*L^3*(Ts-Ta)/v^2
-  Gr}
+  Gr
+  }

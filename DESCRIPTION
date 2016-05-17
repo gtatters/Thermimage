@@ -1,17 +1,19 @@
 Package: Thermimage
 Type: Package
 Title: Functions for Handling Thermal Images
-Version: 2.0
+Version: 2.1
 Date: 2016-05-07
 Author: Glenn J. Tattersall
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal
     image video files, plotting and converting binary raw data into estimates of
     temperature.  First published 2015-03-26.  Written primarily for research purposes in 
-    biological applications of thermal images. 
+    biological applications of thermal images.  v1 included the base calculations for
+    converting thermal image binary values to temperatures. v2 included additional equations
+    for providing heat transfer calculations. 
+SampleScripts: https://github.com/gtatters/Thermimage/blob/master/heatcalc.R
 License: GPL-2
-Depends:
-    R (>= 2.10)
+Depends: R (>= 2.10)
 Suggests:
 Imports: stats
 LazyData: TRUE

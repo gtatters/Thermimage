@@ -23,20 +23,27 @@ The kinematic viscosity returned from function airviscosity (Ta).
 }
 }
 \references{
-Source: Blaxter, K. 1989.  Energy Metabolism in Animals and Man
+Blaxter, K. 1989.  Energy Metabolism in Animals and Man
+Gates, D. M. 2003.  Biophysical Ecology.  Dover Publications, Mineola, New York.  611 pp.
 }
 \author{
 Glenn J Tattersall
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
 ## The function is currently defined as
 function (V, L, v) 
 {
   v<-airviscosity(Ta)
   Re<-V*L/v
   }
+
+# Typical values for Reynolds numbers range from 6.6 to 6.6e+5 
+
+# Example calculation:
+V<-1
+L<-1
+Ta<-20
+v<-airviscosity(Ta)
+Reynolds(V, L, v)
+
 }
