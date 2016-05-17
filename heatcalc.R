@@ -211,7 +211,11 @@ shape="hcylinder"
 # Total area specific heat loss for the proximal area of the bill (Watts/m2)
 qtotal.A*A
 #  Total heat loss for the proximal area of the bill (Watts)
-#  This lines up fairly well with the published values in Tattersall et al (2009).
+#  This lines up well with the published values in Tattersall et al (2009).
+#  This was confirmed in van de Van (2016) where they recalculated the area specifi
+#  heat flux from toucan bills to be ~65 W/m2:
+qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) + 
+  qconv(Ts, Ta, V, L, type="free", shape=shape)
 
 
 # Estimating Operative Temperature ####
@@ -224,6 +228,7 @@ qtotal.A*A
 #  placed into the environment, allowing wind, solar radiation and ambient temperature to 
 #  influence its temperature.
 
+# Operative temperature with varying reflectances:
 Ts<-40
 Ta<-30
 SE<-seq(0,1100,100)
@@ -252,11 +257,10 @@ for(i in 2:12){
 }
 
 
-
-
+# Operative temperature with varying wind speeds
 Ts<-40
 Ta<-30
-SE<-seq(0,1500,100)
+SE<-seq(0,1100,100)
 Toperative<-NULL
 for(V in seq(0, 10, 1)){
   temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=1, SE=SE, V=V, 
@@ -264,8 +268,8 @@ for(V in seq(0, 10, 1)){
   Toperative<-cbind(Toperative, temp)
 }
 V<-seq(0, 10, 1)
-Toperative<-data.frame(SE=seq(0,1500,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,10,0.1))
+Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
+colnames(Toperative)<-c("SE", seq(0,10,1))
 matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
         main="Effects of Altering Wind Speed from 0 to 10 m/s",
         ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
@@ -280,3 +284,77 @@ for(i in 2:12){
   if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
   text(xpos, ypos, labels=V[(i-1)])
 }
+
+# Operative temperature with varying RH
+Ts<-40
+Ta<-30
+SE<-seq(0,1100,100)
+Toperative<-NULL
+for(RH in seq(0, 1, 0.1)){
+  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=RH, E=0.96, rho=0.1, cloud=0.5, SE=SE, V=1, 
+           L=0.1, type="forced", shape="hcylinder")
+  Toperative<-cbind(Toperative, temp)
+}
+RH<-seq(0, 1, 0.1)
+Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
+colnames(Toperative)<-c("SE", seq(0,1,0.1))
+matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
+        main="Effects of changing RH from 0 to 1",
+        ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
+        col=flirpal[rev(seq(1,380,35))])
+for(i in 2:12){
+  ymax<-par()$yaxp[2]
+  xmax<-par()$xaxp[2]  
+  x<-Toperative[,1]; y<-Toperative[,i]
+  lm1<-lm(y~x)
+  b<-coefficients(lm1)[1]; m<-coefficients(lm1)[2]
+  if(max(y)>ymax) {xpos<-(ymax-b)/m; ypos<-ymax}
+  if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
+  text(xpos, ypos, labels=RH[(i-1)])
+}
+
+# Operative temperature with varying cloud cover
+Ts<-40
+Ta<-30
+SE<-seq(0,1100,100)
+Toperative<-NULL
+for(cloud in seq(0, 1, 0.1)){
+  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.5, cloud=cloud, SE=SE, V=1, 
+           L=0.1, type="forced", shape="hcylinder")
+  Toperative<-cbind(Toperative, temp)
+}
+cloud<-seq(0, 1, 0.1)
+Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
+colnames(Toperative)<-c("SE", seq(0,1,0.1))
+matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
+        main="Effects of changing RH from 0 to 1",
+        ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
+        col=flirpal[rev(seq(1,380,35))])
+for(i in 2:12){
+  ymax<-par()$yaxp[2]
+  xmax<-par()$xaxp[2]  
+  x<-Toperative[,1]; y<-Toperative[,i]
+  lm1<-lm(y~x)
+  b<-coefficients(lm1)[1]; m<-coefficients(lm1)[2]
+  if(max(y)>ymax) {xpos<-(ymax-b)/m; ypos<-ymax}
+  if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
+  text(xpos, ypos, labels=cloud[(i-1)])
+}
+
+
+A<-0.0097169
+L<-0.0587
+Ta<-30
+SE<-1000
+Tg<-Tground(Ta, SE)
+Ts<-41
+E<-0.96
+RH<-0.5
+V<-1
+type="forced"
+shape="hcylinder"
+(qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=0.03, cloud=1, SE=SE))
+(qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=0.07, cloud=1, SE=SE))
+(qconv.forced.A<-qconv(Ts, Ta, V, L, type=type, shape=shape))
+qconv(Ts, Ta, V, L, type="free", shape=shape)
+
