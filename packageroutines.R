@@ -8,3 +8,9 @@ path<-find.package(pack)
 system(paste(shQuote(file.path(R.home("bin"), "R")),
              "CMD", "Rd2pdf", shQuote(path)))
 
+
+# Running the following might work better than the Rstudio "check" command:
+library(devtools)
+devtools::build() %>% 
+  install.packages(repos = NULL, type = "source")
+

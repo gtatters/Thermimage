@@ -7,7 +7,7 @@ Nusselt number for free convection.
 Nusselt number for free convection.  Used in calculating heat loss by convection.
 }
 \usage{
-Nusseltfree(a=NULL, b = NULL, m = NULL, L = 0.1, Ts = 20, Ta = 20, shape="hcylinder")
+Nusseltfree(a=NULL, b = NULL, m = NULL, L = 0.1, Ts = 25, Ta = 20, shape="hcylinder")
 }
 \arguments{
   \item{a}{

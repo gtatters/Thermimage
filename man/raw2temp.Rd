@@ -1,6 +1,5 @@
 \name{raw2temp}
 \alias{raw2temp}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Converts raw thermal data into temperature (oC)
 }
@@ -134,7 +133,4 @@ lines(r,t0.9,col="black")
 legend("topleft", bty = "n", c("E=1.0", "E=0.9"), lty=c(1,1), col=c("red", "black"))
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{thermal imaging}
-\keyword{digital video}% __ONLY ONE__ keyword per line
+

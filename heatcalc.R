@@ -1,4 +1,10 @@
 # Estimating heat exchange from thermal images ####
+#  The purpose of this file is to provide a brief introduction to using Thermimage
+#  It is assumed that the user has thermal imaging experience and has extracted
+#  data from thermal images already, or has a means to bring thermal image data 
+#  into R.  This package will not replace thermal image analysis software but it 
+#  can help in automating some calculations associated with large datasets of thermal
+#  images.
 
 # Getting Started: Install Thermimage ####
 #  if you don't have Thermimage installed, type: install.packages("Thermimage")

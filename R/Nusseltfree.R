@@ -1,4 +1,4 @@
-Nusseltfree<-function(a=NULL, b=NULL, m=NULL, L=0.1, Ts=20, Ta=20, shape="hcylinder"){
+Nusseltfree<-function(a=NULL, b=NULL, m=NULL, L=0.1, Ts=25, Ta=20, shape="hcylinder"){
   
   # Gr is the Grashof number as determined by Grashof() function
   # which requires info on L, Ts, Ta and v

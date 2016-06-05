@@ -8,7 +8,7 @@ Determines the Grashof number for an object.  The Grashof number is used in
 calculations of heat exchange.
 }
 \usage{
-Grashof(L = 1, Ts = 20, Ta = 20)
+Grashof(L = 1, Ts = 25, Ta = 20)
 }
 \arguments{
   \item{L}{
@@ -47,7 +47,7 @@ Glenn J Tattersall
 }
 \examples{
 ## The function is currently defined as
-function (L = 1, Ts = 20, Ta = 20) 
+function (L = 1, Ts = 25, Ta = 20) 
 {
     a <- 1/273
     g <- 9.81
