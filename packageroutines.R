@@ -11,6 +11,19 @@ system(paste(shQuote(file.path(R.home("bin"), "R")),
 
 # Running the following might work better than the Rstudio "check" command:
 library(devtools)
-devtools::build() %>% 
+devtools::build() #%>% 
   install.packages(repos = NULL, type = "source")
 
+# Create documentation for new function
+# First add the function to working environment
+# then type prompt(functionname)
+# Rstudio will create an Rd file in the root directory you can edit
+
+  
+# version history
+# v1. initial package with the binary to temperature conversion equations and palettes 
+  # for working with thermal image presentation
+# v2. added thermal modelling equations to convert surface temperatures into estimates of 
+  # heat flux across surfaces to the environment
+# v2.1. added operative temperature (Te): not tested thoroughly for consistency
+# v2.1.1 added equivalent temperature (Teq): not tested thoroughly for consistency

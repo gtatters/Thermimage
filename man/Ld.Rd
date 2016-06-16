@@ -30,7 +30,7 @@ A value, vector of length one, corresponding to the incoming longwave radiation,
 }
 
 \references{
-Konzelmann et al 1994.  Parameterization of gloabl and longwave incoming radiation for the Greenland ice-sheet.  Global and Planetary Change.  9: 143-164. 
+Konzelmann et al 1994.  Parameterization of global and longwave incoming radiation for the Greenland ice-sheet.  Global and Planetary Change.  9: 143-164. 
 }
 \author{
 Glenn J Tattersall
