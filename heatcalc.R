@@ -225,14 +225,17 @@ qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) +
 
 
 # Estimating Operative Temperature ####
-#  Operative environmental temperatures are the expected temperature of an object in the absence
-#  of heat production or evaporative heat loss.  In other words, it is often used to predict
+#  Operative environmental temperature is the expression of the "effective temperature" an 
+#  object is experiencing, accounting for heat absorbed from radiation and heat lost to convection
+#  In other words, it is often used by some when trying to predict
 #  animal body temperature as a null expectation or reference point to determine whether 
 #  active thermoregulation is being used.  More often used in ectotherm studies, but as an 
 #  initial estimate of what a freely moving animal temperature would be, it serves a useful
 #  reference.  Usually, people would measure operative temperature with a model of an object
 #  placed into the environment, allowing wind, solar radiation and ambient temperature to 
-#  influence its temperature.
+#  influence its temperature.  There are numerous formulations for it.  The one here is from
+#  in Angilletta's book on Thermal Adaptations.  Note: in the absence of sun or wind, 
+#  operative temperature is simply ambient temperature.
 
 # Operative temperature with varying reflectances:
 Ts<-40
@@ -240,14 +243,14 @@ Ta<-30
 SE<-seq(0,1100,100)
 Toperative<-NULL
 for(rho in seq(0, 1, 0.1)){
-  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=rho, cloud=0, SE=SE, V=0.1, 
+  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=rho, cloud=1, SE=SE, V=1, 
            L=0.1, type="forced", shape="hcylinder")
   Toperative<-cbind(Toperative, temp)
 }
 rho<-seq(0, 1, 0.1)
 Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
 colnames(Toperative)<-c("SE", seq(0,1,0.1))
-matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
+matplot(Toperative$SE, Toperative[,-1], ylim=c(25, 50), type="l", xlim=c(0,1000),
         main="Effects of Altering Reflectance from 0 to 1",
         ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
         col=flirpal[rev(seq(1,380,35))])
@@ -270,7 +273,7 @@ SE<-seq(0,1100,100)
 Toperative<-NULL
 for(V in seq(0, 10, 1)){
   temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=1, SE=SE, V=V, 
-           L=0.1, type="forced", shape="hcylinder")
+           L=0.1, type="forced", shape="vcylinder")
   Toperative<-cbind(Toperative, temp)
 }
 V<-seq(0, 10, 1)
