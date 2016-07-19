@@ -1,20 +1,26 @@
 Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
-Version: 2.1.1
+Version: 2.2.0
 Date: 2016-06-16
 Author: Glenn J. Tattersall
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal
     image video files, plotting and converting binary raw data into estimates of
-    temperature.  First published 2015-03-26.  Written primarily for research purposes in 
-    biological applications of thermal images.  v1 included the base calculations for
-    converting thermal image binary values to temperatures. v2 included additional equations
-    for providing heat transfer calculations. 
+    temperature.  First published 2015-03-26.  Written primarily for research purposes
+    in biological applications of thermal images.  v1 included the base calculations 
+    for converting thermal image binary values to temperatures. v2 included additional
+    equations for providing heat transfer calculations. 
 License: GPL-2
 Depends: R (>= 2.10)
-Suggests:
-Imports: stats
+SystemRequirements: Exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/)
+Suggests: 
+Imports: stats (>= 3.3.0),
+  tiff (>= 0.1-5),
+  fields (>= 8.4-1),
+  png (>= 0.1-7),
+  ggplot2 (>= 2.1.0),
+  reshape2 (>= 1.4.1)
 LazyData: TRUE
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage, https://github.com/gtatters/Thermimage/blob/master/heatcalc.R
 BugReports: http://github.com/gtatters/Thermimage/issues

@@ -27,3 +27,4 @@ devtools::build() #%>%
   # heat flux across surfaces to the environment
 # v2.1. added operative temperature (Te): not tested thoroughly for consistency
 # v2.1.1 added equivalent temperature (Teq): not tested thoroughly for consistency
+# v2.2.0 

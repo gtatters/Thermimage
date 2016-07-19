@@ -106,7 +106,7 @@ Glenn J. Tattersall
 \section{Warning }{Raw values need to be greater than Planck0 constant}
 
 \seealso{
-\code{\link{temp2raw}},
+\code{\link{temp2raw}}
 }
 \examples{
 # General Usage:

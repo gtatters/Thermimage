@@ -1,0 +1,64 @@
+readflirJPG<-function(imagefile,  exiftool="installed")
+{
+  # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/
+  # see also here for converting thermal image values
+  # http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.45
+  # http://130.15.24.88/exiftool/forum/index.php?topic=4898.90
+  # Accessing exiftool and convert from system command line 
+  # Decipher Camera Meta Data information 
+  # Need to have exiftool installed in your OS's system folder or equivalent
+  # http://www.sno.phy.queensu.ca/~phil/exiftool/
+  # Imagemagick source (redundant now, but was used with convert call):
+  # http://cactuslab.com/imagemagick/
+  
+   exiftoolpath<-""
+  
+  if(exiftool=="package"){
+    exiftoolpath<-system.file("Image-Exiftool/", package="Thermimage")
+  }
+
+  if(exiftool=="installed"){
+   exiftoolpath<-""
+  }  
+  
+  syscommand<-paste0(exiftoolpath, "exiftool")
+  vals<-paste0("-b > tempfile")
+  info<-system2(syscommand, args=paste0(shQuote(imagefile), " ", vals), stdout="")
+  
+  cams<-flirsettings(imagefile, exiftoolpath, camvals="")
+  
+  currentpath<-getwd()
+  to.read<-file("tempfile", "rb")
+  alldata<-readBin(to.read, raw(), n=file.info("tempfile")$size)
+  close(to.read)
+  
+  if(cams$Info$RawThermalImageType=="TIFF"){
+    TIFF<-Thermimage::locate.fid(c("54","49","46","46","49", "49"), alldata)
+    if(length(TIFF)==1) {
+      alldata<-alldata[-c(1:(TIFF+3))]
+      
+      to.write<-file("tempfile", "wb")
+      writeBin(alldata, to.write)
+      close(to.write)
+      img<-tiff::readTIFF(paste0(currentpath, "/tempfile"), as.is=T)
+    }
+  }
+  
+  if(cams$Info$RawThermalImageType=="PNG"){
+    PNG<-Thermimage::locate.fid(c("89","50","4e","47","0d", "0a", "1a", "0a"), alldata)
+    if(length(PNG)==1) {
+      alldata<-alldata[-c(1:(PNG-1))]
+      
+      to.write<-file("tempfile", "wb")
+      writeBin(alldata, to.write)
+      close(to.write)
+      img.reverse<-png::readPNG(paste0(currentpath, "/tempfile")) 
+      # byte order of flir png is reverse to readPNG settings 
+      # This will swap the 16 bit raw to little endian
+      # http://www.imagemagick.org/discourse-server/viewtopic.php?t=24818
+      img<-(img.reverse/256+(floor(img.reverse*(2^16-1))%%256)/256)*(2^16-1)
+    }
+  }
+  if (file.exists("tempfile")) file.remove("tempfile")
+  return(img)
+}
