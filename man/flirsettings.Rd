@@ -46,17 +46,8 @@ Glenn J Tattersall
 \examples{
 
 # Example Use
-imagefile<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
-cams<-flirsettings(imagefile, exiftool="installed", camvals="")
+# See https://github.com/gtatters/FLIRJPGConvert/blob/master/Examples.R
 
-# some of the meta tags:
-cams$Emissivity
-cams$Info$PlanckO
-cams$Info$PlanckR1
-cams$Info$PlanckR2
-cams$Info$PlanckB
-cams$Info$PlanckF
-cams$Info$ObjectDistance
 
 
 }
