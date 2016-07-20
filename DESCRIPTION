@@ -15,13 +15,8 @@ Description: A collection of functions and routines for inputting thermal
 License: GPL-2
 Depends: R (>= 2.10)
 SystemRequirements: Exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/)
-Suggests: 
-Imports: stats (>= 3.3.0),
-  tiff (>= 0.1-5),
-  fields (>= 8.4-1),
-  png (>= 0.1-7),
-  ggplot2 (>= 2.1.0),
-  reshape2 (>= 1.4.1)
+Suggests: ggplot2, fields, reshape
+Imports: tiff, png
 LazyData: TRUE
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage, https://github.com/gtatters/Thermimage/blob/master/heatcalc.R
 BugReports: http://github.com/gtatters/Thermimage/issues
