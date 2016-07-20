@@ -7,18 +7,21 @@ Reads an image from a FLIR JPG file into an integer array.
 Reads an image from a FLIR JPG file into an integer matrix, w pixels wide x h pixels high, depending on image size.
 }
 \usage{
-readflirJPG(imagefile, exiftool = "installed")
+readflirJPG(imagefile, exiftoolpath = "installed")
 }
 \arguments{
   \item{imagefile}{
 Name of the FLIR JPG file to read from, as captured by the thermal camera.  A character string.
 }
-  \item{exiftool}{
-determines whether Exiftool has been "installed" (http://www.sno.phy.queensu.ca/~phil/exiftool/) or not.  If "package" is used (currently experimental), an internal perl script included with this package will be called.  A character string. 
+  \item{exiftoolpath}{
+A character string that determines whether Exiftool has been "installed" (http://www.sno.phy.queensu.ca/~phil/exiftool/) or not.  If Exiftool has been installed in a specific location, use to direct to the folder location.
 }
 }
 \details{
 Only tested on a select number of FLIR JPGs.  Usage depends on functionality provided by Exiftool.
+
+Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool perl scripts and set exiftoolpath to the custom folder locationto access the perl scripts that are attached with this package.  The version of Exiftool installed with Thermimage package has not been tested on all OS.
+
 }
 \value{
 Returns a matrix of integer values, corresponding the calibrated raw thermal image radiance values.  Can be converted to temperature estimates using the raw2temp() function.

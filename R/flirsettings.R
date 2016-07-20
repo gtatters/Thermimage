@@ -1,4 +1,4 @@
-flirsettings<-function(imagefile, exiftool=c("package", "installed"), camvals=NULL)
+flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
 {
   # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/
   # see also here for converting thermal image values
@@ -8,17 +8,19 @@ flirsettings<-function(imagefile, exiftool=c("package", "installed"), camvals=NU
   # Need to have exiftool installed in your OS's system folder or equivalent
   # http://www.sno.phy.queensu.ca/~phil/exiftool/
   
-  exiftoolpath<-"" 
-  # set exiftool to blank will force the system command to call the installed version of
-  # exiftool on the respective OS
- 
-  if(exiftool=="package"){
-    exiftoolpath<-system.file("Image-Exiftool/", package="Thermimage")
+  if(!exiftoolpath=="installed"){
+    exiftoolcheck<-paste0(exiftoolpath, "/exiftool")
+    
+    if(!file.exists(exiftoolcheck)) {
+      stop("Exiftool not installed at this location.  Please check path usage.")
+    }
+    
   }
-
-  if(exiftool=="installed"){
+  
+  if(exiftoolpath=="installed"){
     exiftoolpath<-""
   }  
+ 
 
   if(is.null(camvals)) {
     camvals<-"-flir -*Emissivity -*Original -*Date -*Planck* -*Distance -*Temperature* -*Transmission -*Humidity -*Height -*Width -*Model* -*Median -*Range -*Raw*"
@@ -71,5 +73,6 @@ flirsettings<-function(imagefile, exiftool=c("package", "installed"), camvals=NU
   settings<-list(df, df2)
   names(settings)<-c("Info", "Dates")
   
+  rm(exiftoolpath)
   return(settings)
 }

@@ -2,7 +2,7 @@ Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
 Version: 2.2.0
-Date: 2016-07-19
+Date: 2016-07-20
 Author: Glenn J. Tattersall
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal
@@ -10,7 +10,8 @@ Description: A collection of functions and routines for inputting thermal
     temperature.  First published 2015-03-26.  Written primarily for research purposes
     in biological applications of thermal images.  v1 included the base calculations 
     for converting thermal image binary values to temperatures. v2 included additional
-    equations for providing heat transfer calculations and an import function for thermal JPGs
+    equations for providing heat transfer calculations and an import function for thermal
+    image files.
 License: GPL-2
 Depends: R (>= 2.10)
 SystemRequirements: Exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/)

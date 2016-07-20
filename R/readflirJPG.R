@@ -1,4 +1,4 @@
-readflirJPG<-function(imagefile,  exiftool="installed")
+readflirJPG<-function(imagefile,  exiftoolpath="installed")
 {
   # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/
   # see also here for converting thermal image values
@@ -11,20 +11,24 @@ readflirJPG<-function(imagefile,  exiftool="installed")
   # Imagemagick source (redundant now, but was used with convert call):
   # http://cactuslab.com/imagemagick/
   
-   exiftoolpath<-""
+  if(!exiftoolpath=="installed"){
+    exiftoolcheck<-paste0(exiftoolpath, "/exiftool")
   
-  if(exiftool=="package"){
-    exiftoolpath<-system.file("Image-Exiftool/", package="Thermimage")
+    if(!file.exists(exiftoolcheck)) {
+      stop("Exiftool not installed at this location.  Please check path usage.")
+    }
+    
   }
-
-  if(exiftool=="installed"){
-   exiftoolpath<-""
+  
+  if(exiftoolpath=="installed"){
+    exiftoolpath<-""
   }  
   
   syscommand<-paste0(exiftoolpath, "exiftool")
   vals<-paste0("-b > tempfile")
   info<-system2(syscommand, args=paste0(shQuote(imagefile), " ", vals), stdout="")
   
+  if(exiftoolpath=="") {exiftoolpath<-"installed"}
   cams<-flirsettings(imagefile, exiftoolpath, camvals="")
   
   currentpath<-getwd()
@@ -60,5 +64,6 @@ readflirJPG<-function(imagefile,  exiftool="installed")
     }
   }
   if (file.exists("tempfile")) file.remove("tempfile")
+  rm(exiftoolpath)
   return(img)
 }
