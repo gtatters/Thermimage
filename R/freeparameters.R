@@ -4,7 +4,7 @@ freeparameters<-function(L=0.1, Ts=30, Ta=20, shape="hcylinder"){
   # parameters call
   
   a<-1 # most cases, a will be 1, except for one turbulent situation (not implemented)
-  Gr<-Grashof(L=1, Ts=Ts, Ta=Ta)
+  Gr<-Grashof(L=L, Ts=Ts, Ta=Ta)
   Pr<-Prandtl(Ta)
   b<-rep(NA, length(shape))
   m<-rep(NA, length(shape))

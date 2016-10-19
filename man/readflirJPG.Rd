@@ -22,6 +22,9 @@ Only tested on a select number of FLIR JPGs.  Usage depends on functionality pro
 
 Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool perl scripts and set exiftoolpath to the custom folder locationto access the perl scripts that are attached with this package.  The version of Exiftool installed with Thermimage package has not been tested on all OS.
 
+v 2.2.3: updated to fix a problem calling shell commands requiring folder write access 
+on a windows OS (thanks to John Al-Alawneh)
+
 }
 \value{
 Returns a matrix of integer values, corresponding the calibrated raw thermal image radiance values.  Can be converted to temperature estimates using the raw2temp() function.

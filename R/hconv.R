@@ -19,7 +19,8 @@ hconv<-function(Ts=30, Ta=20, V=1, L=0.1, c=NULL, n=NULL, a=NULL, b=NULL, m=NULL
   BuoyInert<-Gr/Re^2
   # ratio of buoyant to inertial forces (used to double check whether to use free or 
   # forced)
-  Nu<-rep(NA, length(type))
+  # Nu<-rep(NA, length(type))
+  Nu<-c()
   Nuforced<-Nusseltforced(c=c, n=n, V=V, L=L, Ta=Ta, shape=shape)
   Nufree<-Nusseltfree(a=a, b=b, m=m, L=L, Ts=Ts, Ta=Ta, shape=shape)
   if(any(V==0)) type[V==0]<-"free"
