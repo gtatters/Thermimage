@@ -25,5 +25,5 @@
 * Development version from Github:
 
 ```
-library("devtools"); install_github("lme4/lme4",dependencies=TRUE)
+library("devtools"); install_github("gtatters/Thermimage",dependencies=TRUE)
 ```
