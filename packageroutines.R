@@ -25,6 +25,7 @@ devtools::build() #%>%
   # for working with thermal image presentation
 # v2. added thermal modelling equations to convert surface temperatures into estimates of 
   # heat flux across surfaces to the environment
-# v2.1. added operative temperature (Te): not tested thoroughly for consistency
-# v2.1.1 added equivalent temperature (Teq): not tested thoroughly for consistency
+# v2.1. added operative temperature (Te)
+# v2.1.1 added equivalent temperature (Teq)
 # v2.2.0 added readflirjpg and flirsettings functions
+# v3.0.0 added functions to process .seq and .fcf files

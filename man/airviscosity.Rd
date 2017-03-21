@@ -1,7 +1,7 @@
 \name{airviscosity}
 \alias{airviscosity}
 \title{
-Returns air viscovisty for a given air temperature.
+Returns air viscosity for a given air temperature.
 }
 \description{
 Returns the air viscosity value for a given, supplied air temperature (Ta).  Ta should be in
