@@ -163,7 +163,7 @@ The FLIR jpg imports as a matrix, but default plotting parameters leads to it be
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
-![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
+![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270.png?raw=true)
 If you prefer a different palette:
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
@@ -175,11 +175,11 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
           thermal.palette=midgreenpal)
 ```
-![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270rainbowpal.png?raw=true)
+![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270rainbowpal.png?raw=true)
 or
-![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270glowbowwpal.png?raw=true)
+![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowwpal.png?raw=true)
 or
-![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270midgreypal.png?raw=true)
+![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270midgreypal.png?raw=true)
 or
 ![FLIR JPG rotate 270 midgreen palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270midgreenpal.png?raw=true)
 
