@@ -181,10 +181,16 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 ![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowpal.png?raw=true)
 ![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270midgreypal.png?raw=true)
 
+## Export Image or Video
 
+Finding a way to quantitatively analyse thermal images in R is a challenge due to limited interactions with the graphics environment.  Thermimage has a function that allows you to write the image data to a file format that can be imported into ImageJ.  
+
+First, the image matrix needs to be transposed (t) to swap the row vs. column order in which the data are stored, then the temperatures need to be transformed to a vector, a requirement of the writeBin function.  The function writeFlirBin is a wrapper for writeBin, and uses information on image width, height, frame number and image interval (the latter two are included for thermal video saves) but are kept for simplicity to contruct a filename that incorporates image information required when importing to ImageJ:
+```
+writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="FLIRjpg")
 ```
 
-```
+
 Plot initial image of raw binary data
 ```
 fields::image.plot(imgr, useRaster=TRUE, col=ironbowpal)

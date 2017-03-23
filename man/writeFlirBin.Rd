@@ -14,7 +14,7 @@ writeFlirBin(bindata, templookup, w, h, Interval, rootname)
 Vector of raw binary data imported from a thermal image file, using the getFrames function.  Each value corresponds to the raw binary sensor value for each pixel.  Should be supplied as a vector, not a dataframe or matrix.
 }
   \item{templookup}{
-A vector of values from 1:65535 (2^16) that serves as a rapid means to convert the above bindata into calibrated temperature data for each pixel.  This makes use of the raw2temp function.  This value must be supplied and properly calibrated, otherwise the conversion will not be correct.
+A vector of values from 1:65535 (2^16) that serves as a rapid means to convert the above bindata into calibrated temperature data for each pixel.  This makes use of the raw2temp function.  This value must be supplied and properly calibrated, otherwise the conversion will not be correct.  Default is set to NULL.  If calibrated temperature data is supplised as bindata, then templookup should be set to NULL.
 }
  
   \item{w}{
