@@ -177,11 +177,8 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
           thermal.palette=midgreenpal)
 ```
 ![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270rainbowpal.png?raw=true)
-or
 ![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowpal.png?raw=true)
-or
 ![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270midgreypal.png?raw=true)
-or
 ![FLIR JPG rotate 270 midgreen palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270midgreenpal.png?raw=true)
 
 
