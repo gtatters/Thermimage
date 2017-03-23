@@ -157,18 +157,36 @@ The raw binary values are now expressed as temperature in degrees Celsius (apolo
 library(fields) # should be loaded imported when installing Thermimage
 plotTherm(t(temperature), h, w)
 ```
-
 ![FLIR JPG on import](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
-
-The FLIR jpg imports as a matrix, but default plotting parameters leads to it being 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
+The FLIR jpg imports as a matrix, but default plotting parameters leads to it being rotated 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
 
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
+![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
+If you prefer a different palette:
+```
+plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
+          thermal.palette=rainbowpal)
+plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
+          thermal.palette=glowbowpal)
+plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
+          thermal.palette=midgreypal)
+plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
+          thermal.palette=midgreenpal)
+```
+![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270rainbowpal.png?raw=true)
+or
+![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270glowbowwpal.png?raw=true)
+or
+![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270midgreypal.png?raw=true)
+or
+![FLIR JPG rotate 270 midgreen palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270midgreenpal.png?raw=true)
 
-![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate20.png?raw=true)
 
+```
 
+```
 Plot initial image of raw binary data
 ```
 fields::image.plot(imgr, useRaster=TRUE, col=ironbowpal)
