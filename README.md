@@ -158,7 +158,7 @@ library(fields) # should be loaded imported when installing Thermimage
 plotTherm(t(temperature), h, w)
 ```
 
-![Default JPG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGdefault.png?raw=true)
+![Default JPG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
 
 
 Rotate image before plotting
