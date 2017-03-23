@@ -1,3 +1,5 @@
+#' @export
+#' 
 qconv<-function(Ts=30, Ta=20, V=1, L=0.1, c=NULL, n=NULL, a=NULL, b=NULL, m=NULL, type="forced",
                 shape="hcylinder"){
   # Units of qconv will be W/m2/oC

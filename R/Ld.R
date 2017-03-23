@@ -1,3 +1,5 @@
+#' @export
+#' 
 Ld<-function(Ta=20, RH=0.5, n=0.5){
   # Longwave radiation downward to surface.  Units: W/m2
   # Derived from Konzelmann et al 1994.  PARAMETERIZATION OF GLOBAL AND LONGWAVE INCOMING RADIATION FOR THE GREENLAND ICE-SHEET.  

@@ -1,3 +1,5 @@
+#' @export
+#' 
 Nusseltforced<-function(c=NULL, n=NULL, V=1, L=0.1, Ta=20, shape="hcylinder"){
   
   # typical value for c and n are: 0.24 and 0.6

@@ -1,3 +1,5 @@
+#' @export
+#' 
 readflirJPG<-function(imagefile,  exiftoolpath="installed")
 {
   # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/

@@ -1,3 +1,5 @@
+#' @export
+#' 
 airtconductivity<-function(Ta=20){
   # Thermal conductivity of air, as a function of temperature
   # Units: W/m/K

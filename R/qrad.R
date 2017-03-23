@@ -1,3 +1,5 @@
+#' @export
+#' 
 qrad<-function(Ts=30, Ta=25, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=0, SE=0){
   # Net radiation absorbed and emitted by the object
   # calls the qabs() function and subtracts the emitted radiation based on surface temperature

@@ -30,13 +30,7 @@ Bartlett et al. 2006. A decade of ground-air temperature tracking at emigrant pa
 Glenn J Tattersall
 }
 \examples{
-## The function is currently defined as
-function (Ta = 20, SE = 100) 
-{
-    Tground <- 0.0121 * SE + Ta
-    names(Tground) <- "Tground"
-    Tground
-  }
+
   
 # Example:
 Ta<-25

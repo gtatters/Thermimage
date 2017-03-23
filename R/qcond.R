@@ -1,3 +1,5 @@
+#' @export
+#' 
 qcond<-function(Ts=30, Tc=20, ktiss=0.502, x=1){
   # Units: W/m2
   # Ts = surface temperature (degrees Celsius) of surface in contact

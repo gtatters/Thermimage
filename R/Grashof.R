@@ -1,3 +1,5 @@
+#' @export
+#' 
 Grashof<-function(L=1, Ts=25, Ta=20){
   # Grashof number
   # Source: Blaxter, K. 1989.  Energy Metabolism in Animals and Man.

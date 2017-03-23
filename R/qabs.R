@@ -1,3 +1,5 @@
+#' @export
+#' 
 qabs<-function(Ta=20, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=0, SE=100){
   # Units of qrad will be W/m2 (provided the Solar, Ld, and Lu are also W/m2)
   # Sources: Blaxter, 1986, Konzelmann et al 1994

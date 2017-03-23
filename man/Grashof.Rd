@@ -46,19 +46,10 @@ Glenn J Tattersall
 \code{\link{airviscosity}}
 }
 \examples{
-## The function is currently defined as
-function (L = 1, Ts = 25, Ta = 20) 
-{
-    a <- 1/273
-    g <- 9.81
-    Gr <- a * g * L^3 * (Ts - Ta)/v^2
-    Gr
-  }
 
 # Typical values for Grashof number range from 0.016 to 4.6e+09 if Ts-Ta varies from 
 # 0.1 to 30oC
 
-# Example calculation:
 L<-1
 Ts<-30
 Ta<-20

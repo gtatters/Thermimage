@@ -38,15 +38,6 @@ Glenn J Tattersall
 \code{\link{Ld}}
 }
 \examples{
-## The function is currently defined as
-function (Ta = 20, RH = 0.5, n = 0.5) 
-{
-    AT <- Ta + 273.15
-    RH.pct <- RH * 100
-    Ko <- n
-    Lw <- StephBoltz() * (-21 * Ko + AT)^4 + 0.84 * RH.pct - 57
-    Lw
-  }
 
 # Example calculation:
 Ta<-30

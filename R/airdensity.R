@@ -1,3 +1,5 @@
+#' @export
+#' 
 airdensity<-function(Ta=20){
   # Air density (p, or rho) as a function of temperature (Celsius)
   # Units: kg/m3

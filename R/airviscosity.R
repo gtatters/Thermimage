@@ -1,3 +1,5 @@
+#' @export
+#' 
 airviscosity<-function(Ta=20){
   # Kinematic viscosity of air, as a function of temperature
   # Units: m2/s

@@ -1,3 +1,5 @@
+#' @export
+#' 
 Lw <- function(Ta=20, RH=0.5, n=0.5){
   # Longwave radiation downward to surface.  Units: W/m2
   # Alternative to Ld(), derived from Gabathuler et al 2001.  Parameterization of incoming longwave

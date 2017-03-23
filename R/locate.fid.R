@@ -1,3 +1,6 @@
+#' @export
+#' @importFrom stats embed
+#' 
 locate.fid<-function(fid,vect,long=TRUE)
 {
   if(long==FALSE)
@@ -22,7 +25,7 @@ locate.fid<-function(fid,vect,long=TRUE)
   if(long==TRUE)
   {
     fid.rev<-rev(fid)       
-    vect.embed<- stats::embed(vect,length(fid)) 
+    vect.embed<- embed(vect,length(fid)) 
     output<-which(rowSums(vect.embed == rep(fid.rev, each=nrow(vect.embed))) == ncol(vect.embed)) 
   }
   output

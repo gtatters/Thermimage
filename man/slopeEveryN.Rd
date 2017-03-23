@@ -28,7 +28,7 @@ default value is half the sample interval, n, which will ensure the calculation 
 }
 }
 \details{
-he general purpose of this function is to provide a moving average of a data stream typically sampled at evenly recorded time intervals common computerised data acquisition systems.  Akin to a moving average function, except that it also resamples the data.
+The general purpose of this function is to provide a moving average of a data stream typically sampled at evenly recorded time intervals common computerised data acquisition systems.  Akin to a moving average function, except that it also resamples the data.
 }
 \value{
 A matrix object returned

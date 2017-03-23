@@ -1,3 +1,5 @@
+#' @export
+#' 
 mirror.matrix <-
 function(x) {
   xx <- as.data.frame(x);

@@ -1,3 +1,5 @@
+#' @export
+#' 
 airspecificheat<-function(Ta=20){
   # Specific heat capacity of air
   # Units: J/(kg*K)

@@ -33,13 +33,6 @@ Glenn J Tattersall
 \code{\link{Ld}}
 }
 \examples{
-## The function is currently defined as
-function (Tg = 20, Eground = 0.97) 
-{
-    GT <- Tg + 273.15
-    Lu <- Eground * StephBoltz() * (GT)^4
-    Lu
-  }
 
 # Estimates ground generated longwave radiation rising up.  Units W/m2.
 # Example calculation:

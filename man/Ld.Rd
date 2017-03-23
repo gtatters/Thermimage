@@ -40,19 +40,6 @@ Glenn J Tattersall
 }
 \examples{
 
-## The function is currently defined as
-function (Ta = 20, RH = 0.5, n = 0.5) 
-{
-    AT <- Ta + 273.15
-    WVPs <- 611 * exp(17.27 * (AT - 273.15)/(AT - 36))
-    WVP <- RH * WVPs
-    ecs <- 0.23 + 0.443 * (WVP/AT)^(1/8)
-    ecl <- 0.976
-    etotal <- ecs * (1 - n^2) + ecl * n^2
-    Ld <- etotal * StephBoltz() * AT^4
-    Ld
-  }
-
 # Returns a value in W/m2 of the estimated incoming longwave radiation  
 # Example calculation:
 

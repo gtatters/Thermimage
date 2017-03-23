@@ -1,3 +1,5 @@
+#' @export
+#' 
 meanEveryN <-
   function(x, n=2, lag=round(n/2),showsamples=FALSE) {
     # only to be applied to a vector (x) of data 

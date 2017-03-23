@@ -1,3 +1,5 @@
+#' @export
+#' 
 Nusseltfree<-function(a=NULL, b=NULL, m=NULL, L=0.1, Ts=25, Ta=20, shape="hcylinder"){
   
   # Gr is the Grashof number as determined by Grashof() function

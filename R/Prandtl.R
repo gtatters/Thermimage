@@ -1,3 +1,5 @@
+#' @export
+#' 
 Prandtl<-function(Ta=20){
   
   # from http://www.engineeringtoolbox.com/air-properties-d_156.html

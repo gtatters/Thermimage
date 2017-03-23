@@ -1,3 +1,5 @@
+#' @export
+#' 
 freeparameters<-function(L=0.1, Ts=30, Ta=20, shape="hcylinder"){
   # shape can be "sphere", "hplate", "vplate", or "hcylinder" or "vcylinder"
   # the letter v or h denotes vertical or horizontal orientation but is only used in the free

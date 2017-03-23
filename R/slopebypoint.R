@@ -1,3 +1,5 @@
+#' @export
+#' 
 slopebypoint <-
 function(data) 
 {

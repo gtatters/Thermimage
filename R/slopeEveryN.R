@@ -1,3 +1,5 @@
+#' @export
+#' 
 slopeEveryN <-
 function(x, n=2, lag=round(n/2)) {
   # only to be applied to a vector (x) of data 

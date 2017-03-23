@@ -22,6 +22,9 @@ http://www.engineeringtoolbox.com/air-properties-d_156.html
 \author{
 Glenn J Tattersall
 }
+\seealso{
+\code{\link{airviscosity}}
+}
 \examples{
 ## The function is currently defined as
 function (Ta = 20) 

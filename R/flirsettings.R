@@ -1,3 +1,5 @@
+#' @export
+#' 
 flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
 {
   # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/

@@ -1,3 +1,5 @@
+#' @export
+#' 
 Teq<-function(Ts=30, Ta=25, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=0, SE=0, V=1, 
              L=0.1, type="forced"){
 

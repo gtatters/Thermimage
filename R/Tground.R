@@ -1,3 +1,5 @@
+#' @export
+#' 
 Tground<-function(Ta=20, SE=100){
   # Empirical relationship of measured Tg vs. SE allow for a Delta T (Tg - T) to be 
   # estimated.  
