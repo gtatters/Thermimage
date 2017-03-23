@@ -158,12 +158,13 @@ library(fields) # should be loaded imported when installing Thermimage
 plotTherm(t(temperature), h, w)
 ```
 ![FLIR JPG on import](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
+
 The FLIR jpg imports as a matrix, but default plotting parameters leads to it being rotated 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
 
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
-![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270.png?raw=true)
+![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
 If you prefer a different palette:
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
@@ -177,7 +178,7 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 ```
 ![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270rainbowpal.png?raw=true)
 or
-![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowwpal.png?raw=true)
+![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowpal.png?raw=true)
 or
 ![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270midgreypal.png?raw=true)
 or
