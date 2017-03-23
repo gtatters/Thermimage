@@ -166,7 +166,7 @@ The FLIR jpg imports as a matrix, but default plotting parameters leads to it be
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
 
-![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
+![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate20.png?raw=true)
 
 
 Plot initial image of raw binary data
