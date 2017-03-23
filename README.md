@@ -54,30 +54,67 @@ library("devtools"); install_github("gtatters/Thermimage",dependencies=TRUE)
 
 ## A typical thermal image
 
-![myimage-alt-tag](https://github.com/gtatters/Thermimage/blob/master/inst/extdata/IR_2412.jpg?raw=true)
+![Galapagos Night Heron](https://github.com/gtatters/Thermimage/blob/master/inst/extdata/IR_2412.jpg?raw=true)
 
-How to process or 
+Normally, these thermal images require access to software that only runs on Windows operating system.  This package will allow you to import certain FLIR jpgs and videos and process the images.
 
-## Example using the flirsettings and readflirjpg functions
+## Import FLIR JPG
 
+To load a FLIR JPG, you first must install Exiftool as per instructions above.
 Open sample flir jpg included with Thermimage package:
 
 ```
-imagefile<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
-```
+library(Thermimage)
+f<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
+img<-readflirJPG(f, exiftoolpath="installed")
+dim(img)
 
-Extract meta-tags from thermal image file
-
-```
-cams<-flirsettings(imagefile, exiftool="installed", camvals="")
-cams
-```
-
-Set variables for calculation of temperature values from raw A/D sensor data
+[1] 480 640
 
 ```
-Emissivity<-cams$Info$Emissivity                      # Image Saved Emissivity - should be ~0.95 or 0.96
-ObjectEmissivity<-0.96                                # Object Emissivity - should be ~0.95 or 0.96
+
+The readflirJPG function has used Exiftool to figure out the resolution and properties of the image file.  Above you can see the dimensions are listed as 480 x 640.  Before plotting or doing any temperature assessments, let's extract the meta-tages from the thermal image file.
+
+
+# Extract meta-tags from thermal image file
+
+```
+cams<-flirsettings(f, exiftoolpath="installed", camvals="")
+```
+
+This produes a rather long list of meta-tags.  If you only want to see your camera calibration constants, type:
+
+```
+plancks<-flirsettings(f, exiftoolpath="installed", camvals="-*Planck*")
+unlist(plancks$Info)
+
+ PlanckR1       PlanckB       PlanckF       PlanckO      PlanckR2 
+ 2.110677e+04  1.501000e+03  1.000000e+00 -7.340000e+03  1.254526e-02 
+```
+
+If you want to check the file data information, type:
+```
+cbind(unlist(cams$Dates))
+
+                          [,1]                 
+FileModificationDateTime "2017-03-22 22:15:09"
+FileAccessDateTime       "2017-03-22 23:27:31"
+FileInodeChangeDateTime  "2017-03-22 22:15:10"
+ModifyDate               "2013-05-09 16:22:23"
+CreateDate               "2013-05-09 16:22:23"
+DateTimeOriginal         "2013-05-09 22:22:23"
+```
+or just:
+```
+cams$Dates$DateTimeOriginal
+
+[1] "2013-05-09 22:22:23"
+```
+
+The most relevant variables to extract for calculation of temperature values from raw A/D sensor data are listed here.  These can all be extracted from the cams output as above. I have simplified the output below, since dealing with lists can be awkward.
+
+```
+Emissivity<-  cams$Info$Emissivity                    # Image Saved Emissivity - should be ~0.95 or 0.96
 dateOriginal<-cams$Dates$DateTimeOriginal             # Original date/time extracted from file
 dateModif<-   cams$Dates$FileModificationDateTime     # Modification date/time extracted from file
 PlanckR1<-    cams$Info$PlanckR1                      # Planck R1 constant for camera  
@@ -96,15 +133,37 @@ h<-           cams$Info$RawThermalImageHeight         # sensor height (i.e. imag
 w<-           cams$Info$RawThermalImageWidth          # sensor width (i.e. image width)
 ```
 
-Import image from flir jpg to obtain binary data:
+## Convert raw binary to temperature
+
+Now you have the img loaded, look at the values:
+```
+str(img)
+ int [1:480, 1:640] 18090 18074 18064 18061 18081 18057 18092 18079 18071 18071 ...
+```
+
+If stored with a TIFF header, the data load in as a pre-allocated matrix of the same dimensions of the thermal image, but the values are integers values, in this case ~18000.  The data are stored as in binary/raw format at 2^16 bits of resolution = 65535 possible values, starting at 1.  These are not temperature values.  They are, in fact, radiance values or absorbed infrared energy values in arbitrary units.  That is what the calibration constants are for.  The conversion to temperature is a complicated algorithm, incorporating Plank's law and the Stephan Boltzmann relationship, as well as atmospheric absorption, camera IR absorption, emissivity and distance to namea  few.  Each of these raw/binary values can be converted to temperature, using the raw2temp function:
 
 ```
-img<-readflirJPG(imagefile, exiftool="package")
+temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
+                      PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2)
+str(temperature)      
+
+num [1:480, 1:640] 23.7 23.6 23.6 23.6 23.7 ...
 ```
+
+The raw binary values are now expressed as temperature in degrees Celsius (apologies to Lord Kelvin).  Let's plot the temperature data: 
+
+```
+library(fields) # should be loaded imported when installing Thermimage
+plotTherm(t(temperature), h, w)
+```
+
+![Default JPG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGdefault.png?raw=true)
+
 
 Rotate image before plotting
 ```
-imgr<-rotate270.matrix(img)
+
 ```
 
 Plot initial image of raw binary data
@@ -112,7 +171,7 @@ Plot initial image of raw binary data
 fields::image.plot(imgr, useRaster=TRUE, col=ironbowpal)
 ```
 
-## Convert raw binary to temperature
+
 
 
 ## Export Image or Video
