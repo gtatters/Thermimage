@@ -158,13 +158,16 @@ library(fields) # should be loaded imported when installing Thermimage
 plotTherm(t(temperature), h, w)
 ```
 
-![Default JPG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
+![FLIR JPG on import](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
 
-
-Rotate image before plotting
-```
+The FLIR jpg imports as a matrix, but default plotting parameters leads to it being 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
 
 ```
+plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
+```
+
+![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
+
 
 Plot initial image of raw binary data
 ```

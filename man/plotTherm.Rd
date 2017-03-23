@@ -7,7 +7,7 @@ Plot thermal image data for visualisation purposes.
 A quick way to plot and visualise thermal image data using the fields package image.plot function.  
 }
 \usage{
-plotTherm(bindata, templookup = NULL, w, h, minrangeset = 20, maxrangeset = 40,
+plotTherm(bindata, templookup = NULL, w, h, minrangeset = 20, maxrangeset = 40, trans="I",
 main = NULL, thermal.palette = flirpal)
 }
 \arguments{
@@ -29,6 +29,9 @@ The minimum temperature to scale the raster plot z (temperature) value to.
 }
   \item{maxrangeset}{
 The maximum temperature to scale the raster plot z (temperature) value to.
+}
+  \item{trans}{
+Transformation to apply to image matrix.  Default is I, the identity matrix, which will plot the image without transformation.  Options are mirror.matrix, rotate90.matrix, rotate270.matrix, rotate180.matrix, flip.matrix.
 }
   \item{main}{
 Title to plot on image.  Default is NULL.

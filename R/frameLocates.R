@@ -2,6 +2,8 @@
 #' 
 frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
   {
+  f.start<-NULL
+  h.start<-NULL
   
   l<-w*h # l = number of bytes in a frame
   # File information for binary read in

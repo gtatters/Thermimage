@@ -61,7 +61,7 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
       to.write <- file("tempfile", "wb")
       writeBin(alldata, to.write)
       close(to.write)
-      img <- tiff::readTIFF(paste0(currentpath, "/tempfile"),as.is = T)
+      img <- tiff::readTIFF(paste0(currentpath, "/tempfile"),as.is = TRUE)
     }
   }
   if (cams$Info$RawThermalImageType == "PNG") {
