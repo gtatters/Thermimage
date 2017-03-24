@@ -273,17 +273,17 @@ Then pass the fl data to two different functions, one to extract the time inform
 ```
 extract.times<-do.call("c", lapply(fl$h.start, getTimes, vidfile=v))
 data.frame(extract.times)
-```
-1 2012-06-13 15:52:08.698
 
-2 2012-06-13 15:52:12.665
-```
+> 1 2012-06-13 15:52:08.698
+> 2 2012-06-13 15:52:12.665
+
 Interval<-signif(mean(as.numeric(diff(extract.times))),3)
 Interval
-```
-[1] 3.97
 
-This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function produces an error on capturing the first frame time.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
+> [1] 3.97
+```
+
+This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function cannot accurately render the time on the first frame.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
 
 After extracting times, then extract the frame data, with the getFrames function:
 
@@ -297,11 +297,35 @@ class(alldata); length(alldata)/(w*h)
 
 The raw binary data are stored as an integer vector.  Length(alldata)/(w*h) verifies the total # of frames in the video file is 2.
 
-Before.......
+It is best to convert the temperature data in the following manner, although depending on file size and system limits, you may wish to delay converting to temperature until writing the file.
+
+```
+alltemperature<-templookup[alldata]
+```
+
+I recommend converting the binary and/or temperature variables to a matrix class, where each column represents a separate image frame, while the individual rows correspond to unique pixel positions.  Pixels are filled into the row values the same way across all frames.  Dataframes and arrays are much slower for processing large files.
+
+```
+alldata<-unname(matrix(alldata, nrow=w*h, byrow=FALSE))
+alltemperature<-unname(matrix(alltemperature, nrow=w*h, byrow=FALSE))
+dim(alltemperature)
+
+> [1] 307200      2
+
+```
+
+Frames extracted from thermal vids are upside down
+
+```
+plotTherm(alltemperature[,1], w=w, h=h, trans="mirror.matrix")
+plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
+```
 
 
 
-## Heat Transfer Calculation
+
+
+# Heat Transfer Calculation
 
 
  Minimum required information (units) ####
@@ -311,17 +335,17 @@ Before.......
  Surface Area, A (m^2)
  Shape of object: choose from "sphere", "hcylinder", "vcylinder", "hplate", "vplate"
 
-# Required if working outdoors with solar radiation ####
+# Required if working outdoors with solar radiation
  Visible surface reflectance, rho, which could be measured or estimated (0-1)
  Solar radiation (SE=abbrev for solar energy), W/m2
 
-# Can be estimated or provided ####
+# Can be estimated or provided
  Wind speed, V (m/s) - I tend to model heat exchange under different V (0.1 to 10 m/s)
  Ground Temperature, Tg  (oC) - estimated from air temperature if not provided
  Incoming infrared radiation, Ld (will be estimated from Air Temperature)
  Incoming infrared radiation, Lu (will be estimated from Ground Temperature)
 
-# Ground Temperature Estimation ####
+# Ground Temperature Estimation
  For Ground Temp, we derived a relationship based on data in Galapagos that describes
  Tg-Ta ~ Se, (N=516, based on daytime measurements)
  Thus, Tg =  0.0187128*SE + Ta
@@ -331,7 +355,7 @@ Before.......
  Or from published work by Bartlett et al. (2006) in the Tground() function, the
  relationship would be Tg = 0.0121*SE + Ta
 
-# Make your Data frame ####
+# Make your Data frame
  Once you have decided on what variables you have or need to model, create a data
  frame with these values (Ta, Ts, Tg, SE, A, L, Shape, rho), where each row corresponds to
  an individual measurement.  The data frame is not required for calling functions,
@@ -360,9 +384,16 @@ cloud<-rep(0, length(Ta))
 
 d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shape)
 head(d)
+>          Ta        Ts       Tg       SE  RH rho cloud   A V   L     c     n a    b    m   type     shape
+> 1 28.322047 34.426894 32.67210 359.5081 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
+> 2 19.295451 23.458105 23.72816 366.3394 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
+> 3 23.640834 26.932211 28.29766 384.8615 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
+> 4  6.971665  8.822035 12.14272 427.3600 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
+> 5 32.594745 39.277282 38.40423 480.1226 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
+> 6 22.613530 28.058783 27.91851 438.4282 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
 ```
 
-# Basic calculations ####
+# Basic calculations
  The basic approach to estimating heat loss is based on that outlined in
  Tattersall et al (2009)
  This involves breaking the object into component shapes, deriving the exposed areas
@@ -567,6 +598,7 @@ qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) +
  operative temperature is simply ambient temperature.
 
 # Operative temperature with varying reflectances:
+```
 Ts<-40
 Ta<-30
 SE<-seq(0,1100,100)
@@ -593,105 +625,4 @@ for(i in 2:12){
     if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
     text(xpos, ypos, labels=rho[(i-1)])
 }
-
-
-# Operative temperature with varying wind speeds
-Ts<-40
-Ta<-30
-SE<-seq(0,1100,100)
-Toperative<-NULL
-for(V in seq(0, 10, 1)){
-  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=1, SE=SE, V=V, 
-           L=0.1, type="forced", shape="vcylinder")
-  Toperative<-cbind(Toperative, temp)
-}
-V<-seq(0, 10, 1)
-Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,10,1))
-matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
-        main="Effects of Altering Wind Speed from 0 to 10 m/s",
-        ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
-        col=flirpal[rev(seq(1,380,35))])
-for(i in 2:12){
-  ymax<-par()$yaxp[2]
-  xmax<-par()$xaxp[2]  
-  x<-Toperative[,1]; y<-Toperative[,i]
-  lm1<-lm(y~x)
-  b<-coefficients(lm1)[1]; m<-coefficients(lm1)[2]
-  if(max(y)>ymax) {xpos<-(ymax-b)/m; ypos<-ymax}
-  if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
-  text(xpos, ypos, labels=V[(i-1)])
-}
-
-# Operative temperature with varying RH
-Ts<-40
-Ta<-30
-SE<-seq(0,1100,100)
-Toperative<-NULL
-for(RH in seq(0, 1, 0.1)){
-  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=RH, E=0.96, rho=0.1, cloud=0.5, SE=SE, V=1, 
-           L=0.1, type="forced", shape="hcylinder")
-  Toperative<-cbind(Toperative, temp)
-}
-RH<-seq(0, 1, 0.1)
-Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,1,0.1))
-matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
-        main="Effects of changing RH from 0 to 1",
-        ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
-        col=flirpal[rev(seq(1,380,35))])
-for(i in 2:12){
-  ymax<-par()$yaxp[2]
-  xmax<-par()$xaxp[2]  
-  x<-Toperative[,1]; y<-Toperative[,i]
-  lm1<-lm(y~x)
-  b<-coefficients(lm1)[1]; m<-coefficients(lm1)[2]
-  if(max(y)>ymax) {xpos<-(ymax-b)/m; ypos<-ymax}
-  if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
-  text(xpos, ypos, labels=RH[(i-1)])
-}
-
-# Operative temperature with varying cloud cover
-Ts<-40
-Ta<-30
-SE<-seq(0,1100,100)
-Toperative<-NULL
-for(cloud in seq(0, 1, 0.1)){
-  temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.5, cloud=cloud, SE=SE, V=1, 
-           L=0.1, type="forced", shape="hcylinder")
-  Toperative<-cbind(Toperative, temp)
-}
-cloud<-seq(0, 1, 0.1)
-Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,1,0.1))
-matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
-        main="Effects of changing RH from 0 to 1",
-        ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
-        col=flirpal[rev(seq(1,380,35))])
-for(i in 2:12){
-  ymax<-par()$yaxp[2]
-  xmax<-par()$xaxp[2]  
-  x<-Toperative[,1]; y<-Toperative[,i]
-  lm1<-lm(y~x)
-  b<-coefficients(lm1)[1]; m<-coefficients(lm1)[2]
-  if(max(y)>ymax) {xpos<-(ymax-b)/m; ypos<-ymax}
-  if(max(y)<ymax) {xpos<-xmax; ypos<-y[which(x==1000)]}
-  text(xpos, ypos, labels=cloud[(i-1)])
-}
-
-
-A<-0.0097169
-L<-0.0587
-Ta<-30
-SE<-1000
-Tg<-Tground(Ta, SE)
-Ts<-41
-E<-0.96
-RH<-0.5
-V<-1
-type="forced"
-shape="hcylinder"
-(qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=0.03, cloud=1, SE=SE))
-(qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=0.07, cloud=1, SE=SE))
-(qconv.forced.A<-qconv(Ts, Ta, V, L, type=type, shape=shape))
-qconv(Ts, Ta, V, L, type="free", shape=shape)
+```
