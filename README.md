@@ -71,10 +71,8 @@ library(Thermimage)
 f<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
 img<-readflirJPG(f, exiftoolpath="installed")
 dim(img)
-
-[1] 480 640
-
 ```
+[1] 480 640
 
 The readflirJPG function has used Exiftool to figure out the resolution and properties of the image file.  Above you can see the dimensions are listed as 480 x 640.  Before plotting or doing any temperature assessments, let's extract the meta-tages from the thermal image file.
 
@@ -90,29 +88,27 @@ This produes a rather long list of meta-tags.  If you only want to see your came
 ```
 plancks<-flirsettings(f, exiftoolpath="installed", camvals="-*Planck*")
 unlist(plancks$Info)
-
+```
  PlanckR1       PlanckB       PlanckF       PlanckO      PlanckR2 
  2.110677e+04  1.501000e+03  1.000000e+00 -7.340000e+03  1.254526e-02 
-```
+
 
 If you want to check the file data information, type:
 ```
 cbind(unlist(cams$Dates))
-
-                          [,1]                 
+```
 FileModificationDateTime "2017-03-22 22:15:09"
 FileAccessDateTime       "2017-03-22 23:27:31"
 FileInodeChangeDateTime  "2017-03-22 22:15:10"
 ModifyDate               "2013-05-09 16:22:23"
 CreateDate               "2013-05-09 16:22:23"
 DateTimeOriginal         "2013-05-09 22:22:23"
-```
+
 or just:
 ```
 cams$Dates$DateTimeOriginal
-
-[1] "2013-05-09 22:22:23"
 ```
+[1] "2013-05-09 22:22:23"
 
 The most relevant variables to extract for calculation of temperature values from raw A/D sensor data are listed here.  These can all be extracted from the cams output as above. I have simplified the output below, since dealing with lists can be awkward.
 
@@ -141,8 +137,9 @@ w<-           cams$Info$RawThermalImageWidth          # sensor width (i.e. image
 Now you have the img loaded, look at the values:
 ```
 str(img)
- int [1:480, 1:640] 18090 18074 18064 18061 18081 18057 18092 18079 18071 18071 ...
 ```
+ int [1:480, 1:640] 18090 18074 18064 18061 18081 18057 18092 18079 18071 18071 ...
+
 
 If stored with a TIFF header, the data load in as a pre-allocated matrix of the same dimensions of the thermal image, but the values are integers values, in this case ~18000.  The data are stored as in binary/raw format at 2^16 bits of resolution = 65535 possible values, starting at 1.  These are not temperature values.  They are, in fact, radiance values or absorbed infrared energy values in arbitrary units.  That is what the calibration constants are for.  The conversion to temperature is a complicated algorithm, incorporating Plank's law and the Stephan Boltzmann relationship, as well as atmospheric absorption, camera IR absorption, emissivity and distance to namea  few.  Each of these raw/binary values can be converted to temperature, using the raw2temp function:
 
@@ -150,9 +147,9 @@ If stored with a TIFF header, the data load in as a pre-allocated matrix of the 
 temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
                       PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2)
 str(temperature)      
-
-num [1:480, 1:640] 23.7 23.6 23.6 23.6 23.7 ...
 ```
+num [1:480, 1:640] 23.7 23.6 23.6 23.6 23.7 ...
+
 
 The raw binary values are now expressed as temperature in degrees Celsius (apologies to Lord Kelvin).  Let's plot the temperature data: 
 
@@ -167,6 +164,7 @@ The FLIR jpg imports as a matrix, but default plotting parameters leads to it be
 ```
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
+
 ![FLIR JPG rotate 270](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGrotate270.png?raw=true)
 
 If you prefer a different palette:
@@ -181,8 +179,11 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
           thermal.palette=midgreenpal)
 ```
 ![FLIR JPG rotate 270 rainbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270rainbowpal.png?raw=true)
+
 ![FLIR JPG rotate 270 glowbow palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270glowbowpal.png?raw=true)
+
 ![FLIR JPG rotate 270 midgrey palette](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRJPGrotate270midgreypal.png?raw=true)
+
 
 ## Export Image or Video
 
@@ -219,25 +220,63 @@ w<-camvals$Info$RawThermalImageWidth
 h<-camvals$Info$RawThermalImageHeight
 ```
 
+Create a lookup variable to convert the raw binary to actual temperature estimates, use parameters relevant to the experiment.  You could use the values stored in the FLIR meta-tags, but these are not necessarily correct for the conditions of interest.  suppressWarnings() is used because of NaN values returned for binary values that fall outside the range.
+
+```
+suppressWarnings(
+templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
+)
+
+```
+
+![Binary to Temperature Conversion](https://github.com/gtatters/Thermimage/blob/master/READMEimages/CalibrationCurve.png?raw=true)
+
+
 Using the width and height information, we use this to find where in the video file these are stored.  This corresponds to reproducible locations in the frame header:
 ```
 fl<-frameLocates(v, w, h)
 n.frames<-length(fl$f.start)
-n.frames
-
+n.frames; fl
+```
 [1] 2
-
-fl
-
 $h.start
 [1]    162 308688
 
 $f.start
 [1]   1391 309917
-```
+
 The relative positions of the header start (h.start) are 162 and 308688, and the frame start (f.start) positions are 1391 and 309917.  The video file is a short, two frame (n.frames) sequence from a thermal video.
 
-Then pass the fl
+Then pass the fl data to two different functions, one to extract the time information from the header, and the other to extract the actual pixel data from the image frame itself.  The lapply function will have to be used (for efficiency), but to wrap the function across all possible detected image frames.  Note: For large files, the parallel function, mclapply, is advised (?getFrames for an example):
+
+```
+extract.times<-do.call("c", lapply(fl$h.start, getTimes, vidfile=v))
+data.frame(extract.times)
+```
+            extract.times
+1 2012-06-13 15:52:08.698
+2 2012-06-13 15:52:12.665
+```
+Interval<-signif(mean(as.numeric(diff(extract.times))),3)
+Interval
+```
+[1] 3.97
+
+This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function produces an error on capturing the first frame time.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
+
+After extracting times, then extract the frame data, with the getFrames function:
+
+```
+alldata<-unlist(lapply(fl$f.start, getFrames, vidfile=v, w=w, h=h))
+class(alldata); length(alldata)/(w*h)
+```
+[1] "integer"
+[1] 2
+
+The raw binary data are stored as an integer vector.  Length(alldata)/(w*h) verifies the total # of frames in the video file is 2.
+
+Before
+
 
 
 ## Heat Transfer Calculation
