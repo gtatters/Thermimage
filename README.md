@@ -71,8 +71,10 @@ library(Thermimage)
 f<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
 img<-readflirJPG(f, exiftoolpath="installed")
 dim(img)
+
+> [1] 480 640
 ```
-[1] 480 640
+
 
 The readflirJPG function has used Exiftool to figure out the resolution and properties of the image file.  Above you can see the dimensions are listed as 480 x 640.  Before plotting or doing any temperature assessments, let's extract the meta-tages from the thermal image file.
 
@@ -88,27 +90,29 @@ This produes a rather long list of meta-tags.  If you only want to see your came
 ```
 plancks<-flirsettings(f, exiftoolpath="installed", camvals="-*Planck*")
 unlist(plancks$Info)
-```
- PlanckR1       PlanckB       PlanckF       PlanckO      PlanckR2 
- 2.110677e+04  1.501000e+03  1.000000e+00 -7.340000e+03  1.254526e-02 
 
+> PlanckR1       PlanckB       PlanckF       PlanckO      PlanckR2 
+> 2.110677e+04  1.501000e+03  1.000000e+00 -7.340000e+03  1.254526e-02 
+```
 
 If you want to check the file data information, type:
 ```
 cbind(unlist(cams$Dates))
+
+> FileModificationDateTime "2017-03-22 22:15:09"
+> FileAccessDateTime       "2017-03-22 23:27:31"
+> FileInodeChangeDateTime  "2017-03-22 22:15:10"
+> ModifyDate               "2013-05-09 16:22:23"
+> CreateDate               "2013-05-09 16:22:23"
+> DateTimeOriginal         "2013-05-09 22:22:23"
 ```
-FileModificationDateTime "2017-03-22 22:15:09"
-FileAccessDateTime       "2017-03-22 23:27:31"
-FileInodeChangeDateTime  "2017-03-22 22:15:10"
-ModifyDate               "2013-05-09 16:22:23"
-CreateDate               "2013-05-09 16:22:23"
-DateTimeOriginal         "2013-05-09 22:22:23"
 
 or just:
 ```
 cams$Dates$DateTimeOriginal
+
+> [1] "2013-05-09 22:22:23"
 ```
-[1] "2013-05-09 22:22:23"
 
 The most relevant variables to extract for calculation of temperature values from raw A/D sensor data are listed here.  These can all be extracted from the cams output as above. I have simplified the output below, since dealing with lists can be awkward.
 
@@ -137,9 +141,9 @@ w<-           cams$Info$RawThermalImageWidth          # sensor width (i.e. image
 Now you have the img loaded, look at the values:
 ```
 str(img)
-```
- int [1:480, 1:640] 18090 18074 18064 18061 18081 18057 18092 18079 18071 18071 ...
 
+> int [1:480, 1:640] 18090 18074 18064 18061 18081 18057 18092 18079 18071 18071 ...
+```
 
 If stored with a TIFF header, the data load in as a pre-allocated matrix of the same dimensions of the thermal image, but the values are integers values, in this case ~18000.  The data are stored as in binary/raw format at 2^16 bits of resolution = 65535 possible values, starting at 1.  These are not temperature values.  They are, in fact, radiance values or absorbed infrared energy values in arbitrary units.  That is what the calibration constants are for.  The conversion to temperature is a complicated algorithm, incorporating Plank's law and the Stephan Boltzmann relationship, as well as atmospheric absorption, camera IR absorption, emissivity and distance to namea  few.  Each of these raw/binary values can be converted to temperature, using the raw2temp function:
 
@@ -147,9 +151,9 @@ If stored with a TIFF header, the data load in as a pre-allocated matrix of the 
 temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
                       PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2)
 str(temperature)      
-```
-num [1:480, 1:640] 23.7 23.6 23.6 23.6 23.7 ...
 
+> num [1:480, 1:640] 23.7 23.6 23.6 23.6 23.7 ...
+```
 
 The raw binary values are now expressed as temperature in degrees Celsius (apologies to Lord Kelvin).  Let's plot the temperature data: 
 
@@ -157,6 +161,7 @@ The raw binary values are now expressed as temperature in degrees Celsius (apolo
 library(fields) # should be loaded imported when installing Thermimage
 plotTherm(t(temperature), h, w)
 ```
+
 ![FLIR JPG on import](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FlirJPGdefault.png?raw=true)
 
 The FLIR jpg imports as a matrix, but default plotting parameters leads to it being rotated 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
@@ -190,10 +195,13 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 Finding a way to quantitatively analyse thermal images in R is a challenge due to limited interactions with the graphics environment.  Thermimage has a function that allows you to write the image data to a file format that can be imported into ImageJ.  
 
 First, the image matrix needs to be transposed (t) to swap the row vs. column order in which the data are stored, then the temperatures need to be transformed to a vector, a requirement of the writeBin function.  The function writeFlirBin is a wrapper for writeBin, and uses information on image width, height, frame number and image interval (the latter two are included for thermal video saves) but are kept for simplicity to contruct a filename that incorporates image information required when importing to ImageJ:
+
 ```
 writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="FLIRjpg")
 ```
+
 The raw file can be found here: https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw?raw=true
+
 
 # Import Raw File into ImageJ
 The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
@@ -210,6 +218,7 @@ The image imports clearly just as it would in a thermal image program.  Each pix
 Importing thermal videos (March 2017: still in development) is a little more involved and less automated, but below are steps that have worked for seq and fcf files tested.
 
 Set file info and extract meta-tags as done above:
+
 ```
 # set filename as v
 v<-paste0(system.file("extdata/SampleSEQ.seq", package="Thermimage"))
@@ -226,10 +235,19 @@ Create a lookup variable to convert the raw binary to actual temperature estimat
 suppressWarnings(
 templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
 )
-
+plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```
 
 ![Binary to Temperature Conversion](https://github.com/gtatters/Thermimage/blob/master/READMEimages/CalibrationCurve.png?raw=true)
+
+The advantage of using the templookup variable is in its index capacity.  For computations involving large files, this is most efficient way to convert the raw binary values rapidly without having to call the raw2temp function repeatedly.  Thus, for a raw binary value of 17172, 18273, and 24932:
+
+```
+templookup[c(17172, 18273, 24932)]
+
+> [1] 18.30964 24.77935 57.07821
+
+```
 
 
 Using the width and height information, we use this to find where in the video file these are stored.  This corresponds to reproducible locations in the frame header:
@@ -253,8 +271,8 @@ Then pass the fl data to two different functions, one to extract the time inform
 extract.times<-do.call("c", lapply(fl$h.start, getTimes, vidfile=v))
 data.frame(extract.times)
 ```
-            extract.times
 1 2012-06-13 15:52:08.698
+
 2 2012-06-13 15:52:12.665
 ```
 Interval<-signif(mean(as.numeric(diff(extract.times))),3)
