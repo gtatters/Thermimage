@@ -322,6 +322,8 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 ```
 
 
+![Sample Sequence Frame 1](https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ1.png?raw=true)
+![Sample Sequence Frame 2](https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ2.png?raw=true)
 
 
 
