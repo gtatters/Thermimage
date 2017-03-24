@@ -17,7 +17,7 @@ qabs<-function(Ta=20, Tg=NULL, RH=0.5, E=0.96, rho=0.1, cloud=0, SE=100){
   #if(is.null(Tg) | is.na(Tg)) Tg<-Tground(Ta, SE)
   # If Tground is not supplied, estimate it from our empirical relationship, but recognise
   # that this has limits and will return Ta if used outside its valid range
-  Ld<-Ld(Ta, RH=RH, n=cloud)
+  Ld<-Ld(Ta=Ta, RH=RH, n=cloud)
   Lu<-Lu(Tg)
   # total solar radiation (note: this is worst case scenario since no profile/angle metrics
   # are taken into account.  Animal could change orientation to/away from solar beam)
