@@ -189,6 +189,13 @@ First, the image matrix needs to be transposed (t) to swap the row vs. column or
 ```
 writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="FLIRjpg")
 ```
+![Raw converted file](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw?raw=true)
+
+# Import Raw File into ImageJ
+
+![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/READMEimages/ImageJImport?raw=true)
+
+![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw?raw=true)
 
 
 Plot initial image of raw binary data
