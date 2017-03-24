@@ -314,7 +314,7 @@ dim(alltemperature)
 
 ```
 
-Frames extracted from thermal vids are upside down
+Frames extracted from thermal vids are upside down, so use the mirror.matrix function inside the plotTherm function.
 
 ```
 plotTherm(alltemperature[,1], w=w, h=h, trans="mirror.matrix")
@@ -323,7 +323,22 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 
 
 ![Sample Sequence Frame 1](https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ1.png?raw=true)
+
 ![Sample Sequence Frame 2](https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ2.png?raw=true)
+
+
+
+Now, export entire sequence to a raw bin for opening in ImageJ - smallish file size
+
+```
+writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="SampleSEQ")
+```
+
+The newly written 32=bit video file (https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true) can now be imported into ImageJ, as desribed above for the single image.
+
+
+
+
 
 
 
