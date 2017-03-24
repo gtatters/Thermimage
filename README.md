@@ -12,6 +12,9 @@ This is a collection of functions for assisting in converting extracted raw data
 
 ## Recent/release notes
 
+* Version 3.0.0 is on Github (development version)
+* Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
+
 * Version 2.2.3 is on CRAN (as of October 2016). 
 * Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
 
@@ -192,21 +195,16 @@ writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootnam
 The raw file can be found here: https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw?raw=true
 
 # Import Raw File into ImageJ
+The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of frames (stacks), byte storage order (little endian), and hyperstack (if desired):
 
 ![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/READMEimages/ImageJImport.png?raw=true)
+
+The image imports clearly just as it would in a thermal image program.  Each pixel stores the calculated temperatures as provided from the raw2temp function above. 
 
 ![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
 
 
-Plot initial image of raw binary data
-```
-fields::image.plot(imgr, useRaster=TRUE, col=ironbowpal)
-```
-
-
-
-
-## Export Image or Video
+## Importing Thermal Videos
 
 
 
