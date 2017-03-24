@@ -14,9 +14,11 @@ This is a collection of functions for assisting in converting extracted raw data
 
 * Version 3.0.0 is on Github (development version)
 * Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
+* Currently testing seq and fcf imports.  Send sample files for testing.
 
 * Version 2.2.3 is on CRAN (as of October 2016). 
 * Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
+
 
 # Features
 
@@ -635,7 +637,8 @@ qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) + qconv(Ts, Ta
 * In other words, it is often used by some when trying to predict animal body temperature as a null expectation or reference point to determine whether active thermoregulation is being used.  
 * More often used in ectotherm studies, but as an initial estimate of what a freely moving animal temperature would be, it serves a useful reference. 
 * Usually, people would measure operative temperature with a model of an object placed into the environment, allowing wind, solar radiation and ambient temperature to influence its temperature.  
-* There are numerous formulations for it.  The one here is from Michael Angilletta's book on Thermal Adaptations. * Note: in the absence of sun or wind, operative temperature is ~ambient temperature.
+* There are numerous formulations for it.  The one here is from Michael Angilletta's book on Thermal Adaptations.
+* Note: in the absence of sun or wind, operative temperature is ~ambient temperature.
 
 Operative temperature with varying reflectances:
 
@@ -670,5 +673,4 @@ for(i in 2:12){
 ```
 
 ![Modelling Operative Temperature as a function of Reflectance](https://github.com/gtatters/Thermimage/blob/master/READMEimages/Te_modelling.png?raw=true)
-
 
