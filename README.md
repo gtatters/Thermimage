@@ -195,7 +195,7 @@ writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootnam
 The raw file can be found here: https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw?raw=true
 
 # Import Raw File into ImageJ
-The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of frames (stacks), byte storage order (little endian), and hyperstack (if desired):
+The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
 
 ![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/READMEimages/ImageJImport.png?raw=true)
 
@@ -206,6 +206,38 @@ The image imports clearly just as it would in a thermal image program.  Each pix
 
 ## Importing Thermal Videos
 
+Importing thermal videos (March 2017: still in development) is a little more involved and less automated, but below are steps that have worked for seq and fcf files tested.
+
+Set file info and extract meta-tags as done above:
+```
+# set filename as v
+v<-paste0(system.file("extdata/SampleSEQ.seq", package="Thermimage"))
+
+# Extract camera values using Exiftool (needs to be installed)
+camvals<-flirsettings(v)
+w<-camvals$Info$RawThermalImageWidth
+h<-camvals$Info$RawThermalImageHeight
+```
+
+Using the width and height information, we use this to find where in the video file these are stored.  This corresponds to reproducible locations in the frame header:
+```
+fl<-frameLocates(v, w, h)
+n.frames<-length(fl$f.start)
+n.frames
+
+[1] 2
+
+fl
+
+$h.start
+[1]    162 308688
+
+$f.start
+[1]   1391 309917
+```
+The relative positions of the header start (h.start) are 162 and 308688, and the frame start (f.start) positions are 1391 and 309917.  The video file is a short, two frame (n.frames) sequence from a thermal video.
+
+Then pass the fl
 
 
 ## Heat Transfer Calculation
