@@ -14,8 +14,9 @@ This is a collection of functions for assisting in converting extracted raw data
 # Recent/release notes
 
 * Version 3.0.0 is on Github (development version)
+* Version 3.0.0 is on CRAN (as of March 2017). 
 * Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
-* Currently testing seq and fcf imports.  Send sample files for testing.
+* Currently testing seq and fcf imports.  Please send sample files for testing.
 
 * Version 2.2.3 is on CRAN (as of October 2016). 
 * Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
