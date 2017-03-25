@@ -44,31 +44,23 @@ Glenn J Tattersall
 }
 \examples{
 
-# Create a Mandelbrot image sequence, stored in a data.frame
-m = 640 # grid size
-n = 480 # grid size
-C = complex(real=rep(seq(-1.8,0.6, length.out=m), each=n), 
-imag=rep(seq(-1.2,1.2, length.out=m), n))
-C = matrix(C,m,n)
-Z = 0
-Y = NULL
+# set w to 640 and h to 480
+w<-640
+h<-480
+f<-system.file("extdata", "SampleSEQ.seq", package = "Thermimage")
+x<-frameLocates(f)
+suppressWarnings(templookup<-raw2temp(1:65535))
+alldata<-unlist(lapply(x$f.start, getFrames, vidfile=f, w=w, h=h))
+alldata<-matrix(alldata, nrow=w*h, byrow=FALSE)
+alltemperature<-templookup[alldata]
+alltemperature<-unname(matrix(alltemperature, nrow=w*h, byrow=FALSE))
 
-for (k in 1:20) {
-  Z = Z^2+C
-  ZZ<-matrix(exp(-abs(Z)), ncol=1)
-  Y<-cbind(Y, ZZ)
-}
+dalltemperature<-as.matrix(diffFrame(alltemperature, absolute=TRUE), nrow=w)
 
-# Calculate frame by frame difference
-dY<-diffFrame(Y, absolute=TRUE)
+# Plot 
+plotTherm(dalltemperature[,1], templookup=NULL, w=w, h=h,  minrangeset=min(dalltemperature),
+          maxrangeset=max(dalltemperature), trans="mirror.matrix")
 
-# Plot the difference images
-for (k in 1:19){
-  x<-as.matrix(dY[,k], nrow=m)
-  x[is.na(x)]<-min(x, na.rm=TRUE)
-  plotTherm(x, w=m, h=n, minrangeset=min(x), maxrangeset=max(x))
-  Sys.sleep(0.03)
-}
 
 
 }

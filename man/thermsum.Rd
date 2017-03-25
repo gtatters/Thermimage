@@ -59,11 +59,11 @@ tsum<-data.frame(t(apply(alldata, 2, thermsum, templookup)))
 tsum
 
 # Randomly generated data
-alldata<-floor(runif(w*h*40, 17000, 25000))
+alldata<-floor(runif(w*h*10, 17000, 25000))
 alldata<-matrix(alldata, nrow=w*h)
 
 # depending on the size of alldata, directly calculating temperature can slow down processing
-# For a 40 frame file:
+# For a 10 frame file:
 system.time(alltemperature<-raw2temp(alldata))
 
 # But summary calculations using raw binary with lookup are slightly slower than

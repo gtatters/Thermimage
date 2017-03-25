@@ -60,29 +60,25 @@ Glenn J Tattersall
 
 \examples{
 
-# Create a Mandelbrot image sequence, stored in a data.frame
-m = 640 # grid size
-n = 480 # grid size
-C = complex(real=rep(seq(-1.8,0.6, length.out=m), each=n ), 
-imag=rep(seq(-1.2,1.2, length.out=m),n))
-C = matrix(C,m,n)
+m = 400 # grid size
+C = complex( real=rep(seq(-1.8,0.6, length.out=m), each=m ), 
+imag=rep(seq(-1.2,1.2, length.out=m), m ) )
+C = matrix(C,m,m)
+
 Z = 0
-Y = NULL
+X = array(0, c(m,m,20))
 
-for (k in 1:20) {
+for (k in 1:10) {
   Z = Z^2+C
-  ZZ<-matrix(exp(-abs(Z)), ncol=1)
-  Y<-cbind(Y, ZZ)
+  X[,,k] = exp(-abs(Z))
 }
 
-par(pin=c(6,4.5))
-# Plot the difference images
-for (k in 1:19){
-  x<-as.matrix(Y[,k], nrow=m)
+for (k in 1:10){
+  x<-as.matrix(X[,,k], nrow=400)
   x[is.na(x)]<-min(x, na.rm=TRUE)
-  plotTherm(x, w=m, h=n, minrangeset=min(x), maxrangeset=max(x))
-  Sys.sleep(0.03)
+  plotTherm(x, w=400, h=400, minrangeset=min(x), maxrangeset=max(x))
 }
+
 
 # set w to 640 and h to 480
 w<-640
@@ -97,33 +93,32 @@ alltemperature<-unname(matrix(alltemperature, nrow=w*h, byrow=FALSE))
 
 # Plot 
 plotTherm(alldata[,2], templookup=templookup, w=w, h=h,  minrangeset=min(alldata),
-          maxrangeset=max(alldata))
+          maxrangeset=max(alldata), trans="mirror.matrix")
 
 
 # Plot all frames using binary data with templookup
-x<-apply(alldata, 2, plotTherm, templookup=templookup, w=w, h=h, minrangeset=20, maxrangeset=40)
+x<-apply(alldata, 2, plotTherm, templookup=templookup, w=w, h=h, minrangeset=20, 
+maxrangeset=40, trans="mirror.matrix")
 
 # Plot all frames using converted temperature data
 x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-maxrangeset=max(alltemperature), thermal.palette=flirpal)
+         maxrangeset=max(alltemperature), thermal.palette=flirpal, trans="mirror.matrix")
 
 # Try other palettes:
 #x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-#maxrangeset=max(alltemperature), thermal.palette=rainbowpal)
+#maxrangeset=max(alltemperature), thermal.palette=rainbowpal, trans="mirror.matrix")
 
 #x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-#maxrangeset=max(alltemperature), thermal.palette=midgreypal)
+#maxrangeset=max(alltemperature), thermal.palette=midgreypal, trans="mirror.matrix")
 
 #x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-#maxrangeset=max(alltemperature), thermal.palette=midgreenpal)
+#maxrangeset=max(alltemperature), thermal.palette=midgreenpal, trans="mirror.matrix")
 
 #x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-#maxrangeset=max(alltemperature), thermal.palette=greyredpal)
+#maxrangeset=max(alltemperature), thermal.palette=greyredpal, trans="mirror.matrix")
 
 #x<-apply(alltemperature, 2, plotTherm, w=w, h=h, minrangeset=min(alltemperature),
-#maxrangeset=max(alltemperature), thermal.palette=hotironpal)
-
-
+#maxrangeset=max(alltemperature), thermal.palette=hotironpal, trans="mirror.matrix")
 
 
 }
