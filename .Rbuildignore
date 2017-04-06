@@ -2,6 +2,9 @@
 ^\.Rproj\.user$
 ^\scripts\.+$
 ^heatcalc\.R$
+^heatcalc\.pdf$
 ^Thermimage\.pdf$
 ^packageroutines\.R$
 ^\Calibration\.$
+^READMEimages$
+^README.md$
