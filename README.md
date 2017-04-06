@@ -15,6 +15,7 @@ This is a collection of functions for assisting in converting extracted raw data
 
 * Version 3.0.1 is on Github (development version)
 * Minor fix to frameLocates to allow functionality with certain fcf files.
+* Minor edits to help files.  Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
 
 # Previous release notes
 
