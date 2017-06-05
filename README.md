@@ -130,7 +130,7 @@ cams$Dates$DateTimeOriginal
 The most relevant variables to extract for calculation of temperature values from raw A/D sensor data are listed here.  These can all be extracted from the cams output as above. I have simplified the output below, since dealing with lists can be awkward.
 
 ```
-Emissivity<-  cams$Info$Emissivity                    # Image Saved Emissivity - should be ~0.95 or 0.96
+ObjectEmissivity<-  cams$Info$Emissivity                    # Image Saved Emissivity - should be ~0.95 or 0.96
 dateOriginal<-cams$Dates$DateTimeOriginal             # Original date/time extracted from file
 dateModif<-   cams$Dates$FileModificationDateTime     # Modification date/time extracted from file
 PlanckR1<-    cams$Info$PlanckR1                      # Planck R1 constant for camera  
