@@ -7,14 +7,15 @@ Extract raw binary thermal from thermal image file.
 Extracts raw binary thermal image data in integer format as a vector
 }
 \usage{
-getFrames(vidfile, framestarts, w = 640, h = 480, l = w * h, byte.length = 2)
+getFrames(vidfile, framestarts, w = 640, h = 480, l = w * h, byte.length = 2, 
+reverse=FALSE)
 }
 \arguments{
   \item{vidfile}{
 Filename or filepath (as character) of the thermal video.  Should end in .seq or .fcf.  Not tested comprehensively so it may only work for certain camera models and software packages.
 }
   \item{framestarts}{
-A vector of integers corresponding to the actual pixel read byte start positions in the thermal video file.  Acquired using the getFrames function.
+An integer value corresponding to the actual pixel read byte start position in the thermal video file.  Acquired using the frameLocates function.
 }
   \item{w}{
 Width of thermal image.
@@ -27,6 +28,9 @@ The total size (length) of pixel data corresponding to one image = width * heigh
 }
   \item{byte.length}{
 Set to 2 by default.  Each pixel information is encoded in two bytes (i.e. 16 bit), leading to an integer value ranging from 1 to 2^16. Pixel data are read in order in the file and converted to integer using the readBin function. User does not need to set this.
+}
+ \item{reverse}{
+Set to FALSE by default.  Will provide the vector in reverse order.
 }
 }
 \details{

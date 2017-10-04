@@ -13,11 +13,14 @@ This is a collection of functions for assisting in converting extracted raw data
 
 # Current release notes
 
-* Version 3.0.1 is on Github (development version)
-* Minor fix to frameLocates to allow functionality with certain fcf files.
-* Minor edits to help files.  Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
+* 2017-10-04: Version 3.0.2 is on Github (development version)
+* Minor change to getFrames function to provide reverse ordering of vector.
 
 # Previous release notes
+
+* 2017-03-24: Version 3.0.1 is on Github
+* Minor fix to frameLocates to allow functionality with certain fcf files.
+* Minor edits to help files.  Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
 
 * Version 3.0.0 is on Github
 * Version 3.0.0 is on CRAN (as of March 2017). 

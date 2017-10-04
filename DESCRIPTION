@@ -1,8 +1,8 @@
 Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
-Version: 3.0.1
-Date: 2017-03-24
+Version: 3.0.2
+Date: 2017-10-04
 Author: Glenn J. Tattersall
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal
@@ -16,7 +16,7 @@ Description: A collection of functions and routines for inputting thermal
 License: GPL (>=2)
 Depends: R (>= 2.10)
 SystemRequirements: Exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/)
-Suggests: ggplot2, fields, reshape
+Suggests: fields
 Imports: tiff, png
 LazyData: true
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage, https://github.com/gtatters/Thermimage/blob/master/heatcalc.R
