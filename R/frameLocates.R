@@ -13,7 +13,7 @@ frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
   # this should tell you how many total elements make up the video file
   
   to.read <- file(vidfile, "rb") # set to.read file.  rb means read binary
-  alldata<-readBin(to.read, integer(), n=10000000, size=byte.length, endian = "little", signed=FALSE)
+  alldata<-readBin(to.read, integer(), n=5000000, size=byte.length, endian = "little", signed=FALSE)
   close(to.read)
   # approx number of frames in video file, can't be certain since some headers might be different sizes
   # this value might be an over-estimate
@@ -24,7 +24,7 @@ frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
   # that the number of wh locates will be double the number of actual frames, since there is a w,h at the beginning
   # and the end of every frame.
   
-  if(length(alldata)>=10000000)
+  if(length(alldata)>=5000000)
   {
     wh.locate<-locate.fid(fid,alldata,long=TRUE)
     # try wh.locate on a small chunk of all data
@@ -55,7 +55,7 @@ frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
     }
   }
   
-  if(length(alldata)<10000000)
+  if(length(alldata)<5000000)
   {
     # much faster without calling my function:
     fid1.locate<-which(alldata==fid[1])
