@@ -25,8 +25,8 @@ locate.fid<-function(fid,vect,long=TRUE)
   if(long==TRUE)
   {
     fid.rev<-rev(fid)       
-    vect.embed<- embed(vect,length(fid)) 
-    output<-which(rowSums(vect.embed == rep(fid.rev, each=nrow(vect.embed))) == ncol(vect.embed)) 
+    system.time(vect.embed<- embed(vect,length(fid)))
+    system.time(output<-which(rowSums(vect.embed == rep(fid.rev, each=nrow(vect.embed))) == ncol(vect.embed))) 
   }
   output
 }
