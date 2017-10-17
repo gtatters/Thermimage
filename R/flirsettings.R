@@ -51,13 +51,14 @@ flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
   
   dates<-gsub(":", "-", substr(datevalues, 1, 10), fixed=TRUE)
   times<-substr(datevalues, 12, 19)
-  tz<-substr(datevalues, nchar(datevalues)-5,nchar(datevalues))
+  tz<-substr(datevalues, nchar(datevalues)-4,nchar(datevalues))
   no.tz<-grep("[:]", substr(tz,1,1))
   # which timezones were blank
   tz<-gsub(":", "", tz, fixed=TRUE)
   # remove colons from tz
   tz[no.tz]<-"+0000"
   # when in doubt, force the times without TZ to "+00:00".  not sure how to fix this
+  tz<-paste0(" +", tz)
   datechar<-paste0(dates, " ", times, tz)
   datevalues<-strptime(datechar, format="%Y-%m-%d %H:%M:%S%z")
 
