@@ -37,7 +37,9 @@ flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
   # these variables are date/time variables
   datevariables<-gsub(" ", "", info.df[whichdates,1])
   datevariables<-gsub("/", "", datevariables)
-  datevalues<-as.character(gsub("[^0-9: .-]","", info.df[whichdates,2]))
+  datevalues<-info.df[whichdates,2]
+  tz<-substr(datevalues, nchar(datevalues)-5,nchar(datevalues))
+  datevalues<-as.character(gsub("[^0-9: .-]","", datevalues))
     
   notdates<-!1:nrow(info.df) %in% grep("Date", info.df[,1])
   variables<-gsub(" ", "", info.df[notdates,1])
@@ -51,17 +53,16 @@ flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
   
   dates<-gsub(":", "-", substr(datevalues, 1, 10), fixed=TRUE)
   times<-substr(datevalues, 12, 19)
-  tz<-substr(datevalues, nchar(datevalues)-4,nchar(datevalues))
   no.tz<-grep("[:]", substr(tz,1,1))
   # which timezones were blank
   tz<-gsub(":", "", tz, fixed=TRUE)
   # remove colons from tz
   tz[no.tz]<-"+0000"
   # when in doubt, force the times without TZ to "+00:00".  not sure how to fix this
-  tz<-paste0(" +", tz)
-  datechar<-paste0(dates, " ", times, tz)
-  datevalues<-strptime(datechar, format="%Y-%m-%d %H:%M:%S%z")
-
+  #tz<-paste0(" ", tz)
+  datechar<-paste0(dates, " ", times, " ", tz)
+  datevalues<-strptime(datechar, format="%Y-%m-%d %H:%M:%S %z")
+  
   df<-as.list(values)
   names(df)<-variables
   
