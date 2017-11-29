@@ -351,42 +351,6 @@ writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="SampleSEQ")
 The newly written 32-bit video file (https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true) can now be imported into ImageJ, as desribed above for the single image.  Each frame is converted into a stack in ImageJ.
 
 
-# File Conversion functions (calling Exiftool, Imagemagick, and ffmpeg)
-
-
-
-
-```
-setwd("~/Desktop/SampleSeqs")
-exiftoolpath <- "installed"
-
-
-imagefile<-"input/IR_5107.jpg"
-imagefile<-"input/IR_2017-02-10_0003.jpg"
-convertflirjpg(imagefile, exiftoolpath="installed", res.in="640x480", endian="lsb")
-
-
-setwd("//Mac/Home/Desktop/SampleSeqs")
-setwd("~/Desktop/SampleSeqs")
-exiftoolpath <- "installed"
-perlpath <- "installed"
-# Convert CSQ and SEQ to FTS?
-imagefile<-"input/IR_2017-05-19_0222.csq"
-#imagefile<-"input/GlennCameraProgram.seq"
-
-imagefile<-"input/IR_2017-02-10_0003.jpg"
-
-convertflirvid(imagefile, exiftoolpath="installed", perlpath="installed", incompresstype="jpegls", 
-               fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", outputfilenameroot=NULL,
-               outputfiletype="avi")
-
-
-convertflirvid(imagefile, exiftoolpath="installed", perlpath="installed", incompresstype="fff", 
-               fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", outputfilenameroot=NULL,
-               outputfiletype="avi")
-```
-
-
 
 
 # Heat Transfer Calculations

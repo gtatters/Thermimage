@@ -61,6 +61,7 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   
   cat("\n")
   cat(paste(c(perl, pervalsfff), sep=" ", collapse=" "))
+  
   # break video into .fff files into temp folder (inside of working folder):
   info <- system2(perl, args = pervalsfff, stdout = "")
   cat("\n\nVideo split into fff frames in temp folder\n")
