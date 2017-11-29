@@ -4,7 +4,7 @@
 Extract raw binary thermal from thermal image file.
 }
 \description{
-Extracts raw binary thermal image data in integer format as a vector
+Extracts raw binary thermal image data in integer format as a vector from a flir seq file.
 }
 \usage{
 getFrames(vidfile, framestarts, w = 640, h = 480, l = w * h, byte.length = 2, 
@@ -54,14 +54,16 @@ Glenn J Tattersall
 Requires Exiftool be installed in order to automatically determine thermal image width and height.  If you know the width and height in pixels, then the frame start locations can be determined.
 
 For information on installing Exiftool, see http://www.sno.phy.queensu.ca/~phil/exiftool/
+
+See convertflirVID function for an alternative to getFrames.  The latter is loaded into R, which has high processor requirements.  It is likely more feasible to first convert the thermal video into a format to be imported into an image stack processing program like ImageJ.
 }
 
 \seealso{
 \code{\link{frameLocates}},
 \code{\link{getTimes}},
 \code{\link{readBin}},
-\code{\link{raw2temp}}
-
+\code{\link{raw2temp}},
+\code{\link{convertflirVID}}
 }
 \examples{
 # set w to 640 and h to 480

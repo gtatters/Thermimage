@@ -18,9 +18,9 @@ A character string that determines whether Exiftool has been "installed" (http:/
 }
 }
 \details{
-Only tested on a select number of FLIR JPGs.  Usage depends on functionality provided by Exiftool.
+Only tested on a select number of FLIR JPGs.  Usage depends on functionality provided by Exiftool.  At present this function first makes use of readBin to read in thermal image jpgs and searches for the magic start byte sequence ("54", "49", "46", "46","49", "49") for TIFF type images or ("89", "50", "4e", "47", "0d", "0a", "1a", "0a") for PNG type images, and then uses the readTIFF or readPNG functions to load into R.
 
-Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool perl scripts and set exiftoolpath to the custom folder locationto access the perl scripts that are attached with this package.  The version of Exiftool installed with Thermimage package has not been tested on all OS.
+Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool perl scripts and set exiftoolpath to the custom folder location to access the perl scripts that are attached with this package.  The version of Exiftool installed with Thermimage package has not been tested on all OS.
 
 v 2.2.3: updated to fix a problem calling shell commands requiring folder write access 
 on a windows OS (thanks to John Al-Alawneh)
@@ -41,10 +41,16 @@ Returns a matrix of integer values, corresponding the calibrated raw thermal ima
 \author{
 Glenn J Tattersall
 }
+\note{
+Loading image files and manipulating them in R is slow.  Consider using command line tools like exiftool, imagemagick, and ffmpeg to convert the files into a format to analyse in ImageJ, where more powerful plug-ins can be accessed. 
 
+Alternatively, convertflirjpg and convertflirvid functions are wrappers that will call command line tools and convert flir files in the shell environment.
+}
 \seealso{
 \code{\link{temp2raw}}
 \code{\link{raw2temp}}
+\code{\link{convertflirJPG}}
+\code{\link{convertflirVID}}
 }
 \examples{
 # Examples 

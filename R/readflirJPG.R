@@ -58,20 +58,24 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
     TIFF <- Thermimage::locate.fid(c("54", "49", "46", "46","49", "49"), alldata)
     if (length(TIFF) == 1) {
       alldata <- alldata[-c(1:(TIFF + 3))]
+      
       to.write <- file("tempfile", "wb")
       writeBin(alldata, to.write)
       close(to.write)
       img <- tiff::readTIFF(paste0(currentpath, "/tempfile"),as.is = TRUE)
+      #img <- tiff::readTIFF(as.raw(alldata),as.is = TRUE) # can rem out above 4 lines
     }
   }
   if (cams$Info$RawThermalImageType == "PNG") {
     PNG <- Thermimage::locate.fid(c("89", "50", "4e", "47", "0d", "0a", "1a", "0a"), alldata)
     if (length(PNG) == 1) {
       alldata <- alldata[-c(1:(PNG - 1))]
+      
       to.write <- file("tempfile", "wb")
       writeBin(alldata, to.write)
       close(to.write)
       img.reverse <- png::readPNG(paste0(currentpath, "/tempfile"))
+      #img.reverse<-png::readPNG(as.raw(alldata)) # can rem out above 4 lines
       img <- (img.reverse/256 + (floor(img.reverse * (2^16 - 1))%%256)/256) * (2^16 - 1)
     }
   }

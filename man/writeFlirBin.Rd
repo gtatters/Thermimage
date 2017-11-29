@@ -41,14 +41,15 @@ If rootname = 'Thermvid', w=640, h=480, number of frames=100, and image interval
 
 }
 \value{
-Returns nothing, but saves a new file to the current working director. 
+Returns nothing, but saves a new file to the current working directory. 
 }
 
 \author{
 Glenn J Tattersall
 }
 
-\section{Warning}{This function has not been fully tested with all possible video/camera combinations.  Users are advised to compare the exported values in ImageJ on sample images to standard FLIR software values before proceeding with analysis.}
+\section{Warning}{This function has not been fully tested with all possible video/camera combinations.  Users are advised to compare the exported values in ImageJ on sample images to standard FLIR software values before proceeding with analysis.
+}
 
 \seealso{
 \code{\link{raw2temp}},

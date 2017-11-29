@@ -24,22 +24,22 @@ Air velocity (m/s).  Default value is 1.
 Characteristic dimension (m) of object.  Usually the vertical dimension (i.e. height). Default value is 0.1.
 }
   \item{c}{
-coefficient used in forced convection (see Blaxter, 1986, default value is 0.24)
+coefficient used in forced convection (see Blaxter, 1986, default value is 0.24).  see forcedparameters() for details.
 }
   \item{n}{
-coefficient used in forced convection (see Blaxter, 1986, default value is 0.6)
+coefficient used in forced convection (see Blaxter, 1986, default value is 0.6).  see forcedparameters() for details.
 }
   \item{a}{
-coefficient used in free convection (see Gates, 2003. default value is 1)
+coefficient used in free convection (see Gates, 2003. default value is 1). see freeparameters() for details.
 }
   \item{b}{
-coefficient used in free convection (0.58 upright cylinder, 0.48 flat cylinder, default value is 0.58)
+coefficient used in free convection (0.58 upright cylinder, 0.48 flat cylinder, default value is 0.58). see freeparameters() for details.
 }
   \item{m}{
-coefficient used in free convection (0.25 laminar flow, default value is 0.25)
+coefficient used in free convection (0.25 laminar flow, default value is 0.25). see freeparameters() for details.
 }
   \item{type}{
-"forced" or "free" - to calculate convection coefficient for either forced or free convection.  Default value is "forced"
+"forced" or "free" - to calculate convection coefficient for either forced or free convection.  Default value is "forced".
 }
 \item{shape}{
 "sphere", "hplate", "vplate", "hcylinder", "vcylinder" to denote shape and orientation.  h=horizontal, v=vertical.  Default shape is "hcylinder"
@@ -56,7 +56,9 @@ Glenn J Tattersall
 }
 
 \seealso{
-\code{\link{hconv}}
+\code{\link{hconv}},
+\code{\link{forcedparameters}},
+\code{\link{freeparameters}}
 }
 \examples{
 ## The function is currently defined as

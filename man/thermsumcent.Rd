@@ -1,7 +1,7 @@
 \name{thermsumcent}
 \alias{thermsumcent}
 \title{
-Summary thermal calculations on a centrall located region of interest from a thermal image dataset 
+Summary thermal calculations on a centrally located region of interest from a thermal image dataset 
 }
 \description{
 Similarly to the thermsum except this provides thermal summary data on a central region of interest, commonly used in thermal imaging.  The size of the region is a rectangular region corresponding to a fraction of the total image area set by boxsize.   

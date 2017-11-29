@@ -1,8 +1,8 @@
 Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
-Version: 3.0.2
-Date: 2017-10-04
+Version: 3.1.0
+Date: 2017-11-26
 Author: Glenn J. Tattersall
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 Description: A collection of functions and routines for inputting thermal
@@ -15,7 +15,7 @@ Description: A collection of functions and routines for inputting thermal
     functions for importing thermal image videos, rewriting and exporting.
 License: GPL (>=2)
 Depends: R (>= 2.10)
-SystemRequirements: Exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/)
+SystemRequirements: exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/), perl, ffmpeg, imagemagick
 Suggests: fields
 Imports: tiff, png
 LazyData: true

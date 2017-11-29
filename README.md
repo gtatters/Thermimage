@@ -2,7 +2,6 @@ Thermimage: Thermal Image Analysis
 ====
 
 
-
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage)
 [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage)
 [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)
@@ -22,12 +21,11 @@ This is a collection of functions for assisting in converting extracted raw data
 * Minor fix to frameLocates to allow functionality with certain fcf files.
 * Minor edits to help files.  Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
 
-* Version 3.0.0 is on Github
-* Version 3.0.0 is on CRAN (as of March 2017). 
+* March 2017: Version 3.0.0 is on Github & CRAN.
 * Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
 * Currently testing seq and fcf imports.  Please send sample files for testing.
 
-* Version 2.2.3 is on CRAN (as of October 2016). 
+* October 2016: Version 2.2.3 is on CRAN.
 * Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
 
 
@@ -350,12 +348,43 @@ Now, export entire sequence to a raw bin for opening in ImageJ - smallish file s
 writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="SampleSEQ")
 ```
 
-The newly written 32=bit video file (https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true) can now be imported into ImageJ, as desribed above for the single image.  Each frame is converted into a stack in ImageJ.
+The newly written 32-bit video file (https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true) can now be imported into ImageJ, as desribed above for the single image.  Each frame is converted into a stack in ImageJ.
+
+
+# File Conversion functions (calling Exiftool, Imagemagick, and ffmpeg)
 
 
 
 
+```
+setwd("~/Desktop/SampleSeqs")
+exiftoolpath <- "installed"
 
+
+imagefile<-"input/IR_5107.jpg"
+imagefile<-"input/IR_2017-02-10_0003.jpg"
+convertflirjpg(imagefile, exiftoolpath="installed", res.in="640x480", endian="lsb")
+
+
+setwd("//Mac/Home/Desktop/SampleSeqs")
+setwd("~/Desktop/SampleSeqs")
+exiftoolpath <- "installed"
+perlpath <- "installed"
+# Convert CSQ and SEQ to FTS?
+imagefile<-"input/IR_2017-05-19_0222.csq"
+#imagefile<-"input/GlennCameraProgram.seq"
+
+imagefile<-"input/IR_2017-02-10_0003.jpg"
+
+convertflirvid(imagefile, exiftoolpath="installed", perlpath="installed", incompresstype="jpegls", 
+               fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", outputfilenameroot=NULL,
+               outputfiletype="avi")
+
+
+convertflirvid(imagefile, exiftoolpath="installed", perlpath="installed", incompresstype="fff", 
+               fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", outputfilenameroot=NULL,
+               outputfiletype="avi")
+```
 
 
 
