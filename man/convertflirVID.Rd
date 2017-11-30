@@ -85,6 +85,8 @@ This function requires that exiftool and imagemagick are installed.  Consult wit
 # Examples 
 # See https://github.com/gtatters/FLIRJPGConvert/blob/master/Examples.R
 
+# See https://github.com/gtatters/FLIRJPGConvert/blob/master/FLIRJPG_Convert.R 
+
 # See https://github.com/gtatters/Thermimage/blob/master/README.md
 
 

@@ -12,12 +12,15 @@ This is a collection of functions for assisting in converting extracted raw data
 
 # Current release notes
 
-* 2017-10-04: Version 3.0.2 is on Github (development version)
-* Minor change to getFrames function to provide reverse ordering of vector.
+* 2017-11-28: Version 3.1.0 is on Github (development version)
+* Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
 
 # Previous release notes
 
-* 2017-03-24: Version 3.0.1 is on Github
+* 2017-10-04: Version 3.0.2 is on Github and Cran
+* Minor change to getFrames function to provide reverse ordering of vector.
+
+* 2017-03-24: Version 3.0.1 is on Github and Cran
 * Minor fix to frameLocates to allow functionality with certain fcf files.
 * Minor edits to help files.  Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
 

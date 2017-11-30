@@ -12,7 +12,8 @@ Description: A collection of functions and routines for inputting thermal
     for converting thermal image binary values to temperatures. v2 included additional
     equations for providing heat transfer calculations and an import function for thermal
     image files (v2.2.3 fixed error importing thermal image to windows OS). v3. Added numerous
-    functions for importing thermal image videos, rewriting and exporting.
+    functions for converting thermal image, videos, rewriting and exporting.  
+    v3.1. Added new functions to convert files.
 License: GPL (>=2)
 Depends: R (>= 2.10)
 SystemRequirements: exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/), perl, ffmpeg, imagemagick
