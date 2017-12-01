@@ -179,8 +179,7 @@ If you do not have ground temperature, but have measured Ta and SE, then set Tg=
 This is simply the convective heat coefficient, which depends on wind speed and your modelled mode of convective heat exchange (free or forced).  This is used in calculating the convective heat transfer and/or operative temperature but usually you will not need to call hconv() yourself
 
 ### What is qconv()?
-This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer.  Positive values mean heat is gained by convection, negative values mean heat is lost by convection.  Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed >=0.1 m/s).  Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s 
-wind speed.  
+This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer.  Positive values mean heat is gained by convection, negative values mean heat is lost by convection.  Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed >=0.1 m/s).  Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s wind speed (see Gates Biophysical Ecology).
 
 Typical wind speeds indoors are likely <0.5 m/s, but outside can vary wildly.  
 

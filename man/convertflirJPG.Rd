@@ -8,7 +8,7 @@ Invoking shell commands to act on a FLIR jpg and calls the exiftool -RawThermalI
 }
 \usage{
 convertflirJPG(imagefile, exiftoolpath="installed", res.in="640x480", 
-endian="lsb", outputfolder="output", ...)
+endian="lsb", outputfolder="output", verbose=FALSE, ...)
 }
 \arguments{
 \item{imagefile}{
@@ -25,6 +25,9 @@ Byte order ("lsb" = least significant byte or "msb" = most significant byte) use
 }
 \item{outputfolder}{
 Desired output subfolder name, placed inside the folder where the input files are stored.  Default = "output".
+}
+\item{verbose}{
+Provides the command line output if verbose=TRUE.  Default = FALSE. 
 }
 \item{\dots}{
 Other values to pass to command line functions.

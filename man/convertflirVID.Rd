@@ -9,7 +9,7 @@ Invoking shell commands to act on a FLIR video (SEQ or CSQ file type) and calls 
 \usage{
 convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed",
 fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", 
-outputfilenameroot=NULL, outputfiletype="avi", outputfolder="output", ...)
+outputfilenameroot=NULL, outputfiletype="avi", outputfolder="output", verbose=FALSE,...)
 }
 
 \arguments{
@@ -42,6 +42,9 @@ Desired output file type, "avi" or "png".  If "png", multiple files will be expo
 }
 \item{outputfolder}{
 Desired output subfolder name, placed inside the folder where the input files are stored.  Default = "output".
+}
+\item{verbose}{
+Provides the command line output if verbose=TRUE.  Default = FALSE. 
 }
 \item{\dots}{
 Other values to pass to command line functions.

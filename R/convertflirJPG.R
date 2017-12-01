@@ -1,7 +1,7 @@
 #' @export
 #'
 convertflirJPG<-function(imagefile, exiftoolpath="installed", res.in="640x480", endian="lsb", 
-                         outputfolder="output", ...){
+                         outputfolder="output", verbose=FALSE, ...){
   
   if (!exiftoolpath == "installed") {
     exiftoolcheck <- paste0(exiftoolpath, "/exiftool")
@@ -34,11 +34,14 @@ convertflirJPG<-function(imagefile, exiftoolpath="installed", res.in="640x480", 
   
   exiftool <- paste0(exiftoolpath, "exiftool")
   
-  cat(paste(c(exiftool, exifvalsrawunix), sep=" ", collapse=" "))
+  if(verbose==TRUE) cat(paste(c(exiftool, exifvalsrawunix), sep=" ", collapse=" "))
   
   info<-system2(exiftool, args=exifvalsrawunix, stdout=TRUE) 
-  return(info)
   
-  cat(info)
-  cat("\n")
+  if(verbose==TRUE) {
+    cat(info)
+    cat("\n")
+    return(info)
+  }
+  
 }
