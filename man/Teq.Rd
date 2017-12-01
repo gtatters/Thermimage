@@ -72,6 +72,6 @@ function (Ts = 30, Ta = 25, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1,
   }
   
 # For detailed examples and explanations, see:
-https://github.com/gtatters/Thermimage/blob/master/HeatTransferCalculations.md
+# https://github.com/gtatters/Thermimage/blob/master/HeatTransferCalculations.md
 
 }
