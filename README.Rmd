@@ -782,7 +782,7 @@ Ts<-40
 Ta<-30
 SE<-seq(0,1100,100)
 Toperative<-NULL
-for(cloud in seq(0, 1, 0.1)){
+for(cloud in seq(0, 1, 0.5)){
   temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.5, cloud=cloud, SE=SE, V=1, 
            L=0.1, type="forced", shape="hcylinder")
   Toperative<-cbind(Toperative, temp)
