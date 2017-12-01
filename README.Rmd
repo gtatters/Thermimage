@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-[](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png)
+![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true)
 
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage)
 [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage)
@@ -305,6 +305,7 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 ```
 
 These files can be found:
+
 https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ1.png?raw=true
 https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ2.png?raw=true
 
