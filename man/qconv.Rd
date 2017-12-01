@@ -81,5 +81,8 @@ shape="hcylinder"
 qconv(Ts=Ts, Ta=Ta, V=V, L=L, type=type, shape=shape)
 
 qconv(Ts=Ts, Ta=Ta, V=V, L=L, type=type, shape="sphere")
+
+# For detailed examples and explanations, see:
+https://github.com/gtatters/Thermimage/blob/master/HeatTransferCalculations.md
   
 }

@@ -98,6 +98,9 @@ matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000)
         ylab="Operative Temperature (C)", xlab="Solar Radiation (W/m2)", lty=1,
         col=flirpal[rev(seq(1,380,35))])
 
+# For detailed examples and explanations, see:
+https://github.com/gtatters/Thermimage/blob/master/HeatTransferCalculations.md
+
 
 }
 

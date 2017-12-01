@@ -8,9 +8,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 The purpose of this file is to provide an introduction to estimating heat exchange from animal-based thermal images using the R Package, Thermimage.
+
 It is assumed that the user has thermal imaging experience and has extracted thermal data from thermal images already, or has a means to bring thermal image data into R.
 
 This package will not replace thermal image analysis software nor should it replace working knowledge of biophysical modelling, but it can help in automating some calculations associated with large datasets of thermal images.
+
+This help file assumes the user already has captured and analysed thermal images, like the following image, isolating surface temperatures for key regions of interests (ROI analysis).  
+
+![Sample Thermal Image with Regions of Interest](HeatTransferCalculations_files/figure-markdown_github/FinchROI.png)
+
 
 ### Getting Started: Install Thermimage
 If you don't have Thermimage installed, type: 
@@ -25,6 +31,7 @@ This should download the most recent version of Thermimage from github repositor
 ```{r Thermimage}
 library(Thermimage)
 ```
+
 
 ### Minimum required information
 Before getting started ensure you have the following information available:
@@ -75,7 +82,7 @@ The shape is determined by the user, estimating the best approximation of sphere
 The convection parameters are highlighted in references contained in Thermimage, but can be found in Gates (2003) Biophysical Ecology.
 
 
-## Make your Data frame ####
+## Assemble data into a data frame ####
 Once you have decided on what variables you have or need to model, create a data frame with these values (Ta, Ts, Tg, SE, A, L, Shape, rho), where each row corresponds toan individual measurement.  The data frame is not required for calling functions, but it will force you to assemble your data and find missing values before proceeding with calculations.
 
 Other records such as size, date image captured, time of day, species, sex, etc...should also be stored in the data frame.
@@ -137,7 +144,7 @@ conductive heat flux (W/m2), or qcond is often ignored unless a large contact ar
 
 Additional information is required to accurately calculate conductive heat exchange and are not provided here, since thermal imaging would not capture the temperature.
 
-### What is qabs?
+### What is qabs()?
 qabs = absorbed radiation (W/m2).  Radiation is both absorbed and emitted by animals.  I have broken this down into partially separate functions.  
 qabs() is a function to estimate the area specific amount of solar and infrared radiation absorbed by the object from the environment and requires information on the air (ambient) temperature, ground temperature, relative humidity, emissivity of the object, reflectivity of the object, proportion cloud cover, and solar energy. 
 
@@ -152,7 +159,7 @@ qabs(Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 100)
 
 ```
 
-### What is qrad?
+### What is qrad()?
 qrad = net radiative heat flux (includes that absorbed and that emitted).  Since the animal also emits radiation, qrad() provides the net radiative heat transfer.  Here is an example, using the same parameters as the previous example, but calculating qrad based on a Ts=27 degrees C:
 ```{r}
 qrad(Ts = 27, Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 100)
@@ -168,10 +175,10 @@ qrad(Ts = 30, Ta = 25, Tg = 28, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 1
 
 If you do not have ground temperature, but have measured Ta and SE, then set Tg=NULL.  This will force a call to the Tground() function to estimate Tground.  It is likely better to assume that Tground is slightly higher than Ta, at least in the daytime. If using measurements obtained at night (SE=0), then you will have to provide both Ta and Tground, since Tground could be colder equal to Ta depending on cloud cover.
 
-### What is hconv?
+### What is hconv()?
 This is simply the convective heat coefficient, which depends on wind speed and your modelled mode of convective heat exchange (free or forced).  This is used in calculating the convective heat transfer and/or operative temperature but usually you will not need to call hconv() yourself
 
-### What is qconv?
+### What is qconv()?
 This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer.  Positive values mean heat is gained by convection, negative values mean heat is lost by convection.  Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed >=0.1 m/s).  Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s 
 wind speed.  
 
@@ -242,11 +249,11 @@ type="forced"
 shape="hcylinder"
 (qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=rho, cloud=cloud, SE=SE))
 ```
-compare to calculated value of -28.7 W/m2 the R calculations differ slightly from Tattersall et al (2009) since they did not use estimates of longwave radiation (Ld and Lu), but instead assumed a simpler, constant Ta environment.
+compare to calculated value of -28.7 W/m2 the R calculations differ slightly from Tattersall et al (2009) since they did not use estimates of longwave radiation (Ld and Lu), but instead assumed a simpler, constant Ta.
 ```{r}
 (qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=rho, cloud=0, SE=SE))
 ```
-but if cloud = 0, then the qrad values calculated here are much higher than calculated by Tattersall et al (2009) since they only estimated under simplifying, indoor conditions where background temperature = air temperature.  In the outdoors, then, cloud presence would affect estimates of radiative heat loss
+but if cloud = 0, then the qrad values calculated here are much higher than calculated by Tattersall et al (2009) since they only estimated under simplifying, indoor conditions where background temperature = air temperature.  In the outdoors, then, cloud presence would affect estimates of radiative heat loss.
 ```{r}
 (qconv.forced.A<-qconv(Ts, Ta, V, L, type=type, shape=shape))
 ```
@@ -268,13 +275,15 @@ qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) + qconv(Ts, Ta
 
 
 ## Estimating Operative Temperature
-Operative environmental temperature is the expression of the "effective temperature" an object is experiencing, accounting for heat absorbed from radiation and heat lost to convection.
+Operative environmental temperature is the expression of the "effective temperature" an object is experiencing, accounting for heat absorbed from radiation and heat lost to convection.  
 
 In other words, it is often used by some when trying to predict animal body temperature as a null expectation or reference point to determine whether active thermoregulation is being used.  More often used in ectotherm studies, but as an initial estimate of what a freely moving animal temperature would be, it serves a useful reference.
 
-Usually, people would measure operative temperature with a model of an object placed into the environment, allowing wind, solar radiation and ambient temperature to influence its temperature.  There are numerous formulations for it.  The one here is from in Angilletta's book on Thermal Adaptations.  Note: in the absence of sun or wind, operative temperature is simply ambient temperature.
+Usually, people would measure operative temperature with a model of an object placed into the environment, allowing wind, solar radiation and ambient temperature to influence its temperature.  There are numerous formulations for it.  The one here is from Angilletta's book on Thermal Adaptations, and requires measurements of air temperature, ground temperature, SE, wind speed, relative humidity, emissivity, reflectance, cloud cover, and object shape and size.
 
-## Model operative temperature with varying reflectances:
+Note: in the absence of sun or wind, operative temperature is simply ambient temperature.
+
+### Model operative temperature with varying reflectances
 ```{r}
 Ts<-40
 Ta<-30
@@ -307,7 +316,7 @@ for(i in 2:12){
 
 
 
-# Model operative temperature with varying wind speeds
+### Model operative temperature with varying wind speeds
 ```{r}
 Ts<-40
 Ta<-30
@@ -342,7 +351,7 @@ for(i in 2:12){
 ```
 
 
-# Operative temperature with varying RH
+### Model operative temperature with varying RH
 ```{r}
 
 Ts<-40
@@ -374,8 +383,7 @@ for(i in 2:3){
 ```
 
 
-# Operative temperature with varying cloud cover
-
+### Model operative temperature with varying cloud cover
 ```{r}
 Ts<-40
 Ta<-30
@@ -405,7 +413,7 @@ for(i in 2:12){
 }
 ```
 
-## References
+### References
 
 Angiletta, M. J. 2009. Thermal Adaptation: A Theoretical and Empirical Synthesis. Oxford University Press, Oxford, UK, 304 pp. Gates, D.M. 2003. Biophysical Ecology. Courier Corporation, 656 pp.
 

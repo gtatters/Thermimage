@@ -1,9 +1,15 @@
 Estimating heat exchange from thermal images
 ================
 
-The purpose of this file is to provide an introduction to estimating heat exchange from animal-based thermal images using the R Package, Thermimage. It is assumed that the user has thermal imaging experience and has extracted thermal data from thermal images already, or has a means to bring thermal image data into R.
+The purpose of this file is to provide an introduction to estimating heat exchange from animal-based thermal images using the R Package, Thermimage.
+
+It is assumed that the user has thermal imaging experience and has extracted thermal data from thermal images already, or has a means to bring thermal image data into R.
 
 This package will not replace thermal image analysis software nor should it replace working knowledge of biophysical modelling, but it can help in automating some calculations associated with large datasets of thermal images.
+
+This help file assumes the user already has captured and analysed thermal images, like the following image, isolating surface temperatures for key regions of interests (ROI analysis).
+
+![Sample Thermal Image with Regions of Interest](HeatTransferCalculations_files/figure-markdown_github/FinchROI.png)
 
 ### Getting Started: Install Thermimage
 
@@ -14,7 +20,7 @@ library(devtools)
 install_github("gtatters/Thermimage")
 ```
 
-    ## Skipping install of 'Thermimage' from a github remote, the SHA1 (8b80b88b) has not changed since last install.
+    ## Skipping install of 'Thermimage' from a github remote, the SHA1 (ba27f5af) has not changed since last install.
     ##   Use `force = TRUE` to force installation
 
 This should download the most recent version of Thermimage from github repository and install it. Then simply type library(Thermimage) to call the functions into the working environment:
@@ -62,7 +68,9 @@ which yielded the following relationship:
 
 Tg = 0.0187128\*SE + Ta
 
-Alternatively, published work by Bartlett et al. (2006) in the Tground() function, found the following relationship: Tg = 0.0121\*SE + Ta
+Alternatively, published work by Bartlett et al. (2006) in the Tground() function, found the following relationship:
+
+Tg = 0.0121\*SE + Ta
 
 Incoming infrared radiation is modelled as deriving from two sources: sky (Ld) and ground (Lu). Half of the incoming is assumed to be from the sky and half from the ground. Sky radiation is influenced by cloud cover, cloud emissivity, and sky temperature, ground radiation is influenced by ground temperature. The two functions Ld() and Lu() estimate these sources of radiation.
 
@@ -75,8 +83,8 @@ It might be sufficient to model convection in low air flow conditions (&lt;=0.1 
 The shape is determined by the user, estimating the best approximation of sphere, cylinder, or plate.
 The convection parameters are highlighted in references contained in Thermimage, but can be found in Gates (2003) Biophysical Ecology.
 
-Make your Data frame
---------------------
+Assemble data into a data frame
+-------------------------------
 
 Once you have decided on what variables you have or need to model, create a data frame with these values (Ta, Ts, Tg, SE, A, L, Shape, rho), where each row corresponds toan individual measurement. The data frame is not required for calling functions, but it will force you to assemble your data and find missing values before proceeding with calculations.
 
@@ -107,12 +115,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.02570 27.74613 26.35269 357.6027 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 16.72592 21.63130 20.38349 302.2783 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 26.88396 31.57279 31.48044 379.8737 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 23.47769 28.26211 28.52824 417.4002 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 27.73302 33.52448 32.31613 378.7698 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 18.51558 23.84233 22.70885 346.5514 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 25.32012 30.61430 29.51546 346.7221 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 30.72967 35.53104 35.47736 392.3715 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 20.57663 25.20849 25.94505 443.6713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 28.71814 33.78483 33.77230 417.6990 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 22.05680 24.98733 25.51801 286.0500 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 34.63809 39.91382 38.83346 346.7254 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -160,9 +168,15 @@ If used comprehensively across the entire body's thermal image, component shapes
 
 ### Qtotal is made up of two components: qrad + qconv
 
-qrad is the net radiative heat flux (W/m2) qconv is the net convective heat flux (W/m2) conductive heat flux (W/m2), or qcond is often ignored unless a large contact area exists between substrate. Additional information is required to accurately calculate conductive heat exchange and are not provided here, since thermal imaging would not capture the temperature.
+qrad is the net radiative heat flux (W/m2).
 
-### What is qabs?
+qconv is the net convective heat flux (W/m2)
+
+conductive heat flux (W/m2), or qcond is often ignored unless a large contact area exists between substrate.
+
+Additional information is required to accurately calculate conductive heat exchange and are not provided here, since thermal imaging would not capture the temperature.
+
+### What is qabs()?
 
 qabs = absorbed radiation (W/m2). Radiation is both absorbed and emitted by animals. I have broken this down into partially separate functions.
 qabs() is a function to estimate the area specific amount of solar and infrared radiation absorbed by the object from the environment and requires information on the air (ambient) temperature, ground temperature, relative humidity, emissivity of the object, reflectivity of the object, proportion cloud cover, and solar energy.
@@ -181,7 +195,7 @@ qabs(Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 100)
 
     ## [1] 440.2954
 
-### What is qrad?
+### What is qrad()?
 
 qrad = net radiative heat flux (includes that absorbed and that emitted). Since the animal also emits radiation, qrad() provides the net radiative heat transfer. Here is an example, using the same parameters as the previous example, but calculating qrad based on a Ts=27 degrees C:
 
@@ -191,7 +205,7 @@ qrad(Ts = 27, Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE =
 
     ## [1] -1.486309
 
-Notice how the absorbed environmental radiation is ~440 W/m2, but the animal is also losing losing a similar amount, so once we account for the net radiative flux, it very nearly balances out at a slightly negative number (-1.486 W/m2)
+Notice how the absorbed environmental radiation is ~440 W/m2, but the animal is also losing a similar amount, so once we account for the net radiative flux, it very nearly balances out at a slightly negative number (-1.486 W/m2)
 
 ### How to include Ground temperature?
 
@@ -205,11 +219,11 @@ qrad(Ts = 30, Ta = 25, Tg = 28, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 1
 
 If you do not have ground temperature, but have measured Ta and SE, then set Tg=NULL. This will force a call to the Tground() function to estimate Tground. It is likely better to assume that Tground is slightly higher than Ta, at least in the daytime. If using measurements obtained at night (SE=0), then you will have to provide both Ta and Tground, since Tground could be colder equal to Ta depending on cloud cover.
 
-### What is hconv?
+### What is hconv()?
 
 This is simply the convective heat coefficient, which depends on wind speed and your modelled mode of convective heat exchange (free or forced). This is used in calculating the convective heat transfer and/or operative temperature but usually you will not need to call hconv() yourself
 
-### What is qconv?
+### What is qconv()?
 
 This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer. Positive values mean heat is gained by convection, negative values mean heat is lost by convection. Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed &gt;=0.1 m/s). Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s wind speed.
 
@@ -286,25 +300,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 246.0243 200.0090 272.6314 307.3204 264.6920 238.5929 295.0002
-    ##  [8] 334.2636 236.0399 229.3535 318.1278 370.2296 297.3898 336.4769
-    ## [15] 249.9122 269.0726 306.5518 313.0513 248.6041 357.6311
+    ##  [1] 237.9946 283.6241 332.9857 305.6661 195.5001 237.8103 332.4666
+    ##  [8] 336.0286 330.3487 303.4015 320.5512 307.8896 257.4890 251.2610
+    ## [15] 255.4668 374.8888 299.8315 379.0547 359.3154 345.8220
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -24.09662 -19.93820 -18.75259 -19.26029 -24.40980 -22.08045 -14.68306
-    ##  [8] -29.33060 -14.75422 -25.49350 -21.41345 -23.24172 -17.14120 -20.40791
-    ## [15] -28.46250 -22.67630 -22.60226 -30.03504 -16.41568 -18.82240
+    ##  [1] -21.84074 -19.28763 -18.52121 -20.64489 -10.44351 -21.66838 -21.35778
+    ##  [8] -13.25295 -22.06062 -12.36287 -26.06066  -6.84959 -24.89307 -16.34760
+    ## [15] -14.40102 -13.51798 -25.10000 -16.96329 -19.91804 -20.48968
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -58.57989 -50.56520 -47.74761 -48.91068 -58.92066 -54.78365 -39.20607
-    ##  [8] -69.13915 -39.74152 -61.37508 -52.97538 -56.12050 -44.54997 -51.12053
-    ## [15] -66.27464 -55.51699 -56.00752 -70.21870 -42.61920 -48.11680
+    ##  [1] -54.00695 -48.69068 -47.51546 -51.49163 -30.00889 -53.28769 -52.95391
+    ##  [8] -36.51496 -54.40142 -34.10044 -61.81819 -21.42829 -59.65628 -42.96470
+    ## [15] -38.70212 -37.11602 -60.23518 -44.84175 -51.03215 -51.27342
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -314,19 +328,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.02570 27.74613 26.35269 357.6027 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 16.72592 21.63130 20.38349 302.2783 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 26.88396 31.57279 31.48044 379.8737 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 23.47769 28.26211 28.52824 417.4002 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 27.73302 33.52448 32.31613 378.7698 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 18.51558 23.84233 22.70885 346.5514 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 25.32012 30.61430 29.51546 346.7221 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 30.72967 35.53104 35.47736 392.3715 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 20.57663 25.20849 25.94505 443.6713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 28.71814 33.78483 33.77230 417.6990 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 22.05680 24.98733 25.51801 286.0500 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 34.63809 39.91382 38.83346 346.7254 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder  98.40970 -23.43196  74.97774
-    ## 2 1 0.58 0.25 forced hcylinder  80.00360 -20.22608  59.77752
-    ## 3 1 0.58 0.25 forced hcylinder 109.05255 -19.09904  89.95351
-    ## 4 1 0.58 0.25 forced hcylinder 122.92817 -19.56427 103.36390
-    ## 5 1 0.58 0.25 forced hcylinder 105.87680 -23.56826  82.30853
-    ## 6 1 0.58 0.25 forced hcylinder  95.43715 -21.91346  73.52369
+    ## 1 1 0.58 0.25 forced hcylinder  95.19784 -21.60278  73.59506
+    ## 2 1 0.58 0.25 forced hcylinder 113.44962 -19.47627  93.97335
+    ## 3 1 0.58 0.25 forced hcylinder 133.19427 -19.00619 114.18809
+    ## 4 1 0.58 0.25 forced hcylinder 122.26646 -20.59665 101.66980
+    ## 5 1 0.58 0.25 forced hcylinder  78.20005 -12.00356  66.19649
+    ## 6 1 0.58 0.25 forced hcylinder  95.12413 -21.31508  73.80905
 
 ### Test the equations out for consistency
 
@@ -351,7 +365,7 @@ shape="hcylinder"
 
     ## [1] -37.90549
 
-compare to calculated value of -28.7 W/m2 the R calculations differ slightly from Tattersall et al (2009) since they did not use estimates of longwave radiation (Ld and Lu), but instead assumed a simpler, constant Ta environment.
+compare to calculated value of -28.7 W/m2 the R calculations differ slightly from Tattersall et al (2009) since they did not use estimates of longwave radiation (Ld and Lu), but instead assumed a simpler, constant Ta.
 
 ``` r
 (qrad.A<-qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=RH, E=E, rho=rho, cloud=0, SE=SE))
@@ -359,7 +373,7 @@ compare to calculated value of -28.7 W/m2 the R calculations differ slightly fro
 
     ## [1] -83.03191
 
-but if cloud = 0, then the qrad values calculated here are much higher than calculated by Tattersall et al (2009) since they only estimated under simplifying, indoor conditions where background temperature = air temperature. In the outdoors, then, cloud presence would affect estimates of radiative heat loss
+but if cloud = 0, then the qrad values calculated here are much higher than calculated by Tattersall et al (2009) since they only estimated under simplifying, indoor conditions where background temperature = air temperature. In the outdoors, then, cloud presence would affect estimates of radiative heat loss.
 
 ``` r
 (qconv.forced.A<-qconv(Ts, Ta, V, L, type=type, shape=shape))
@@ -400,10 +414,11 @@ Operative environmental temperature is the expression of the "effective temperat
 
 In other words, it is often used by some when trying to predict animal body temperature as a null expectation or reference point to determine whether active thermoregulation is being used. More often used in ectotherm studies, but as an initial estimate of what a freely moving animal temperature would be, it serves a useful reference.
 
-Usually, people would measure operative temperature with a model of an object placed into the environment, allowing wind, solar radiation and ambient temperature to influence its temperature. There are numerous formulations for it. The one here is from in Angilletta's book on Thermal Adaptations. Note: in the absence of sun or wind, operative temperature is simply ambient temperature.
+Usually, people would measure operative temperature with a model of an object placed into the environment, allowing wind, solar radiation and ambient temperature to influence its temperature. There are numerous formulations for it. The one here is from Angilletta's book on Thermal Adaptations, and requires measurements of air temperature, ground temperature, SE, wind speed, relative humidity, emissivity, reflectance, cloud cover, and object shape and size.
 
-Model operative temperature with varying reflectances:
-------------------------------------------------------
+Note: in the absence of sun or wind, operative temperature is simply ambient temperature.
+
+### Model operative temperature with varying reflectances
 
 ``` r
 Ts<-40
@@ -436,8 +451,7 @@ for(i in 2:12){
 
 ![](HeatTransferCalculations_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
-Model operative temperature with varying wind speeds
-====================================================
+### Model operative temperature with varying wind speeds
 
 ``` r
 Ts<-40
@@ -472,8 +486,7 @@ for(i in 2:12){
 
 ![](HeatTransferCalculations_files/figure-markdown_github/unnamed-chunk-21-1.png)
 
-Operative temperature with varying RH
-=====================================
+### Model operative temperature with varying RH
 
 ``` r
 Ts<-40
@@ -506,8 +519,7 @@ for(i in 2:3){
 
 ![](HeatTransferCalculations_files/figure-markdown_github/unnamed-chunk-22-1.png)
 
-Operative temperature with varying cloud cover
-==============================================
+### Model operative temperature with varying cloud cover
 
 ``` r
 Ts<-40
@@ -540,8 +552,7 @@ for(i in 2:12){
 
 ![](HeatTransferCalculations_files/figure-markdown_github/unnamed-chunk-23-1.png)
 
-References
-----------
+### References
 
 Angiletta, M. J. 2009. Thermal Adaptation: A Theoretical and Empirical Synthesis. Oxford University Press, Oxford, UK, 304 pp. Gates, D.M. 2003. Biophysical Ecology. Courier Corporation, 656 pp.
 
