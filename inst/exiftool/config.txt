@@ -1,0 +1,44 @@
+# The %Image::ExifTool::UserDefined hash defines new tags to be added to existing tables.
+%Image::ExifTool::UserDefined = (
+  
+  'Image::ExifTool::FLIR::FFF' => {
+    0x15 => {
+      Name => 'CompressedBurst',
+      SubDirectory => { TagTable => 'Image::ExifTool::FLIR::CompressedBurst' },
+    },
+  },
+  
+);   
+
+# define new table
+%Image::ExifTool::FLIR::CompressedBurst = (
+  GROUPS => { 0 => 'APP1', 2 => 'Image' },
+  PROCESS_PROC => \&Image::ExifTool::ProcessBinaryData,
+  FIRST_ENTRY => 0,
+  NOTES => q{
+    16 RAW frames of CompressedBurst - 1 second
+  },
+  0x00 => {
+    # use this tag only to determine the byte order
+    # (the value should be 0x0003 if the byte order is correct)
+    Name => 'CameraInfoByteOrder',
+    Format => 'int16u',
+    Hidden => 1,
+    RawConv => 'ToggleByteOrder() if $val >= 0x0100; undef',
+  },
+  0x02 => {
+    Name => 'EmbeddedImageWidth',
+    Format => 'int16u',
+  },
+  0x04 => {
+    Name => 'EmbeddedImageHeight',
+    Format => 'int16u',
+  },
+  0x20 => {
+    Name => 'CompressedBurst',
+    Format => 'undef[$size-0x20]',
+    Notes => 'unknown format',
+    Binary => 1,
+  },
+  
+);
