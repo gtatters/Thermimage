@@ -71,7 +71,7 @@ The version here on github is the current, development version.  Archived source
 * Suggests: ggplot2, fields, reshape
 
 ## OS Requirements
-
+* Thermimage was developed on OSX, and works well on Linux.  Many features in Windows will require installation of command line tools that may or may not work as effectively.  The internal R functions should operate fine in Windows.
 * Exiftool is required for certain functions.  Installation instructions can be found here: http://www.sno.phy.queensu.ca/~phil/exiftool/install.html
 * Imagemagick is required for certain functions.  Installation instructions can be found here: https://www.imagemagick.org/script/download.php
 * Perl is required for certain functions.  Installation instructions can be found here: https://www.perl.org/get.html
@@ -374,6 +374,10 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
+Here is a sample image:
+
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true)
+The above PNG file is a sample image of the 16 bit grayscale image.  Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.  
 
 
 # Convert FLIR SEQ or CSQ from R 
@@ -410,6 +414,9 @@ Converted files are in output folder:
 cd ~/Desktop/SampleFLIR
 ls output/
 ```
+
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true)
+The above PNG file is a sample image of the 16 bit grayscale image.  Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.  
 
 
 
@@ -808,4 +815,11 @@ Tattersall, GJ, Andrade, DV, and Abe, AS. 2009. Heat exchange from the toucan bi
 
 Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finches. Functional Ecology 2017; 00:1–11. https://doi.org/10.1111/1365-2435.12990
 
+### Online Resources
 
+The following brilliant, open source programs and programmers were critical to the development of Thermimage.
+
+Exiftool: http://www.sno.phy.queensu.ca/~phil/exiftool/ 
+Imagemagick: http://imagemagick.org
+Perl: http://www.perl.org
+EEVBlog: 

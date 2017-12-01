@@ -68,6 +68,7 @@ Package Imports
 OS Requirements
 ---------------
 
+-   Thermimage was developed on OSX, and works well on Linux. Many features in Windows will require installation of command line tools that may or may not work as effectively. The internal R functions should operate fine in Windows.
 -   Exiftool is required for certain functions. Installation instructions can be found here: <http://www.sno.phy.queensu.ca/~phil/exiftool/install.html>
 -   Imagemagick is required for certain functions. Installation instructions can be found here: <https://www.imagemagick.org/script/download.php>
 -   Perl is required for certain functions. Installation instructions can be found here: <https://www.perl.org/get.html>
@@ -146,7 +147,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2017-12-01 11:35:14"
-    ## FileAccessDateTime       "2017-12-01 12:59:32"
+    ## FileAccessDateTime       "2017-12-01 13:17:09"
     ## FileInodeChangeDateTime  "2017-12-01 11:35:15"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -514,8 +515,23 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
+    ## CSQconverted.avi
+    ## JPGconverted.png
+    ## SEQconvertedjpegls.avi
+    ## SEQconvertedpng.avi
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
+
+Here is a sample image:
+
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 Convert FLIR SEQ or CSQ from R
 ==============================
@@ -557,8 +573,21 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
+    ## CSQconverted.avi
+    ## JPGconverted.png
+    ## SEQconvertedjpegls.avi
+    ## SEQconvertedpng.avi
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
+
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 Heat Transfer Calculations
 ==========================
@@ -651,12 +680,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 14.46796 20.89132 18.13876 303.3724 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.77203 26.05113 26.00032 349.4458 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 17.60031 23.33818 22.75212 425.7688 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 28.53920 34.08579 32.64228 339.0975 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 13.32995 20.61276 18.46915 424.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 25.63119 31.97365 30.05868 365.9088 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 32.88071 40.11765 37.58711 388.9591 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 37.59971 42.82464 41.76449 344.1969 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 25.81818 28.98196 31.24895 448.8235 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 31.42296 37.24285 36.73100 438.6810 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 25.04981 30.42098 30.26429 430.9488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 30.30080 34.45989 35.31993 414.8045 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -836,26 +865,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 193.1502 246.9111 310.3403 229.0187 301.8119 249.4655 366.7534
-    ##  [8] 307.7831 308.0587 320.9585 301.5476 328.6532 354.7001 246.9499
-    ## [15] 385.3943 277.5181 318.4811 236.7149 239.0880 345.8917
+    ##  [1] 264.3932 235.9525 346.4254 320.4796 316.3473 308.7284 290.8311
+    ##  [8] 261.7987 304.2518 246.9924 265.4691 353.9086 301.9376 253.7511
+    ## [15] 160.7977 342.2793 247.7241 280.3178 278.7136 273.1519
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -27.964059 -16.765406 -24.242548 -23.119126 -32.738758 -27.370533
-    ##  [7] -21.559651 -19.554413 -19.160239  -9.640023 -26.271329 -22.574263
-    ## [13] -14.754215 -24.894195 -14.209643 -25.425699 -26.129838 -32.514264
-    ## [19] -24.975634 -20.222140
+    ##  [1] -32.18681 -21.38774 -11.47315 -24.52471 -22.24117 -16.12095 -19.06763
+    ##  [8] -12.17610 -16.66963 -20.76470 -21.94062 -21.69859 -23.79326 -20.60338
+    ## [15] -15.77220 -17.57461 -36.11737 -17.15129 -21.26260 -25.56062
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -66.40932 -43.83336 -59.08029 -56.37978 -75.41044 -64.67787 -52.79238
-    ##  [8] -49.13556 -47.84541 -27.84546 -63.46017 -55.74429 -39.95071 -59.30160
-    ## [15] -39.42200 -60.78779 -62.64326 -73.54045 -61.24771 -50.92833
+    ##  [1] -73.22645 -52.62277 -32.25606 -58.97658 -54.80936 -42.19642 -48.65956
+    ##  [8] -33.92249 -43.98767 -51.72806 -54.10444 -53.81874 -57.30559 -51.32688
+    ## [15] -41.60503 -45.05141 -81.38467 -44.69202 -52.72151 -61.08165
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -865,19 +893,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 14.46796 20.89132 18.13876 303.3724 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.77203 26.05113 26.00032 349.4458 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 17.60031 23.33818 22.75212 425.7688 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 28.53920 34.08579 32.64228 339.0975 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 13.32995 20.61276 18.46915 424.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 25.63119 31.97365 30.05868 365.9088 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 32.88071 40.11765 37.58711 388.9591 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 37.59971 42.82464 41.76449 344.1969 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 25.81818 28.98196 31.24895 448.8235 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 31.42296 37.24285 36.73100 438.6810 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 25.04981 30.42098 30.26429 430.9488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 30.30080 34.45989 35.31993 414.8045 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder  77.26010 -26.56373  50.69637
-    ## 2 1 0.58 0.25 forced hcylinder  98.76444 -17.53334  81.23110
-    ## 3 1 0.58 0.25 forced hcylinder 124.13614 -23.63212 100.50402
-    ## 4 1 0.58 0.25 forced hcylinder  91.60750 -22.55191  69.05558
-    ## 5 1 0.58 0.25 forced hcylinder 120.72475 -30.16417  90.56058
-    ## 6 1 0.58 0.25 forced hcylinder  99.78619 -25.87115  73.91504
+    ## 1 1 0.58 0.25 forced hcylinder 105.75728 -29.29058  76.46670
+    ## 2 1 0.58 0.25 forced hcylinder  94.38098 -21.04911  73.33188
+    ## 3 1 0.58 0.25 forced hcylinder 138.57017 -12.90243 125.66774
+    ## 4 1 0.58 0.25 forced hcylinder 128.19182 -23.59063 104.60119
+    ## 5 1 0.58 0.25 forced hcylinder 126.53894 -21.92375 104.61519
+    ## 6 1 0.58 0.25 forced hcylinder 123.49135 -16.87857 106.61278
 
 ### Test the equations out for consistency
 
@@ -1100,3 +1128,9 @@ Gates, DM. 2003. Biophysical Ecology. Dover Publications, Mineola, New York, 611
 Tattersall, GJ, Andrade, DV, and Abe, AS. 2009. Heat exchange from the toucan bill reveals a controllable vascular thermal radiator. Science, 325: 468-470.
 
 Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finches. Functional Ecology 2017; 00:1–11. <https://doi.org/10.1111/1365-2435.12990>
+
+### Online Resources
+
+The following brilliant, open source programs and programmers were critical to the development of Thermimage.
+
+Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/> Imagemagick: <http://imagemagick.org> Perl: <http://www.perl.org> EEVBlog:

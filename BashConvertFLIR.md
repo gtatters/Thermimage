@@ -61,13 +61,15 @@ perl -f ~/Desktop/perl/split_jpegls.pl temp/thermalvid.raw
 ls temp/*.jpegls
 echo
 
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 CSQconverted.avi -y
+cd ~/Desktop/SampleFLIR
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 output/CSQconverted.avi -y
 echo
 
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 frame%05d.png -y
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 output/frame%05d.png -y
 
-ls *.avi
-ls *.png
+ls output/*.avi
+ls output/*.png
+cd ~/Desktop
 rm -r temp
 ```
 
@@ -124,7 +126,7 @@ rm -r temp
     ##   Stream #0:0 -> #0:0 (jpegls (native) -> jpegls (native))
     ## Press [q] to stop, [?] for help
     ## Incompatible pixel format 'gray16be' for codec 'jpegls', auto-selecting format 'gray16le'
-    ## Output #0, avi, to 'CSQconverted.avi':
+    ## Output #0, avi, to 'output/CSQconverted.avi':
     ##   Metadata:
     ##     ISFT            : Lavf57.83.100
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
@@ -151,22 +153,27 @@ rm -r temp
     ## Stream mapping:
     ##   Stream #0:0 -> #0:0 (jpegls (native) -> png (native))
     ## Press [q] to stop, [?] for help
-    ## Output #0, image2, to 'frame%05d.png':
+    ## Output #0, image2, to 'output/frame%05d.png':
     ##   Metadata:
     ##     encoder         : Lavf57.83.100
     ##     Stream #0:0: Video: png, gray16be, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.714x    
+    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.743x    
     ## video:4758kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
-    ## CSQconverted.avi
-    ## frame00001.png
-    ## frame00002.png
-    ## frame00003.png
-    ## frame00004.png
-    ## frame00005.png
-    ## frame00006.png
-    ## frame00007.png
+    ## output/CSQconverted.avi
+    ## output/SEQconvertedjpegls.avi
+    ## output/SEQconvertedpng.avi
+    ## output/SampleFLIR.csq.avi
+    ## output/JPGconverted.png
+    ## output/SampleFLIR.png
+    ## output/frame00001.png
+    ## output/frame00002.png
+    ## output/frame00003.png
+    ## output/frame00004.png
+    ## output/frame00005.png
+    ## output/frame00006.png
+    ## output/frame00007.png
 
 Which produces the following output:
 
@@ -201,12 +208,13 @@ perl -f ~/Desktop/perl/split_tiff.pl < temp/thermalvid.raw
 ls temp/*.tiff
 echo
 
-
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 SEQconvertedjpegls.avi -y
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 SEQconvertedpng.avi -y
+cd ~/Desktop/SampleFLIR
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 output/SEQconvertedjpegls.avi -y
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 output/SEQconvertedpng.avi -y
 echo
 
-ls *.avi
+ls output/*.avi
+cd ~/Desktop
 rm -r temp
 ```
 
@@ -289,13 +297,13 @@ rm -r temp
     ##   Stream #0:0 -> #0:0 (tiff (native) -> jpegls (native))
     ## Press [q] to stop, [?] for help
     ## Incompatible pixel format 'gray16be' for codec 'jpegls', auto-selecting format 'gray16le'
-    ## Output #0, avi, to 'SEQconvertedjpegls.avi':
+    ## Output #0, avi, to 'output/SEQconvertedjpegls.avi':
     ##   Metadata:
     ##     ISFT            : Lavf57.83.100
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 jpegls
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.8x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.5x    
     ## video:5757kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.109466%
     ## ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
     ##   built with Apple LLVM version 9.0.0 (clang-900.0.38)
@@ -315,18 +323,19 @@ rm -r temp
     ## Stream mapping:
     ##   Stream #0:0 -> #0:0 (tiff (native) -> png (native))
     ## Press [q] to stop, [?] for help
-    ## Output #0, avi, to 'SEQconvertedpng.avi':
+    ## Output #0, avi, to 'output/SEQconvertedpng.avi':
     ##   Metadata:
     ##     ISFT            : Lavf57.83.100
     ##     Stream #0:0: Video: png (MPNG / 0x474E504D), gray16be, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=3.98x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=4.05x    
     ## video:10025kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.062800%
     ## 
-    ## CSQconverted.avi
-    ## SEQconvertedjpegls.avi
-    ## SEQconvertedpng.avi
+    ## output/CSQconverted.avi
+    ## output/SEQconvertedjpegls.avi
+    ## output/SEQconvertedpng.avi
+    ## output/SampleFLIR.csq.avi
 
 Which produces the following output:
 
@@ -342,8 +351,8 @@ Note: the above avi should open up in VLC player, but may or may not play proper
 4.  Use exiftool to extract calibration constants from file (for use in converting raw values)
 
 ``` bash
-cd ~/Desktop
-exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- JPGconverted.png
+cd ~/Desktop/SampleFLIR
+exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- output/JPGconverted.png
 
 exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
 ```

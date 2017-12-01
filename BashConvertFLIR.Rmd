@@ -59,13 +59,15 @@ perl -f ~/Desktop/perl/split_jpegls.pl temp/thermalvid.raw
 ls temp/*.jpegls
 echo
 
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 CSQconverted.avi -y
+cd ~/Desktop/SampleFLIR
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 output/CSQconverted.avi -y
 echo
 
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 frame%05d.png -y
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 output/frame%05d.png -y
 
-ls *.avi
-ls *.png
+ls output/*.avi
+ls output/*.png
+cd ~/Desktop
 rm -r temp
 ```
 
@@ -106,12 +108,13 @@ perl -f ~/Desktop/perl/split_tiff.pl < temp/thermalvid.raw
 ls temp/*.tiff
 echo
 
-
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 SEQconvertedjpegls.avi -y
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 SEQconvertedpng.avi -y
+cd ~/Desktop/SampleFLIR
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 output/SEQconvertedjpegls.avi -y
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 output/SEQconvertedpng.avi -y
 echo
 
-ls *.avi
+ls output/*.avi
+cd ~/Desktop
 rm -r temp
 ```
 
@@ -131,8 +134,8 @@ Note: the above avi should open up in VLC player, but may or may not play proper
 4. Use exiftool to extract calibration constants from file (for use in converting raw values)
 
 ```{bash}
-cd ~/Desktop
-exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- JPGconverted.png
+cd ~/Desktop/SampleFLIR
+exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- output/JPGconverted.png
 
 exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
 ```
