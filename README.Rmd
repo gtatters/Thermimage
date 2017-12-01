@@ -377,6 +377,7 @@ ls output/
 Here is a sample image:
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true)
+
 The above PNG file is a sample image of the 16 bit grayscale image.  Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.  
 
 
