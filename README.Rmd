@@ -827,3 +827,9 @@ Imagemagick: http://imagemagick.org
 Perl: http://www.perl.org
 
 EEVBlog: 
+
+* raw to temperatre conversion: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135
+
+* magicbyte import: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0
+
+* fileformat: https://www.eevblog.com/forum/thermal-imaging/csq-file-format/

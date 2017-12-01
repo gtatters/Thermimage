@@ -147,7 +147,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2017-12-01 11:35:14"
-    ## FileAccessDateTime       "2017-12-01 13:17:09"
+    ## FileAccessDateTime       "2017-12-01 13:29:18"
     ## FileInodeChangeDateTime  "2017-12-01 11:35:15"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -531,7 +531,9 @@ ls output/
 
 Here is a sample image:
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true)
+
+The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 Convert FLIR SEQ or CSQ from R
 ==============================
@@ -680,12 +682,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 32.88071 40.11765 37.58711 388.9591 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 37.59971 42.82464 41.76449 344.1969 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 25.81818 28.98196 31.24895 448.8235 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 31.42296 37.24285 36.73100 438.6810 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 25.04981 30.42098 30.26429 430.9488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 30.30080 34.45989 35.31993 414.8045 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 26.53515 32.21741 31.56718 415.8703 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 24.83735 29.07616 29.25728 365.2834 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 29.81995 36.98651 34.45698 383.2257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 39.15531 45.48292 44.78985 465.6647 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.25664 28.18716 28.05683 396.7093 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 17.36897 24.43835 22.07783 389.1620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -865,25 +867,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 264.3932 235.9525 346.4254 320.4796 316.3473 308.7284 290.8311
-    ##  [8] 261.7987 304.2518 246.9924 265.4691 353.9086 301.9376 253.7511
-    ## [15] 160.7977 342.2793 247.7241 280.3178 278.7136 273.1519
+    ##  [1] 300.2082 261.7797 259.8500 342.6487 287.1202 268.6427 368.4222
+    ##  [8] 243.7404 243.8357 260.6119 240.2403 227.4058 258.0255 289.6934
+    ## [15] 347.8022 347.8765 291.8119 405.4454 285.7740 268.4792
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -32.18681 -21.38774 -11.47315 -24.52471 -22.24117 -16.12095 -19.06763
-    ##  [8] -12.17610 -16.66963 -20.76470 -21.94062 -21.69859 -23.79326 -20.60338
-    ## [15] -15.77220 -17.57461 -36.11737 -17.15129 -21.26260 -25.56062
+    ##  [1] -23.84766 -16.54495 -31.83172 -27.15900 -20.00027 -31.47171 -22.93015
+    ##  [8] -16.36841 -25.57019 -26.08728 -18.17514 -11.96922 -12.17069 -19.05366
+    ## [15] -18.45439 -18.31861 -24.13031 -20.59871 -17.88973 -18.21988
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -73.22645 -52.62277 -32.25606 -58.97658 -54.80936 -42.19642 -48.65956
-    ##  [8] -33.92249 -43.98767 -51.72806 -54.10444 -53.81874 -57.30559 -51.32688
-    ## [15] -41.60503 -45.05141 -81.38467 -44.69202 -52.72151 -61.08165
+    ##  [1] -57.88652 -43.26475 -72.74608 -63.63512 -50.41729 -72.81176 -56.00521
+    ##  [8] -42.81332 -60.83357 -62.59783 -46.62765 -33.64866 -33.45821 -48.76055
+    ## [15] -47.34342 -46.64788 -57.97575 -51.86550 -46.10134 -47.02518
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -893,19 +895,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 32.88071 40.11765 37.58711 388.9591 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 37.59971 42.82464 41.76449 344.1969 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 25.81818 28.98196 31.24895 448.8235 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 31.42296 37.24285 36.73100 438.6810 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 25.04981 30.42098 30.26429 430.9488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 30.30080 34.45989 35.31993 414.8045 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 105.75728 -29.29058  76.46670
-    ## 2 1 0.58 0.25 forced hcylinder  94.38098 -21.04911  73.33188
-    ## 3 1 0.58 0.25 forced hcylinder 138.57017 -12.90243 125.66774
-    ## 4 1 0.58 0.25 forced hcylinder 128.19182 -23.59063 104.60119
-    ## 5 1 0.58 0.25 forced hcylinder 126.53894 -21.92375 104.61519
-    ## 6 1 0.58 0.25 forced hcylinder 123.49135 -16.87857 106.61278
+    ## 1 26.53515 32.21741 31.56718 415.8703 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 24.83735 29.07616 29.25728 365.2834 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 29.81995 36.98651 34.45698 383.2257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 39.15531 45.48292 44.78985 465.6647 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.25664 28.18716 28.05683 396.7093 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 17.36897 24.43835 22.07783 389.1620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 120.0833 -23.15461  96.92868
+    ## 2 1 0.58 0.25 forced hcylinder 104.7119 -17.30590  87.40598
+    ## 3 1 0.58 0.25 forced hcylinder 103.9400 -29.09843  74.84158
+    ## 4 1 0.58 0.25 forced hcylinder 137.0595 -25.45405 111.60542
+    ## 5 1 0.58 0.25 forced hcylinder 114.8481 -20.16692  94.68117
+    ## 6 1 0.58 0.25 forced hcylinder 107.4571 -29.12470  78.33236
 
 ### Test the equations out for consistency
 
@@ -1131,6 +1133,18 @@ Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finche
 
 ### Online Resources
 
-The following brilliant, open source programs and programmers were critical to the development of Thermimage.
+The following open source programs and programmers were critical to the development of Thermimage.
 
-Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/> Imagemagick: <http://imagemagick.org> Perl: <http://www.perl.org> EEVBlog:
+Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
+
+Imagemagick: <http://imagemagick.org>
+
+Perl: <http://www.perl.org>
+
+EEVBlog:
+
+-   raw to temperatre conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
+
+-   magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
+
+-   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
