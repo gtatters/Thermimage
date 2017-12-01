@@ -76,7 +76,7 @@ library("devtools"); install_github("gtatters/Thermimage",dependencies=TRUE)
 
 ![Galapagos Night Heron](https://github.com/gtatters/Thermimage/blob/master/inst/extdata/IR_2412.jpg?raw=true)
 
-Normally, these thermal images require access to software that only runs on Windows operating system.  This package will allow you to import certain FLIR jpgs and videos and process the images.
+Normally, these thermal images require access to software that only runs on Windows operating system.  This package will allow you to import certain FLIR jpgs and videos and process the images in R, and thus is platform independent.
 
 ## Import FLIR JPG
 
@@ -356,6 +356,68 @@ The newly written 32-bit video file (https://github.com/gtatters/Thermimage/blob
 
 
 
+
+
+# Convert FLIR JPG from R 
+
+```
+library(Thermimage)
+setwd("~/Desktop/input")
+exiftoolpath <- "installed"
+
+l.files<-list.files(pattern=".jpg", recursive=T, full.names=F, include.dirs=T, no..=T)
+l.files
+
+# if JPG contains raw thermal image as TIFF, endian = "lsb"
+# if JPG contains raw thermal image as PNG, endian = "msb"?
+
+for(f in l.files){
+  imagefile<-f
+  vals<-flirsettings(imagefile)
+  w<-vals$Info$ImageWidth
+  h<-vals$Info$ImageHeight
+  res.in<-paste0(w,"x",h)
+  
+  if(vals$Info$RawThermalImageType=="PNG") endian="msb"
+  if(vals$Info$RawThermalImageType=="TIFF") endian="lsb"
+  
+  convertflirJPG(imagefile, exiftoolpath="installed", res.in=res.in, endian=endian, outputfolder="output")
+  cat("\n")
+}
+```
+
+
+# Convert FLIR SEQ or CSQ from R 
+
+```
+library(Thermimage)
+setwd("~/Desktop/input")
+exiftoolpath <- "installed"
+perlpath <- "installed"
+
+# Convert CSQ and SEQ
+l.files<-list.files(pattern=".csq", recursive=F, full.names=F, include.dirs=T, no..=T)
+l.files
+
+
+# if JPG contains raw thermal image as TIFF, endian = "lsb"
+# if JPG contains raw thermal image as PNG,  endian = "msb"
+for(f in l.files){
+  imagefile<-f
+  vals<-flirsettings(imagefile)
+  w<-vals$Info$RawThermalImageWidth
+  h<-vals$Info$RawThermalImageHeight
+  res.in<-paste0(w,"x",h)
+  info<-convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed", 
+                       fr=30, res.in=res.in, res.out=res.in, outputcompresstype="jpegls", outputfilenameroot=NULL,
+                       outputfiletype="avi", outputfolder="output")
+}
+```
+
+
+
+
+
 # Heat Transfer Calculations
 
 The other functions in Thermimage relate to steady state modelling of heat exchange using surface temperatures extracted from thermal images.  Provided below are basic steps and other information that is required to make use of the heat transfer calculations.  References for these calculations are found within the Thermimage package.
@@ -411,15 +473,7 @@ rho<-rep(0.1, length(Ta))
 cloud<-rep(0, length(Ta))
 
 d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shape)
-head(d)
 
->          Ta        Ts       Tg       SE  RH rho cloud   A V   L     c     n a    b    m   type     shape
-> 1 28.322047 34.426894 32.67210 359.5081 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
-> 2 19.295451 23.458105 23.72816 366.3394 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
-> 3 23.640834 26.932211 28.29766 384.8615 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
-> 4  6.971665  8.822035 12.14272 427.3600 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
-> 5 32.594745 39.277282 38.40423 480.1226 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
-> 6 22.613530 28.058783 27.91851 438.4282 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1 0.58 0.25 forced hcylinder
 ```
 
 ## Applying the heat transfer calculations

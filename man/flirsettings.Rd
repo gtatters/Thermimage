@@ -50,9 +50,43 @@ Requires Exiftool be installed.  see http://www.sno.phy.queensu.ca/~phil/exiftoo
 }
 
 \examples{
+\dontrun{
+## To access meta-tag information from a flir jpg or flir file:
 
-# Example Use
-# See https://github.com/gtatters/FLIRJPGConvert/blob/master/Examples.R
+## Example using the flirsettings functions:
+
+library(Thermimage)
+## Sample flir jpg included with Thermimage package:
+
+imagefile<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
+
+## Extract meta-tags from thermal image file ##
+cams<-flirsettings(imagefile, exiftool="installed", camvals="")
+cams
+
+## Set variables for calculation of temperature values from raw A/D sensor data
+Emissivity<-cams$Info$Emissivity      # Image Saved Emissivity - should be ~0.95 or 0.96
+ObjectEmissivity<-0.96                # Object Emissivity - should be ~0.95 or 0.96
+dateOriginal<-cams$Dates$DateTimeOriginal
+dateModif<-   cams$Dates$FileModificationDateTime
+PlanckR1<-    cams$Info$PlanckR1                      # Planck R1 constant for camera  
+PlanckB<-     cams$Info$PlanckB                       # Planck B constant for camera  
+PlanckF<-     cams$Info$PlanckF                       # Planck F constant for camera
+PlanckO<-     cams$Info$PlanckO                       # Planck O constant for camera
+PlanckR2<-    cams$Info$PlanckR2                      # Planck R2 constant for camera
+OD<-          cams$Info$ObjectDistance                # object distance in metres
+FD<-          cams$Info$FocusDistance                 # focus distance in metres
+ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature
+AtmosT<-      cams$Info$AtmosphericTemperature        # Atmospheric temperature
+IRWinT<-      cams$Info$IRWindowTemperature           # IR Window Temperature
+IRWinTran<-   cams$Info$IRWindowTransmission          # IR Window transparency
+RH<-          cams$Info$RelativeHumidity              # Relative Humidity
+h<-           cams$Info$RawThermalImageHeight         # sensor height (i.e. image height)
+w<-           cams$Info$RawThermalImageWidth          # sensor width (i.e. image width)
+
+## See also https://github.com/gtatters/Thermimage/README.md
+}
+
 
 }
 
