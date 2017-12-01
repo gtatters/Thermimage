@@ -4,3 +4,6 @@
 .Rhistory
 .RData
 .Rbuildignore
+^HeatTransferCalculations.Rmd
+^heatcalc.pdf
+^healcalc.R
