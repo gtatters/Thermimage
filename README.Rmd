@@ -1,3 +1,4 @@
+
 ---
 title: "Thermimage: Thermal Image Analysis"
 output: github_document
@@ -7,8 +8,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true)
 
+![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true)
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage)
 [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage)
 [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)

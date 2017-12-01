@@ -1,9 +1,7 @@
 Thermimage: Thermal Image Analysis
 ================
 
-[](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png)
-
-[![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage)
+![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage)
 
 A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
 
@@ -149,7 +147,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2017-12-01 16:00:29"
-    ## FileAccessDateTime       "2017-12-01 16:09:23"
+    ## FileAccessDateTime       "2017-12-01 16:27:59"
     ## FileInodeChangeDateTime  "2017-12-01 16:00:30"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -434,7 +432,9 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 
 ![](README_files/figure-markdown_github/unnamed-chunk-23-2.png)
 
-These files can be found: <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ2.png?raw=true>
+These files can be found:
+
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ2.png?raw=true>
 
 Now, export entire sequence to a raw bin for opening in ImageJ - smallish file size
 
@@ -474,24 +474,9 @@ cd ~/Desktop/perl
 ls
 ```
 
-    ## bash: line 0: cd: /Users/GlennTattersall/Desktop/perl: No such file or directory
-    ## BashConvertFLIR.Rmd
-    ## BashConvertFLIR.md
-    ## DESCRIPTION
-    ## HeatTransferCalculations.Rmd
-    ## HeatTransferCalculations.md
-    ## HeatTransferCalculations_files
-    ## NAMESPACE
-    ## R
-    ## README.Rmd
-    ## README.md
-    ## README_files
-    ## Thermimage.Rproj
-    ## Thermimage.pdf
-    ## Uploads
-    ## data
-    ## inst
-    ## man
+    ## split_fff.pl
+    ## split_jpegls.pl
+    ## split_tiff.pl
 
 Bulk convert all FLIR jpg files found in folder:
 
@@ -677,12 +662,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 25.32134 30.28545 30.26575 408.6288 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.23982 26.56581 26.41298 427.5339 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.28392 24.15555 25.34833 418.5462 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 14.08612 19.75826 18.37150 354.1634 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.67920 28.29131 28.43761 393.2574 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 22.65473 27.17275 26.62510 328.1300 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 35.22123 40.41571 38.86538 301.1694 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.54350 28.04588 27.80293 352.0192 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 35.63933 39.11100 40.97617 441.0614 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 15.93577 21.82243 21.48928 458.9675 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 42.06648 45.86698 46.73773 386.0539 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 24.15205 29.56888 28.87612 390.4190 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -862,25 +847,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 297.9229 313.7998 313.9093 244.7065 285.7601 225.5188 294.2846
-    ##  [8] 181.6391 369.8766 335.9200 290.5236 367.6882 277.9685 322.6980
-    ## [15] 247.8370 260.8697 231.8237 250.7661 339.0380 257.4280
+    ##  [1] 195.6054 247.8674 338.5346 340.7995 286.0384 278.2373 220.1292
+    ##  [8] 296.1819 351.6584 217.1709 329.1006 305.3544 283.5856 254.4511
+    ## [15] 254.3259 379.3672 221.9178 232.0623 287.8203 303.4644
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -20.15213 -22.04623 -14.80490 -23.94299 -18.39548 -17.93605 -17.26303
-    ##  [8] -23.98854 -15.21005 -25.11059 -21.93825 -25.15334 -22.57960 -12.50842
-    ## [15] -26.27849 -26.96078 -28.26675 -31.77426 -17.25018 -26.67921
+    ##  [1] -21.24800 -17.85116 -12.83821 -25.05365 -14.34884 -22.48665 -23.77998
+    ##  [8] -17.58815 -19.52742 -30.27763 -14.96175 -22.26501 -19.10057 -14.32134
+    ## [15] -19.87671 -19.34617 -22.89667 -23.33387 -11.32815 -13.22357
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -50.63982 -54.59213 -39.73094 -58.67272 -47.13810 -46.23207 -44.50099
-    ##  [8] -57.60549 -41.10184 -59.77963 -53.74796 -61.00671 -55.90329 -34.12138
-    ## [15] -62.45102 -63.17924 -66.16071 -73.33640 -44.75401 -63.00917
+    ##  [1] -52.43683 -46.02392 -35.03115 -60.74266 -38.11935 -55.33229 -58.11805
+    ##  [8] -45.88290 -49.27062 -70.80764 -40.27576 -55.06461 -47.96062 -39.01619
+    ## [15] -50.38932 -49.09771 -56.07200 -57.56201 -32.20437 -35.86090
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -890,19 +875,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 25.32134 30.28545 30.26575 408.6288 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.23982 26.56581 26.41298 427.5339 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.28392 24.15555 25.34833 418.5462 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 14.08612 19.75826 18.37150 354.1634 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.67920 28.29131 28.43761 393.2574 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 22.65473 27.17275 26.62510 328.1300 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 35.22123 40.41571 38.86538 301.1694 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.54350 28.04588 27.80293 352.0192 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 35.63933 39.11100 40.97617 441.0614 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 15.93577 21.82243 21.48928 458.9675 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 42.06648 45.86698 46.73773 386.0539 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 24.15205 29.56888 28.87612 390.4190 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 119.16917 -20.25593  98.91324
-    ## 2 1 0.58 0.25 forced hcylinder 125.51992 -21.83685 103.68306
-    ## 3 1 0.58 0.25 forced hcylinder 125.56373 -15.89238 109.67135
-    ## 4 1 0.58 0.25 forced hcylinder  97.88261 -23.46909  74.41352
-    ## 5 1 0.58 0.25 forced hcylinder 114.30403 -18.85524  95.44879
-    ## 6 1 0.58 0.25 forced hcylinder  90.20753 -18.49283  71.71471
+    ## 1 1 0.58 0.25 forced hcylinder  78.24217 -20.97473  57.26744
+    ## 2 1 0.58 0.25 forced hcylinder  99.14696 -18.40957  80.73739
+    ## 3 1 0.58 0.25 forced hcylinder 135.41382 -14.01246 121.40136
+    ## 4 1 0.58 0.25 forced hcylinder 136.31980 -24.29706 112.02274
+    ## 5 1 0.58 0.25 forced hcylinder 114.41536 -15.24774  99.16762
+    ## 6 1 0.58 0.25 forced hcylinder 111.29490 -22.13292  89.16199
 
 ### Test the equations out for consistency
 
