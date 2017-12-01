@@ -1,5 +1,7 @@
-TheRmimage: Thermal Image Analysis
+Thermimage: Thermal Image Analysis
 ================
+
+[](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png)
 
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage)
 
@@ -146,9 +148,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2017-12-01 11:35:14"
-    ## FileAccessDateTime       "2017-12-01 13:29:18"
-    ## FileInodeChangeDateTime  "2017-12-01 11:35:15"
+    ## FileModificationDateTime "2017-12-01 16:00:29"
+    ## FileAccessDateTime       "2017-12-01 16:06:40"
+    ## FileInodeChangeDateTime  "2017-12-01 16:00:30"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -290,21 +292,21 @@ Finding a way to quantitatively analyse thermal images in R is a challenge due t
 First, the image matrix needs to be transposed (t) to swap the row vs. column order in which the data are stored, then the temperatures need to be transformed to a vector, a requirement of the writeBin function. The function writeFlirBin is a wrapper for writeBin, and uses information on image width, height, frame number and image interval (the latter two are included for thermal video saves) but are kept for simplicity to contruct a filename that incorporates image information required when importing to ImageJ:
 
 ``` r
-writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="README_files/FLIRjpg")
+writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="Uploads/FLIRjpg")
 ```
 
-The raw file can be found here: <https://github.com/gtatters/Thermimage/blob/master/README_files/FLIRjpg_W640_H480_F1_I.raw?raw=true>
+The raw file can be found here: <https://github.com/gtatters/Thermimage/blob/master/Uploads/FLIRjpg_W640_H480_F1_I.raw?raw=true>
 
 Import Raw File into ImageJ
 ---------------------------
 
 The .raw file is simply the pixel data saved in raw format but with real 32-bit precision. This means that the temperature data (negative or positive values) are encoded in 4 byte chunks. ImageJ has a plethora of import functions, and the File--&gt;Import--&gt;Raw option provides great flexibility. Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
 
-![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/README_files/ImageJImport.png?raw=true)
+![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/Uploads/ImageJImport.png?raw=true)
 
 The image imports clearly just as it would in a thermal image program. Each pixel stores the calculated temperatures as provided from the raw2temp function above.
 
-![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/README_files/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
+![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/Uploads/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
 
 Importing Thermal Videos
 ------------------------
@@ -432,15 +434,15 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 
 ![](README_files/figure-markdown_github/unnamed-chunk-23-2.png)
 
-These files can be found: <https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ2.png?raw=true>
+These files can be found: <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ2.png?raw=true>
 
 Now, export entire sequence to a raw bin for opening in ImageJ - smallish file size
 
 ``` r
-writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="README_files/SampleSEQ")
+writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="Uploads/SampleSEQ")
 ```
 
-The newly written 32-bit video file (<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true>) can now be imported into ImageJ, as desribed above for the single image. Each frame is converted into a stack in ImageJ.
+The newly written 32-bit video file (<https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true>) can now be imported into ImageJ, as desribed above for the single image. Each frame is converted into a stack in ImageJ.
 
 Note: 32-bit video files can be large and difficult to load into ImageJ. Approaches involving direct import of flir video files is recommended and under development.
 
@@ -451,7 +453,7 @@ If you have a lot of files and wish simply to analyse images in ImageJ, not in R
 
 ### Download and extract sample files to SampleFLIR folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip>
 
 ``` bash
 cd ~/Desktop/SampleFLIR
@@ -465,16 +467,31 @@ ls
 
 ### Download and extract perl scripts to perl folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/perl.zip>
 
 ``` bash
 cd ~/Desktop/perl
 ls
 ```
 
-    ## split_fff.pl
-    ## split_jpegls.pl
-    ## split_tiff.pl
+    ## bash: line 0: cd: /Users/GlennTattersall/Desktop/perl: No such file or directory
+    ## BashConvertFLIR.Rmd
+    ## BashConvertFLIR.md
+    ## DESCRIPTION
+    ## HeatTransferCalculations.Rmd
+    ## HeatTransferCalculations.md
+    ## HeatTransferCalculations_files
+    ## NAMESPACE
+    ## R
+    ## README.Rmd
+    ## README.md
+    ## README_files
+    ## Thermimage.Rproj
+    ## Thermimage.pdf
+    ## Uploads
+    ## data
+    ## inst
+    ## man
 
 Bulk convert all FLIR jpg files found in folder:
 
@@ -515,23 +532,12 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
-    ## CSQconverted.avi
-    ## JPGconverted.png
-    ## SEQconvertedjpegls.avi
-    ## SEQconvertedpng.avi
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
-    ## frame00001.png
-    ## frame00002.png
-    ## frame00003.png
-    ## frame00004.png
-    ## frame00005.png
-    ## frame00006.png
-    ## frame00007.png
 
 Here is a sample image:
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.png?raw=true)
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.png?raw=true)
 
 The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
@@ -575,21 +581,10 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
-    ## CSQconverted.avi
-    ## JPGconverted.png
-    ## SEQconvertedjpegls.avi
-    ## SEQconvertedpng.avi
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
-    ## frame00001.png
-    ## frame00002.png
-    ## frame00003.png
-    ## frame00004.png
-    ## frame00005.png
-    ## frame00006.png
-    ## frame00007.png
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 Heat Transfer Calculations
 ==========================
@@ -682,12 +677,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.53515 32.21741 31.56718 415.8703 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 24.83735 29.07616 29.25728 365.2834 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 29.81995 36.98651 34.45698 383.2257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 39.15531 45.48292 44.78985 465.6647 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.25664 28.18716 28.05683 396.7093 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 17.36897 24.43835 22.07783 389.1620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 30.53979 36.71903 35.12809 379.1981 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 31.50723 35.56987 36.46638 409.8468 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 19.22305 25.88178 24.33776 422.7033 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.38960 40.04579 41.13431 474.7695 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 30.51951 35.31317 35.69806 427.9796 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6  7.42109 11.54930 11.81291 362.9605 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -867,25 +862,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 300.2082 261.7797 259.8500 342.6487 287.1202 268.6427 368.4222
-    ##  [8] 243.7404 243.8357 260.6119 240.2403 227.4058 258.0255 289.6934
-    ## [15] 347.8022 347.8765 291.8119 405.4454 285.7740 268.4792
+    ##  [1] 262.4036 304.7863 301.8513 362.2782 317.0536 262.5578 318.7068
+    ##  [8] 244.5726 232.0437 241.2332 231.7244 291.1846 278.5773 299.5944
+    ## [15] 268.2395 228.4437 281.8750 302.0569 204.5921 241.3252
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -23.84766 -16.54495 -31.83172 -27.15900 -20.00027 -31.47171 -22.93015
-    ##  [8] -16.36841 -25.57019 -26.08728 -18.17514 -11.96922 -12.17069 -19.05366
-    ## [15] -18.45439 -18.31861 -24.13031 -20.59871 -17.88973 -18.21988
+    ##  [1] -26.44063 -15.64796 -29.17492 -18.53121 -19.25041 -16.16385 -19.51944
+    ##  [8] -16.52852 -24.09959 -17.11061 -21.59925 -13.71060 -22.07604 -20.65774
+    ## [15] -21.72391 -10.23551 -27.57460 -10.45953 -21.49736 -26.24653
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -57.88652 -43.26475 -72.74608 -63.63512 -50.41729 -72.81176 -56.00521
-    ##  [8] -42.81332 -60.83357 -62.59783 -46.62765 -33.64866 -33.45821 -48.76055
-    ## [15] -47.34342 -46.64788 -57.97575 -51.86550 -46.10134 -47.02518
+    ##  [1] -62.67614 -41.16569 -68.42189 -46.99506 -48.62319 -43.10596 -49.38043
+    ##  [8] -42.79078 -58.46022 -44.41596 -53.81384 -36.63646 -54.61654 -51.44158
+    ## [15] -52.79582 -29.49326 -65.18985 -30.07752 -52.86921 -62.73233
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -895,19 +890,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.53515 32.21741 31.56718 415.8703 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 24.83735 29.07616 29.25728 365.2834 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 29.81995 36.98651 34.45698 383.2257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 39.15531 45.48292 44.78985 465.6647 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.25664 28.18716 28.05683 396.7093 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 17.36897 24.43835 22.07783 389.1620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 30.53979 36.71903 35.12809 379.1981 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 31.50723 35.56987 36.46638 409.8468 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 19.22305 25.88178 24.33776 422.7033 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.38960 40.04579 41.13431 474.7695 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 30.51951 35.31317 35.69806 427.9796 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6  7.42109 11.54930 11.81291 362.9605 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape     qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 120.0833 -23.15461  96.92868
-    ## 2 1 0.58 0.25 forced hcylinder 104.7119 -17.30590  87.40598
-    ## 3 1 0.58 0.25 forced hcylinder 103.9400 -29.09843  74.84158
-    ## 4 1 0.58 0.25 forced hcylinder 137.0595 -25.45405 111.60542
-    ## 5 1 0.58 0.25 forced hcylinder 114.8481 -20.16692  94.68117
-    ## 6 1 0.58 0.25 forced hcylinder 107.4571 -29.12470  78.33236
+    ## 1 1 0.58 0.25 forced hcylinder 104.9614 -25.07046  79.89099
+    ## 2 1 0.58 0.25 forced hcylinder 121.9145 -16.46627 105.44825
+    ## 3 1 0.58 0.25 forced hcylinder 120.7405 -27.36875  93.37177
+    ## 4 1 0.58 0.25 forced hcylinder 144.9113 -18.79802 126.11327
+    ## 5 1 0.58 0.25 forced hcylinder 126.8214 -19.44928 107.37216
+    ## 6 1 0.58 0.25 forced hcylinder 105.0231 -17.24238  87.78073
 
 ### Test the equations out for consistency
 
