@@ -205,11 +205,11 @@ The raw file can be found here: https://github.com/gtatters/Thermimage/blob/mast
 ## Import Raw File into ImageJ
 The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
 
-![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/READMEimages/ImageJImport.png?raw=true)
+![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/README_files/ImageJImport.png?raw=true)
 
 The image imports clearly just as it would in a thermal image program.  Each pixel stores the calculated temperatures as provided from the raw2temp function above. 
 
-![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
+![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/README_files/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
 
 
 ## Importing Thermal Videos
@@ -303,8 +303,8 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 ```
 
 These files can be found:
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ1.png?raw=true
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ2.png?raw=true
+https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ1.png?raw=true
+https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ2.png?raw=true
 
 
 
@@ -324,7 +324,7 @@ Note: 32-bit video files can be large and difficult to load into ImageJ.  Approa
 If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files.  The following methods are available in R, but are based on command line tools that are also described in https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md
 
 ### Download and extract sample files to SampleFLIR folder on desktop:
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleFLIR.zip
+https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip
 
 ```{bash}
 cd ~/Desktop/SampleFLIR
@@ -332,7 +332,7 @@ ls
 ```
 
 ### Download and extract perl scripts to perl folder on desktop:
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/perl.zip
+https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip
 
 ```{bash}
 cd ~/Desktop/perl

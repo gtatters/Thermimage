@@ -146,7 +146,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2017-12-01 11:35:14"
-    ## FileAccessDateTime       "2017-12-01 12:45:31"
+    ## FileAccessDateTime       "2017-12-01 12:59:32"
     ## FileInodeChangeDateTime  "2017-12-01 11:35:15"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -234,13 +234,15 @@ library(fields) # should be imported when installing Thermimage
 plotTherm(temperature, h=h, w=w, minrangeset=21, maxrangeset=32)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png) The FLIR jpg imports as a matrix, but default plotting parameters leads to it being rotated 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
+![](README_files/figure-markdown_github/unnamed-chunk-11-1.png)
+
+The FLIR jpg imports as a matrix, but default plotting parameters leads to it being rotated 270 degrees (counter clockwise) from normal perspective, so you should either rotate the matrix data before plotting, or include the rotate270.matrix transformation in the call to the plotTherm function:
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 If you prefer a different palette:
 
@@ -249,35 +251,35 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
           thermal.palette=rainbowpal)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
           thermal.palette=glowbowpal)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-2.png)
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
           thermal.palette=midgreypal)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-3.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-3.png)
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
           thermal.palette=midgreenpal)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-4.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-4.png)
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
           thermal.palette=rainbow1234pal)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-5.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-5.png)
 
 Export Image or Video
 ---------------------
@@ -297,11 +299,11 @@ Import Raw File into ImageJ
 
 The .raw file is simply the pixel data saved in raw format but with real 32-bit precision. This means that the temperature data (negative or positive values) are encoded in 4 byte chunks. ImageJ has a plethora of import functions, and the File--&gt;Import--&gt;Raw option provides great flexibility. Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
 
-![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/READMEimages/ImageJImport.png?raw=true)
+![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/README_files/ImageJImport.png?raw=true)
 
 The image imports clearly just as it would in a thermal image program. Each pixel stores the calculated temperatures as provided from the raw2temp function above.
 
-![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/READMEimages/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
+![Image Imported into ImageJ](https://github.com/gtatters/Thermimage/blob/master/README_files/FLIRjpg_W640_H480_F1_I.raw.png?raw=true)
 
 Importing Thermal Videos
 ------------------------
@@ -329,9 +331,7 @@ templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$Obj
 plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-16-1.png)
-
-![Binary to Temperature Conversion](https://github.com/gtatters/Thermimage/blob/master/READMEimages/CalibrationCurve.png?raw=true)
+![](README_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 The advantage of using the templookup variable is in its index capacity. For computations involving large files, this is most efficient way to convert the raw binary values rapidly without having to call the raw2temp function repeatedly. Thus, for a raw binary value of 17172, 18273, and 24932:
 
@@ -423,15 +423,15 @@ Frames extracted from thermal vids are upside down, so use the mirror.matrix fun
 plotTherm(alltemperature[,1], w=w, h=h, trans="mirror.matrix")
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-23-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-23-1.png)
 
 ``` r
 plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-23-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-23-2.png)
 
-These files can be found: <https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleSEQ2.png?raw=true>
+These files can be found: <https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ1.png?raw=true> <https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ2.png?raw=true>
 
 Now, export entire sequence to a raw bin for opening in ImageJ - smallish file size
 
@@ -441,12 +441,16 @@ writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="README_files
 
 The newly written 32-bit video file (<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleSEQ_W640_H480_F2_I3.97.raw?raw=true>) can now be imported into ImageJ, as desribed above for the single image. Each frame is converted into a stack in ImageJ.
 
+Note: 32-bit video files can be large and difficult to load into ImageJ. Approaches involving direct import of flir video files is recommended and under development.
+
 Convert FLIR JPG from R
 =======================
 
+If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files. The following methods are available in R, but are based on command line tools that are also described in <https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md>
+
 ### Download and extract sample files to SampleFLIR folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleFLIR.zip>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip>
 
 ``` bash
 cd ~/Desktop/SampleFLIR
@@ -460,7 +464,7 @@ ls
 
 ### Download and extract perl scripts to perl folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/perl.zip>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip>
 
 ``` bash
 cd ~/Desktop/perl
@@ -559,6 +563,8 @@ ls output/
 Heat Transfer Calculations
 ==========================
 
+The information below is duplicated at: <https://github.com/gtatters/Thermimage/blob/master/HeatTransferCalculations.md>
+
 ### Minimum required information
 
 Before getting started ensure you have the following information available:
@@ -645,12 +651,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.20403 30.68895 30.66188 368.4177 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 25.91992 29.96396 30.38918 369.3608 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 24.87673 31.21265 29.79367 406.3583 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 37.81364 41.80827 42.88290 418.9471 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 25.28437 28.23229 30.49452 430.5908 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 33.71596 37.29200 38.35069 383.0357 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 14.46796 20.89132 18.13876 303.3724 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.77203 26.05113 26.00032 349.4458 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.60031 23.33818 22.75212 425.7688 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 28.53920 34.08579 32.64228 339.0975 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 13.32995 20.61276 18.46915 424.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 25.63119 31.97365 30.05868 365.9088 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -830,25 +836,26 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 263.1787 266.7490 287.4600 314.6659 330.6135 283.0267 292.2995
-    ##  [8] 270.2533 288.6959 254.9979 226.0695 309.0864 317.4598 397.6463
-    ## [15] 175.4659 273.9781 255.7641 404.1892 314.7726 271.1857
+    ##  [1] 193.1502 246.9111 310.3403 229.0187 301.8119 249.4655 366.7534
+    ##  [8] 307.7831 308.0587 320.9585 301.5476 328.6532 354.7001 246.9499
+    ## [15] 385.3943 277.5181 318.4811 236.7149 239.0880 345.8917
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -17.74388 -15.59291 -27.34421 -15.28909 -10.50559 -13.33097 -20.40901
-    ##  [8] -34.62877 -27.49605 -23.12880 -10.19943 -29.84225 -17.35624 -16.21108
-    ## [15] -17.74403 -16.90085 -28.52679 -22.74510 -17.75859 -24.88310
+    ##  [1] -27.964059 -16.765406 -24.242548 -23.119126 -32.738758 -27.370533
+    ##  [7] -21.559651 -19.554413 -19.160239  -9.640023 -26.271329 -22.574263
+    ## [13] -14.754215 -24.894195 -14.209643 -25.425699 -26.129838 -32.514264
+    ## [19] -24.975634 -20.222140
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -45.70591 -41.22608 -64.66667 -40.22363 -30.07352 -36.15330 -50.99651
-    ##  [8] -78.23393 -64.57733 -57.23014 -29.27014 -69.21136 -44.71572 -42.61839
-    ## [15] -45.67584 -43.84660 -66.83324 -55.62025 -45.95894 -60.16128
+    ##  [1] -66.40932 -43.83336 -59.08029 -56.37978 -75.41044 -64.67787 -52.79238
+    ##  [8] -49.13556 -47.84541 -27.84546 -63.46017 -55.74429 -39.95071 -59.30160
+    ## [15] -39.42200 -60.78779 -62.64326 -73.54045 -61.24771 -50.92833
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -858,19 +865,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.20403 30.68895 30.66188 368.4177 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 25.91992 29.96396 30.38918 369.3608 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 24.87673 31.21265 29.79367 406.3583 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 37.81364 41.80827 42.88290 418.9471 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 25.28437 28.23229 30.49452 430.5908 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 33.71596 37.29200 38.35069 383.0357 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape     qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 105.2715 -18.28237  86.98912
-    ## 2 1 0.58 0.25 forced hcylinder 106.6996 -16.49043  90.20918
-    ## 3 1 0.58 0.25 forced hcylinder 114.9840 -25.86667  89.11733
-    ## 4 1 0.58 0.25 forced hcylinder 125.8664 -16.08945 109.77693
-    ## 5 1 0.58 0.25 forced hcylinder 132.2454 -12.02941 120.21600
-    ## 6 1 0.58 0.25 forced hcylinder 113.2107 -14.46132  98.74935
+    ## 1 14.46796 20.89132 18.13876 303.3724 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.77203 26.05113 26.00032 349.4458 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.60031 23.33818 22.75212 425.7688 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 28.53920 34.08579 32.64228 339.0975 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 13.32995 20.61276 18.46915 424.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 25.63119 31.97365 30.05868 365.9088 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape      qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder  77.26010 -26.56373  50.69637
+    ## 2 1 0.58 0.25 forced hcylinder  98.76444 -17.53334  81.23110
+    ## 3 1 0.58 0.25 forced hcylinder 124.13614 -23.63212 100.50402
+    ## 4 1 0.58 0.25 forced hcylinder  91.60750 -22.55191  69.05558
+    ## 5 1 0.58 0.25 forced hcylinder 120.72475 -30.16417  90.56058
+    ## 6 1 0.58 0.25 forced hcylinder  99.78619 -25.87115  73.91504
 
 ### Test the equations out for consistency
 
@@ -979,7 +986,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-49-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-49-1.png)
 
 ### Model operative temperature with varying wind speeds
 
@@ -1014,7 +1021,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-50-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-50-1.png)
 
 ### Model operative temperature with varying RH
 
@@ -1047,7 +1054,7 @@ for(i in 2:3){
 }
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-51-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-51-1.png)
 
 ### Model operative temperature with varying cloud cover
 
@@ -1080,7 +1087,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-52-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
 
 ### References
 
