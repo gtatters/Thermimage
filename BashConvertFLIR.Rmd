@@ -15,7 +15,7 @@ Imagemagick: https://www.imagemagick.org/script/index.php
 Perl: https://www.perl.org/get.html 
 
 ### Download and extract sample files to SampleFLIR folder on desktop:
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleFLIR.zip
+https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip
 
 ```{bash}
 cd ~/Desktop/SampleFLIR
@@ -23,7 +23,7 @@ ls
 ```
 
 ### Download and extract perl scripts to perl folder on desktop:
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/perl.zip
+https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip
 
 ```{bash}
 cd ~/Desktop/perl
@@ -71,11 +71,11 @@ rm -r temp
 
 Which produces the following output:
 
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/CSQconverted.avi?raw=true
+https://github.com/gtatters/Thermimage/blob/master/README_files/CSQconverted.avi?raw=true
 
 The above avi should open up in VLC player, but may or may not play properly.  In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/frame00001.png?raw=true)
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true)
 The above PNG file is a sample image of the 16 bit grayscale image.  Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.  
 
 
@@ -117,8 +117,8 @@ rm -r temp
 
 Which produces the following output:
 
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SEQconvertedjpegls.avi?raw=true
-https://github.com/gtatters/Thermimage/blob/master/READMEimages/SEQconvertedpng.avi?raw=true
+https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedjpegls.avi?raw=true
+https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedpng.avi?raw=true
 
 Note: the above avi should open up in VLC player, but may or may not play properly.  In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
@@ -137,7 +137,7 @@ exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gra
 exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
 ```
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/JPGconverted.png?raw=true)
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/JPGconverted.png?raw=true)
 
 
 

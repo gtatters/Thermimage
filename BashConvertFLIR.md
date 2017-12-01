@@ -11,7 +11,7 @@ Perl: <https://www.perl.org/get.html>
 
 ### Download and extract sample files to SampleFLIR folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/SampleFLIR.zip>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip>
 
 ``` bash
 cd ~/Desktop/SampleFLIR
@@ -21,10 +21,11 @@ ls
     ## SampleFLIR.csq
     ## SampleFLIR.jpg
     ## SampleFLIR.seq
+    ## output
 
 ### Download and extract perl scripts to perl folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/perl.zip>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip>
 
 ``` bash
 cd ~/Desktop/perl
@@ -129,7 +130,7 @@ rm -r temp
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 jpegls
-    ## frame=    7 fps=0.0 q=-0.0 Lsize=    3656kB time=00:00:00.23 bitrate=128339.8kbits/s speed=1.08x    
+    ## frame=    7 fps=0.0 q=-0.0 Lsize=    3656kB time=00:00:00.23 bitrate=128339.8kbits/s speed=1.25x    
     ## video:3650kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.156768%
     ## 
     ## ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
@@ -156,12 +157,9 @@ rm -r temp
     ##     Stream #0:0: Video: png, gray16be, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.69x    
+    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.714x    
     ## video:4758kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
     ## CSQconverted.avi
-    ## SEQconvertedjpegls.avi
-    ## SEQconvertedpng.avi
-    ## JPGconverted.png
     ## frame00001.png
     ## frame00002.png
     ## frame00003.png
@@ -172,11 +170,11 @@ rm -r temp
 
 Which produces the following output:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/CSQconverted.avi?raw=true>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/CSQconverted.avi?raw=true>
 
 The above avi should open up in VLC player, but may or may not play properly. In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 ### Workflow to convert seq (640x480) to avi file
 
@@ -297,7 +295,7 @@ rm -r temp
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 jpegls
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.4x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.8x    
     ## video:5757kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.109466%
     ## ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
     ##   built with Apple LLVM version 9.0.0 (clang-900.0.38)
@@ -323,7 +321,7 @@ rm -r temp
     ##     Stream #0:0: Video: png (MPNG / 0x474E504D), gray16be, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=4.07x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=3.98x    
     ## video:10025kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.062800%
     ## 
     ## CSQconverted.avi
@@ -332,7 +330,7 @@ rm -r temp
 
 Which produces the following output:
 
-<https://github.com/gtatters/Thermimage/blob/master/READMEimages/SEQconvertedjpegls.avi?raw=true> <https://github.com/gtatters/Thermimage/blob/master/READMEimages/SEQconvertedpng.avi?raw=true>
+<https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedjpegls.avi?raw=true> <https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedpng.avi?raw=true>
 
 Note: the above avi should open up in VLC player, but may or may not play properly. In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
@@ -356,7 +354,7 @@ exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
     ## Planck O                        : -7340
     ## Planck R2                       : 0.012545258
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/READMEimages/JPGconverted.png?raw=true)
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/JPGconverted.png?raw=true)
 
 ### Workflow to convert FLIR jpg multi-burst (with ultramax) to png file
 
