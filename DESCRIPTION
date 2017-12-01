@@ -16,10 +16,10 @@ Description: A collection of functions and routines for inputting thermal
     v3.1. Added new functions to convert files.
 License: GPL (>=2)
 Depends: R (>= 2.10)
-SystemRequirements: exiftool (http://www.sno.phy.queensu.ca/~phil/exiftool/), perl, ffmpeg, imagemagick
+SystemRequirements: exiftool, perl, ffmpeg, imagemagick
 Suggests: fields
 Imports: tiff, png
 LazyData: true
-URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage, https://github.com/gtatters/Thermimage/blob/master/heatcalc.R
+URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage
 BugReports: http://github.com/gtatters/Thermimage/issues
 RoxygenNote: 6.0.1
