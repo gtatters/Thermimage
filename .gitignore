@@ -1,9 +1,0 @@
-.Rproj.user
-^.*\.Rproj$
-^\.Rproj\.user$
-.Rhistory
-.RData
-.Rbuildignore
-^HeatTransferCalculations.Rmd
-^heatcalc.pdf
-^healcalc.R
