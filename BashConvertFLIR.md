@@ -1,6 +1,8 @@
 Command Line Instructions for Converting FLIR Video and JPG files for import to ImageJ
 ================
 
+These instructions are for converting certain flir file types using command line tools. These functions are also incorporated into the Thermimage package through the functions, convertflirJPG(), converflirVID(), and ffmpegcall(). If these functions are not working in R, try following the command line instructions here to diagnose your system.
+
 ### System Requirements
 
 Exiftool: <https://www.sno.phy.queensu.ca/~phil/exiftool/>
@@ -132,7 +134,7 @@ rm -r temp
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 jpegls
-    ## frame=    7 fps=0.0 q=-0.0 Lsize=    3656kB time=00:00:00.23 bitrate=128339.8kbits/s speed=1.25x    
+    ## frame=    7 fps=0.0 q=-0.0 Lsize=    3656kB time=00:00:00.23 bitrate=128339.8kbits/s speed=1.15x    
     ## video:3650kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.156768%
     ## 
     ## ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
@@ -159,7 +161,7 @@ rm -r temp
     ##     Stream #0:0: Video: png, gray16be, 1024x768, q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.743x    
+    ## frame=    7 fps=0.0 q=-0.0 Lsize=N/A time=00:00:00.23 bitrate=N/A speed=0.738x    
     ## video:4758kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
     ## output/CSQconverted.avi
     ## output/SEQconvertedjpegls.avi
@@ -303,7 +305,7 @@ rm -r temp
     ##     Stream #0:0: Video: jpegls (MJLS / 0x534C4A4D), gray16le, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 jpegls
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.5x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=    5763kB time=00:00:00.93 bitrate=50583.9kbits/s speed=10.3x    
     ## video:5757kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.109466%
     ## ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
     ##   built with Apple LLVM version 9.0.0 (clang-900.0.38)
@@ -329,7 +331,7 @@ rm -r temp
     ##     Stream #0:0: Video: png (MPNG / 0x474E504D), gray16be, 640x480 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 30 fps, 30 tbn, 30 tbc
     ##     Metadata:
     ##       encoder         : Lavc57.107.100 png
-    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=4.05x    
+    ## frame=   28 fps=0.0 q=-0.0 Lsize=   10032kB time=00:00:00.93 bitrate=88049.1kbits/s speed=3.83x    
     ## video:10025kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.062800%
     ## 
     ## output/CSQconverted.avi

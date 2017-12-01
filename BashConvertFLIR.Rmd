@@ -7,6 +7,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+These instructions are for converting certain flir file types using command line tools.  These functions are also incorporated into the Thermimage package through the functions, convertflirJPG(), converflirVID(), and ffmpegcall().  If these functions are not working in R, try following the command line instructions here to diagnose your system.
+
 ### System Requirements
 Exiftool: https://www.sno.phy.queensu.ca/~phil/exiftool/
 

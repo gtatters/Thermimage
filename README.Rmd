@@ -1,5 +1,5 @@
 ---
-title: "TheRmimage: Thermal Image Analysis"
+title: "Thermimage: Thermal Image Analysis"
 output: github_document
 ---
 
