@@ -1,3 +1,4 @@
+(https://github.com/gtatters/Thermimage/blob/master/README_files/Thermimage.png)
 ---
 title: "Thermimage: Thermal Image Analysis"
 output: github_document
