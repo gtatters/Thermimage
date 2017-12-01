@@ -817,9 +817,12 @@ Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finche
 
 ### Online Resources
 
-The following brilliant, open source programs and programmers were critical to the development of Thermimage.
+The following open source programs and programmers were critical to the development of Thermimage.
 
 Exiftool: http://www.sno.phy.queensu.ca/~phil/exiftool/ 
+
 Imagemagick: http://imagemagick.org
+
 Perl: http://www.perl.org
+
 EEVBlog: 
