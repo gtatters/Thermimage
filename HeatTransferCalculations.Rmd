@@ -388,19 +388,19 @@ Ts<-40
 Ta<-30
 SE<-seq(0,1100,100)
 Toperative<-NULL
-for(cloud in seq(0, 1, 0.1)){
+for(cloud in seq(0, 1, 0.5)){
   temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.5, cloud=cloud, SE=SE, V=1, 
            L=0.1, type="forced", shape="hcylinder")
   Toperative<-cbind(Toperative, temp)
 }
-cloud<-seq(0, 1, 0.1)
+cloud<-seq(0, 1, 0.5)
 Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,1,0.1))
+colnames(Toperative)<-c("SE", seq(0,1,0.5))
 matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
-        main="Effects of changing RH from 0 to 1",
+        main="Effects of changing cloud cover from 0 to 1",
         ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
         col=flirpal[rev(seq(1,380,35))])
-for(i in 2:12){
+for(i in 2:3){
   ymax<-par()$yaxp[2]
   xmax<-par()$xaxp[2]  
   x<-Toperative[,1]; y<-Toperative[,i]

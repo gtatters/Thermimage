@@ -20,8 +20,18 @@ library(devtools)
 install_github("gtatters/Thermimage")
 ```
 
-    ## Skipping install of 'Thermimage' from a github remote, the SHA1 (ba27f5af) has not changed since last install.
-    ##   Use `force = TRUE` to force installation
+    ## Downloading GitHub repo gtatters/Thermimage@master
+    ## from URL https://api.github.com/repos/gtatters/Thermimage/zipball/master
+
+    ## Installing Thermimage
+
+    ## '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \
+    ##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
+    ##   '/private/var/folders/0f/_hbgzdkx3pl6bvs35cm_dr1h0000gn/T/RtmpN4L2Um/devtools153cf4dfacae1/gtatters-Thermimage-959fd8c'  \
+    ##   --library='/Library/Frameworks/R.framework/Versions/3.4/Resources/library'  \
+    ##   --install-tests
+
+    ## 
 
 This should download the most recent version of Thermimage from github repository and install it. Then simply type library(Thermimage) to call the functions into the working environment:
 
@@ -115,12 +125,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 25.32012 30.61430 29.51546 346.7221 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 30.72967 35.53104 35.47736 392.3715 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.57663 25.20849 25.94505 443.6713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 28.71814 33.78483 33.77230 417.6990 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 22.05680 24.98733 25.51801 286.0500 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 34.63809 39.91382 38.83346 346.7254 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 12.22503 15.15419 17.98821 476.2959 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 18.10625 24.91881 22.35742 351.3360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 27.15160 32.99247 33.08919 490.7101 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.86914 40.79612 39.85561 329.4608 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 25.52482 32.17084 29.85964 358.2489 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 18.52938 22.34500 22.59713 336.1774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -225,7 +235,7 @@ This is simply the convective heat coefficient, which depends on wind speed and 
 
 ### What is qconv()?
 
-This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer. Positive values mean heat is gained by convection, negative values mean heat is lost by convection. Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed &gt;=0.1 m/s). Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s wind speed.
+This is the function to calculate area specific convective heat transfer, analagous to qrad, except for convective heat transfer. Positive values mean heat is gained by convection, negative values mean heat is lost by convection. Included in the function is the ability to estimate free convection (which occurs at 0 wind speed) or forced convection (wind speed &gt;=0.1 m/s). Unless working in a completely still environment, it is more appropriate to used "forced" convection down to 0.1 m/s wind speed (see Gates Biophysical Ecology).
 
 Typical wind speeds indoors are likely &lt;0.5 m/s, but outside can vary wildly.
 
@@ -300,25 +310,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 237.9946 283.6241 332.9857 305.6661 195.5001 237.8103 332.4666
-    ##  [8] 336.0286 330.3487 303.4015 320.5512 307.8896 257.4890 251.2610
-    ## [15] 255.4668 374.8888 299.8315 379.0547 359.3154 345.8220
+    ##  [1] 373.4393 234.6286 369.2614 224.0027 240.4368 237.4652 264.4358
+    ##  [8] 312.0933 296.3560 350.5890 245.0032 355.3068 321.0396 257.4509
+    ## [15] 243.9035 319.5909 279.3958 217.6691 336.9465 334.2372
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -21.84074 -19.28763 -18.52121 -20.64489 -10.44351 -21.66838 -21.35778
-    ##  [8] -13.25295 -22.06062 -12.36287 -26.06066  -6.84959 -24.89307 -16.34760
-    ## [15] -14.40102 -13.51798 -25.10000 -16.96329 -19.91804 -20.48968
+    ##  [1] -10.49320 -30.03727 -24.67624 -19.88495 -29.01901 -14.55066 -20.72045
+    ##  [8] -19.69362 -23.87048 -18.48460 -26.96748 -14.48489 -23.90236 -21.13729
+    ## [15] -20.89854 -12.24145 -22.96670 -30.11934 -29.79777 -20.05169
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -54.00695 -48.69068 -47.51546 -51.49163 -30.00889 -53.28769 -52.95391
-    ##  [8] -36.51496 -54.40142 -34.10044 -61.81819 -21.42829 -59.65628 -42.96470
-    ## [15] -38.70212 -37.11602 -60.23518 -44.84175 -51.03215 -51.27342
+    ##  [1] -30.37614 -70.10075 -59.46142 -49.70481 -67.78157 -39.24151 -51.78957
+    ##  [8] -50.13293 -57.26548 -47.03136 -63.75500 -38.79341 -58.45417 -53.03130
+    ## [15] -52.44368 -33.92124 -56.28807 -69.41974 -69.36761 -50.17441
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -328,19 +338,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 25.32012 30.61430 29.51546 346.7221 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 30.72967 35.53104 35.47736 392.3715 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.57663 25.20849 25.94505 443.6713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 28.71814 33.78483 33.77230 417.6990 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 22.05680 24.98733 25.51801 286.0500 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 34.63809 39.91382 38.83346 346.7254 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 12.22503 15.15419 17.98821 476.2959 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 18.10625 24.91881 22.35742 351.3360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 27.15160 32.99247 33.08919 490.7101 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.86914 40.79612 39.85561 329.4608 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 25.52482 32.17084 29.85964 358.2489 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 18.52938 22.34500 22.59713 336.1774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder  95.19784 -21.60278  73.59506
-    ## 2 1 0.58 0.25 forced hcylinder 113.44962 -19.47627  93.97335
-    ## 3 1 0.58 0.25 forced hcylinder 133.19427 -19.00619 114.18809
-    ## 4 1 0.58 0.25 forced hcylinder 122.26646 -20.59665 101.66980
-    ## 5 1 0.58 0.25 forced hcylinder  78.20005 -12.00356  66.19649
-    ## 6 1 0.58 0.25 forced hcylinder  95.12413 -21.31508  73.80905
+    ## 1 1 0.58 0.25 forced hcylinder 149.37573 -12.15046 137.22527
+    ## 2 1 0.58 0.25 forced hcylinder  93.85144 -28.04030  65.81114
+    ## 3 1 0.58 0.25 forced hcylinder 147.70458 -23.78457 123.92001
+    ## 4 1 0.58 0.25 forced hcylinder  89.60108 -19.88193  69.71915
+    ## 5 1 0.58 0.25 forced hcylinder  96.17474 -27.11263  69.06211
+    ## 6 1 0.58 0.25 forced hcylinder  94.98608 -15.69660  79.28948
 
 ### Test the equations out for consistency
 
@@ -526,19 +536,19 @@ Ts<-40
 Ta<-30
 SE<-seq(0,1100,100)
 Toperative<-NULL
-for(cloud in seq(0, 1, 0.1)){
+for(cloud in seq(0, 1, 0.5)){
   temp<-Te(Ts=Ts, Ta=Ta, Tg=NULL, RH=0.5, E=0.96, rho=0.5, cloud=cloud, SE=SE, V=1, 
            L=0.1, type="forced", shape="hcylinder")
   Toperative<-cbind(Toperative, temp)
 }
-cloud<-seq(0, 1, 0.1)
+cloud<-seq(0, 1, 0.5)
 Toperative<-data.frame(SE=seq(0,1100,100), Toperative)
-colnames(Toperative)<-c("SE", seq(0,1,0.1))
+colnames(Toperative)<-c("SE", seq(0,1,0.5))
 matplot(Toperative$SE, Toperative[,-1], ylim=c(30, 50), type="l", xlim=c(0,1000),
-        main="Effects of changing RH from 0 to 1",
+        main="Effects of changing cloud cover from 0 to 1",
         ylab="Operative Temperature (°C)", xlab="Solar Radiation (W/m2)", lty=1,
         col=flirpal[rev(seq(1,380,35))])
-for(i in 2:12){
+for(i in 2:3){
   ymax<-par()$yaxp[2]
   xmax<-par()$xaxp[2]  
   x<-Toperative[,1]; y<-Toperative[,i]
