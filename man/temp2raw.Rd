@@ -131,5 +131,7 @@ plot(t,r1.0,type="l",col="red")
 lines(t,r0.9,col="black")
 legend("topleft", bty = "n", c("E=1.0", "E=0.9"), lty=c(1,1), col=c("red", "black"))
 
+# For information on the effectiveness of the raw2temp and temp2raw functions at estimating temperature properly, see the following:
+# https://github.com/gtatters/ThermimageCalibration
 
 }

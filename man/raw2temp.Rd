@@ -146,5 +146,7 @@ system.time(templookup[r]) # 0.109 seconds
 # calculate temperature using the raw2temp function on the raw vector: 
 system.time(raw2temp(r)) # 0.248 seconds
 
+# For information on the effectiveness of the raw2temp and temp2raw functions at estimating temperature properly, see the following:
+# https://github.com/gtatters/ThermimageCalibration
 }
 
