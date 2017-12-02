@@ -190,6 +190,27 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
           thermal.palette=rainbow1234pal)
 ```
 
+## Deconvolute temperature to raw and back to temperature
+With thermal imaging analysis, there are at least 7 environmental parameters that must be known to convert raw to temperature.  Sometimes, the parameters might have been incorrectly input by the user or changing the parameters is too cumbersome in the commercial software.  temp2raw() is the inverse of raw2temp(), which allows you to convert an estimated temperature back to the raw values (i.e. deconvolute), using the initial object parameters used.
+
+For example, convert a temperature estimated at 23 degrees C, under the default blackbody conditions:
+```{r}
+temp2raw(23, E=1, OD=0, RTemp=20, ATemp=20, IRWTemp=20, IRT=1, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
+```
+Which yields a raw value of 17994.06 (using the calibration constants above).  Now you can use raw2temp to calculate a better estimate of an object that has emissivity=0.95, distance=1m, window transmission=0.96, all temperatures=20C, 50 RH:
+
+```{r}
+raw2temp(17994.06, E=0.95, OD=1, RTemp=20, ATemp=20, IRWTemp=20, IRT=0.96, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
+```
+Note: the default calibration constants for my FLIR camera will be used if you leave out the
+ calibration data during this two step process, but it is more appropriate to look up your camera's calibrations constants using the flirsettings() function.
+
+## How accurate is the raw2temp() conversion
+See the following github for an explanation and break-down of the conversion process and comparison to existing commercial software:
+
+https://github.com/gtatters/ThermimageCalibration
+
+
 ## Export Image or Video
 
 Finding a way to quantitatively analyse thermal images in R is a challenge due to limited interactions with the graphics environment.  Thermimage has a function that allows you to write the image data to a file format that can be easily imported into ImageJ.  
@@ -828,9 +849,11 @@ Imagemagick: http://imagemagick.org
 
 Perl: http://www.perl.org
 
+raw2temp, temp2raw: https://github.com/gtatters/ThermimageCalibration
+
 EEVBlog: 
 
-* raw to temperatre conversion: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135
+* raw to temperature conversion: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135
 
 * magicbyte import: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0
 

@@ -146,9 +146,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2017-12-01 16:00:29"
-    ## FileAccessDateTime       "2017-12-01 16:46:41"
-    ## FileInodeChangeDateTime  "2017-12-01 16:00:30"
+    ## FileModificationDateTime "2017-12-01 16:52:11"
+    ## FileAccessDateTime       "2017-12-02 09:21:10"
+    ## FileInodeChangeDateTime  "2017-12-01 16:52:12"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -282,6 +282,36 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 
 ![](README_files/figure-markdown_github/unnamed-chunk-13-5.png)
 
+Deconvolute temperature to raw and back to temperature
+------------------------------------------------------
+
+With thermal imaging analysis, there are at least 7 environmental parameters that must be known to convert raw to temperature. Sometimes, the parameters might have been incorrectly input by the user or changing the parameters is too cumbersome in the commercial software. temp2raw() is the inverse of raw2temp(), which allows you to convert an estimated temperature back to the raw values (i.e. deconvolute), using the initial object parameters used.
+
+For example, convert a temperature estimated at 23 degrees C, under the default blackbody conditions:
+
+``` r
+temp2raw(23, E=1, OD=0, RTemp=20, ATemp=20, IRWTemp=20, IRT=1, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
+```
+
+    ## [1] 17994.06
+
+Which yields a raw value of 17994.06 (using the calibration constants above). Now you can use raw2temp to calculate a better estimate of an object that has emissivity=0.95, distance=1m, window transmission=0.96, all temperatures=20C, 50 RH:
+
+``` r
+raw2temp(17994.06, E=0.95, OD=1, RTemp=20, ATemp=20, IRWTemp=20, IRT=0.96, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
+```
+
+    ## [1] 23.31223
+
+Note: the default calibration constants for my FLIR camera will be used if you leave out the calibration data during this two step process, but it is more appropriate to look up your camera's calibrations constants using the flirsettings() function.
+
+How accurate is the raw2temp() conversion
+-----------------------------------------
+
+See the following github for an explanation and break-down of the conversion process and comparison to existing commercial software:
+
+<https://github.com/gtatters/ThermimageCalibration>
+
 Export Image or Video
 ---------------------
 
@@ -332,7 +362,7 @@ templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$Obj
 plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 The advantage of using the templookup variable is in its index capacity. For computations involving large files, this is most efficient way to convert the raw binary values rapidly without having to call the raw2temp function repeatedly. Thus, for a raw binary value of 17172, 18273, and 24932:
 
@@ -424,13 +454,13 @@ Frames extracted from thermal vids are upside down, so use the mirror.matrix fun
 plotTherm(alltemperature[,1], w=w, h=h, trans="mirror.matrix")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-23-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-25-1.png)
 
 ``` r
 plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-23-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-25-2.png)
 
 These files can be found:
 
@@ -463,7 +493,6 @@ ls
     ## SampleFLIR.csq
     ## SampleFLIR.jpg
     ## SampleFLIR.seq
-    ## output
 
 ### Download and extract perl scripts to perl folder on desktop:
 
@@ -474,9 +503,24 @@ cd ~/Desktop/perl
 ls
 ```
 
-    ## split_fff.pl
-    ## split_jpegls.pl
-    ## split_tiff.pl
+    ## bash: line 0: cd: /Users/GlennTattersall/Desktop/perl: No such file or directory
+    ## BashConvertFLIR.Rmd
+    ## BashConvertFLIR.md
+    ## DESCRIPTION
+    ## HeatTransferCalculations.Rmd
+    ## HeatTransferCalculations.md
+    ## HeatTransferCalculations_files
+    ## NAMESPACE
+    ## R
+    ## README.Rmd
+    ## README.md
+    ## README_files
+    ## Thermimage.Rproj
+    ## Thermimage.pdf
+    ## Uploads
+    ## data
+    ## inst
+    ## man
 
 Bulk convert all FLIR jpg files found in folder:
 
@@ -517,7 +561,6 @@ cd ~/Desktop/SampleFLIR
 ls output/
 ```
 
-    ## SampleFLIR.csq.avi
     ## SampleFLIR.png
 
 Here is a sample image:
@@ -662,12 +705,12 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 29.830822 34.02282 34.68686 401.3250 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 23.829340 29.03084 28.63065 396.8024 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 25.119113 29.99038 29.24096 340.6484 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 32.643114 36.95267 37.46583 398.5712 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  5.481612 10.18499 10.00146 373.5413 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 24.604179 31.50284 29.75138 425.3882 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1  4.851622 10.23259 10.22024 443.6876 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.248939 26.91658 28.28763 416.4205 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 39.439827 44.85148 44.84761 446.9242 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 20.768446 23.93421 26.40373 465.7257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 49.039982 53.82150 53.61726 378.2877 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6  5.948828 12.20171 10.90568 409.6576 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -847,26 +890,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 295.8573 285.5355 234.9037 292.7141 269.9996 301.8467 266.4903
-    ##  [8] 303.9700 232.9004 262.7129 255.6554 266.7220 300.4056 243.1448
-    ## [15] 272.7886 296.1150 302.1029 316.4784 283.3225 365.5478
+    ##  [1] 331.9874 313.0259 331.4762 362.0073 273.5790 295.6597 357.4721
+    ##  [8] 329.6502 232.6788 372.1086 268.4575 229.4482 318.7662 317.0066
+    ## [15] 315.6879 358.3530 290.1922 261.8728 238.5886 322.3363
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -16.283422 -21.378049 -19.683862 -16.838770 -19.052567 -30.416699
-    ##  [7] -16.176966 -14.780076 -18.852352 -27.456194  -8.708464 -21.800654
-    ## [13] -18.577432 -26.428259 -21.915075 -21.647966 -27.005347 -22.348039
-    ## [19] -16.306181 -15.146205
+    ##  [1] -22.55368 -13.81676 -22.33527 -11.50886 -19.08846 -27.18907 -16.26509
+    ##  [8] -19.45540 -33.65072 -16.62858 -18.09653 -13.84015 -20.81195 -27.41666
+    ## [15] -21.68399 -23.75822 -18.88087 -12.60607 -23.53706 -11.81878
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -42.55145 -53.15271 -49.70420 -43.61644 -49.25530 -70.43232 -42.40320
-    ##  [8] -39.22494 -47.85939 -64.22558 -26.03820 -54.76450 -47.27206 -62.80315
-    ## [15] -53.87253 -53.65252 -63.90257 -54.48976 -42.88984 -40.18595
+    ##  [1] -56.40574 -37.50407 -54.40923 -32.46809 -47.67611 -65.43565 -43.11653
+    ##  [8] -48.80713 -76.54007 -43.89625 -46.54906 -37.64837 -51.70938 -64.98254
+    ## [15] -53.79294 -57.35680 -48.47245 -34.79975 -57.91469 -32.76347
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -876,19 +918,19 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 29.830822 34.02282 34.68686 401.3250 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 23.829340 29.03084 28.63065 396.8024 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 25.119113 29.99038 29.24096 340.6484 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 32.643114 36.95267 37.46583 398.5712 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  5.481612 10.18499 10.00146 373.5413 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 24.604179 31.50284 29.75138 425.3882 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 118.34290 -17.02058 101.32232
-    ## 2 1 0.58 0.25 forced hcylinder 114.21420 -21.26109  92.95311
-    ## 3 1 0.58 0.25 forced hcylinder  93.96147 -19.88168  74.07979
-    ## 4 1 0.58 0.25 forced hcylinder 117.08564 -17.44658  99.63907
-    ## 5 1 0.58 0.25 forced hcylinder 107.99984 -19.70212  88.29772
-    ## 6 1 0.58 0.25 forced hcylinder 120.73868 -28.17293  92.56576
+    ## 1  4.851622 10.23259 10.22024 443.6876 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.248939 26.91658 28.28763 416.4205 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 39.439827 44.85148 44.84761 446.9242 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 20.768446 23.93421 26.40373 465.7257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 49.039982 53.82150 53.61726 378.2877 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6  5.948828 12.20171 10.90568 409.6576 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 132.7950 -22.56230 110.23266
+    ## 2 1 0.58 0.25 forced hcylinder 125.2104 -15.00163 110.20873
+    ## 3 1 0.58 0.25 forced hcylinder 132.5905 -21.76369 110.82681
+    ## 4 1 0.58 0.25 forced hcylinder 144.8029 -12.98724 131.81567
+    ## 5 1 0.58 0.25 forced hcylinder 109.4316 -19.07044  90.36116
+    ## 6 1 0.58 0.25 forced hcylinder 118.2639 -26.17426  92.08964
 
 ### Test the equations out for consistency
 
@@ -997,7 +1039,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-49-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-51-1.png)
 
 ### Model operative temperature with varying wind speeds
 
@@ -1032,7 +1074,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-50-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
 
 ### Model operative temperature with varying RH
 
@@ -1065,7 +1107,7 @@ for(i in 2:3){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-51-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-53-1.png)
 
 ### Model operative temperature with varying cloud cover
 
@@ -1098,7 +1140,7 @@ for(i in 2:3){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-54-1.png)
 
 ### References
 
@@ -1122,9 +1164,11 @@ Imagemagick: <http://imagemagick.org>
 
 Perl: <http://www.perl.org>
 
+raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
+
 EEVBlog:
 
--   raw to temperatre conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
+-   raw to temperature conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
 
 -   magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
 
