@@ -1,0 +1,12 @@
+citHeader("To cite Thermimage in publications, please use:")
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype="manual",
+         title = "Thermimage: Thermal Image Analysis",
+         author = person("Glenn J.", "Tattersall"),
+         year = year,
+         note = note,
+         url = "https://CRAN.R-project.org/package=Thermimage",
+         doi = "10.5281/zenodo.1069704" )
