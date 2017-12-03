@@ -1,7 +1,7 @@
 Thermimage: Thermal Image Analysis
 ================
 
-![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage)
+![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
 A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
 
@@ -146,9 +146,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2017-12-01 16:52:11"
-    ## FileAccessDateTime       "2017-12-02 09:21:10"
-    ## FileInodeChangeDateTime  "2017-12-01 16:52:12"
+    ## FileModificationDateTime "2017-12-02 10:16:50"
+    ## FileAccessDateTime       "2017-12-02 23:20:34"
+    ## FileInodeChangeDateTime  "2017-12-02 10:16:52"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -704,13 +704,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  4.851622 10.23259 10.22024 443.6876 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 23.248939 26.91658 28.28763 416.4205 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 39.439827 44.85148 44.84761 446.9242 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 20.768446 23.93421 26.40373 465.7257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 49.039982 53.82150 53.61726 378.2877 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6  5.948828 12.20171 10.90568 409.6576 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 15.53967 19.22587 20.82008 436.3977 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 27.86264 31.91933 32.74496 403.4970 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 22.97500 28.25836 27.71649 391.8588 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 16.02913 20.83191 21.25105 431.5637 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 38.54651 44.26467 43.11193 377.3073 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 26.70544 32.52430 32.64614 490.9671 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -890,25 +890,26 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 331.9874 313.0259 331.4762 362.0073 273.5790 295.6597 357.4721
-    ##  [8] 329.6502 232.6788 372.1086 268.4575 229.4482 318.7662 317.0066
-    ## [15] 315.6879 358.3530 290.1922 261.8728 238.5886 322.3363
+    ##  [1] 331.9448 298.6544 280.5101 321.2513 263.7466 369.6647 352.2878
+    ##  [8] 327.5517 250.5594 286.2139 376.8194 266.3368 335.6352 330.5008
+    ## [15] 337.6313 312.6323 319.4308 287.7427 275.9922 356.4795
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -22.55368 -13.81676 -22.33527 -11.50886 -19.08846 -27.18907 -16.26509
-    ##  [8] -19.45540 -33.65072 -16.62858 -18.09653 -13.84015 -20.81195 -27.41666
-    ## [15] -21.68399 -23.75822 -18.88087 -12.60607 -23.53706 -11.81878
+    ##  [1] -13.959000 -15.641227 -21.807914 -19.425774 -23.933822 -24.564637
+    ##  [7] -21.319119 -10.439697 -29.908329 -14.522328 -25.734470 -29.767056
+    ## [13] -13.252188 -12.824061 -36.273220 -21.828767 -20.482622 -20.569565
+    ## [19]  -9.595917 -15.970083
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -56.40574 -37.50407 -54.40923 -32.46809 -47.67611 -65.43565 -43.11653
-    ##  [8] -48.80713 -76.54007 -43.89625 -46.54906 -37.64837 -51.70938 -64.98254
-    ## [15] -53.79294 -57.35680 -48.47245 -34.79975 -57.91469 -32.76347
+    ##  [1] -38.05649 -41.26571 -54.04316 -49.55242 -57.53883 -59.26678 -52.88193
+    ##  [8] -29.94011 -68.71640 -39.15200 -60.96264 -69.09744 -36.33904 -35.13199
+    ## [15] -81.30573 -54.17014 -50.99152 -51.26439 -27.42684 -41.85296
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -917,20 +918,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  4.851622 10.23259 10.22024 443.6876 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 23.248939 26.91658 28.28763 416.4205 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 39.439827 44.85148 44.84761 446.9242 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 20.768446 23.93421 26.40373 465.7257 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 49.039982 53.82150 53.61726 378.2877 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6  5.948828 12.20171 10.90568 409.6576 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 15.53967 19.22587 20.82008 436.3977 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 27.86264 31.91933 32.74496 403.4970 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 22.97500 28.25836 27.71649 391.8588 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 16.02913 20.83191 21.25105 431.5637 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 38.54651 44.26467 43.11193 377.3073 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 26.70544 32.52430 32.64614 490.9671 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape     qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 132.7950 -22.56230 110.23266
-    ## 2 1 0.58 0.25 forced hcylinder 125.2104 -15.00163 110.20873
-    ## 3 1 0.58 0.25 forced hcylinder 132.5905 -21.76369 110.82681
-    ## 4 1 0.58 0.25 forced hcylinder 144.8029 -12.98724 131.81567
-    ## 5 1 0.58 0.25 forced hcylinder 109.4316 -19.07044  90.36116
-    ## 6 1 0.58 0.25 forced hcylinder 118.2639 -26.17426  92.08964
+    ## 1 1 0.58 0.25 forced hcylinder 132.7779 -15.22259 117.55533
+    ## 2 1 0.58 0.25 forced hcylinder 119.4618 -16.50628 102.95548
+    ## 3 1 0.58 0.25 forced hcylinder 112.2040 -21.61726  90.58679
+    ## 4 1 0.58 0.25 forced hcylinder 128.5005 -19.82097 108.67955
+    ## 5 1 0.58 0.25 forced hcylinder 105.4987 -23.01553  82.48312
+    ## 6 1 0.58 0.25 forced hcylinder 147.8659 -23.70671 124.15915
 
 ### Test the equations out for consistency
 
