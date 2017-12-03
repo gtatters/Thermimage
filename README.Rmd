@@ -55,7 +55,7 @@ The version here on github is the current, development version.  Archived source
 
 Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis (Version v3.1.0). Zenodo. http://doi.org/10.5281/zenodo.1069705
 [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
-
+ 
 # Installation
 
 ## On current R (>= 3.0.0)
