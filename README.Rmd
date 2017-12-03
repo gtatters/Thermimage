@@ -41,7 +41,6 @@ The version here on github is the current, development version.  Archived source
    - Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
 
 
-
 # Features
 
 * Functions for importing FLIR image and video files into R.
@@ -50,6 +49,12 @@ The version here on github is the current, development version.  Archived source
 * Functions for running command line conversion tools to prepare FLIR thermal image files for direct import into ImageJ.
 * Functions for steady state estimates of heat exchange from surface temperatures estimated by thermal imaging.
 * Functions for modelling heat exchange under various convective, short-wave, and long-wave radiative heat flux, useful in thermal ecology studies.
+
+
+# How to Cite
+
+Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis (Version v3.1.0). Zenodo. http://doi.org/10.5281/zenodo.1069705
+
 
 # Installation
 
