@@ -13,7 +13,7 @@ Perl: <https://www.perl.org/get.html>
 
 ### Download and extract sample files to SampleFLIR folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/SampleFLIR.zip>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip>
 
 ``` bash
 cd ~/Desktop/SampleFLIR
@@ -27,7 +27,7 @@ ls
 
 ### Download and extract perl scripts to perl folder on desktop:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/perl.zip>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/perl.zip>
 
 ``` bash
 cd ~/Desktop/perl
@@ -179,11 +179,11 @@ rm -r temp
 
 Which produces the following output:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/CSQconverted.avi?raw=true>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/CSQconverted.avi?raw=true>
 
 The above avi should open up in VLC player, but may or may not play properly. In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
 ### Workflow to convert seq (640x480) to avi file
 
@@ -341,7 +341,7 @@ rm -r temp
 
 Which produces the following output:
 
-<https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedjpegls.avi?raw=true> <https://github.com/gtatters/Thermimage/blob/master/README_files/SEQconvertedpng.avi?raw=true>
+<https://github.com/gtatters/Thermimage/blob/master/Uploads/SEQconvertedjpegls.avi?raw=true> <https://github.com/gtatters/Thermimage/blob/master/Uploads/SEQconvertedpng.avi?raw=true>
 
 Note: the above avi should open up in VLC player, but may or may not play properly. In ImageJ, with the ffmpeg plugin installed, the jpegls compression should work.
 
@@ -365,7 +365,7 @@ exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
     ## Planck O                        : -7340
     ## Planck R2                       : 0.012545258
 
-![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/README_files/JPGconverted.png?raw=true)
+![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/JPGconverted.png?raw=true)
 
 ### Workflow to convert FLIR jpg multi-burst (with ultramax) to png file
 
