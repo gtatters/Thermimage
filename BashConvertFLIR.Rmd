@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-These instructions are for converting certain flir file types using command line tools.  These functions are also incorporated into the Thermimage package through the functions, convertflirJPG(), converflirVID(), and ffmpegcall().  If these functions are not working in R, try following the command line instructions here to diagnose your system.
+These instructions are for converting certain flir file types using command line tools.  Variants of these functions are also incorporated into the Thermimage package through the functions, convertflirJPG(), converflirVID(), and ffmpegcall().  If these functions are not working in R, try following the command line instructions here to diagnose your system.
 
 ### System Requirements
 Exiftool: https://www.sno.phy.queensu.ca/~phil/exiftool/
@@ -20,34 +20,35 @@ Perl: https://www.perl.org/get.html
 https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip
 
 ```{bash}
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls
 ```
 
-### Download and extract perl scripts to perl folder on desktop:
-https://github.com/gtatters/Thermimage/blob/master/Uploads/perl.zip
+### Download and extract this perl script (split.pl) to a scripts folder in an IRconvert folder:
+https://github.com/gtatters/Thermimage/blob/master/Uploads/split.pl
 
 ```{bash}
-cd ~/Desktop/perl
+cd ~/IRconvert/scripts
 ls
 ```
 
 ### Workflow to convert csq (1024x768) to avi file
 
-1. Break video into .fff files into temp/ subfolder and extract times from each frame.
-2. Put raw thermal data from fff into one thermalvid.raw file in temp folder.
-3. Break thermalvid.raw video from .CSQ file into .jpegls files into temp folder.
-4. Convert all jpegls files into avi file.  
+1. Break video into .fff files into a temp/ subfolder
+2. Extract times from each frame (this is optional but allows a quick check that the fff files are valid).
+3. Put raw thermal data from fff into one thermalvid.raw file in temp folder.
+4. Break thermalvid.raw video from .CSQ file into .jpegls files into temp folder.
+5. Convert all jpegls files into avi file.  
 -----Use -codec png for compatibility, -codec jpegls for greater compression.
 -----Use -pix_fmt gray16be for big endian export format, -pix_fmt gray16le for little endian format.
 -----Use -f image2 -codec png to export a series of PNG files instead of an avi.
-5. Import avi into ImageJ using File->Import->Movie(ffmpeg) import routine.
+6. Import avi into ImageJ using File->Import->Movie(ffmpeg) import routine.
 -----Import png files into ImageJ using File->Import->Image Sequence
 
 
 ```{bash}
-cd ~/Desktop
-perl -f ~/Desktop/perl/split_fff.pl ~/Desktop/SampleFLIR/SampleFLIR.csq
+cd ~/IRconvert
+perl -f ~/IRconvert/scripts/split.pl -i ~/IRconvert/SampleFLIR/SampleFLIR.csq -o temp -b frame -p fff -x fff
 ls temp
 rm temp/frame00008.fff # remove 8th frame - due to file corruption
 echo
@@ -57,19 +58,19 @@ exiftool -b -RawThermalImage temp/*.fff > temp/thermalvid.raw
 ls temp/*.raw
 echo
 
-perl -f ~/Desktop/perl/split_jpegls.pl temp/thermalvid.raw
+perl ~/IRconvert/scripts/split.pl -i temp/thermalvid.raw -o temp -b frame -p jpegls -x jpegls
 ls temp/*.jpegls
 echo
 
-cd ~/Desktop/SampleFLIR
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 output/CSQconverted.avi -y
+cd ~/IRconvert/SampleFLIR
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/IRconvert/temp/frame%05d.jpegls -pix_fmt gray16be -vcodec jpegls -s 1024x768 CSQconverted.avi -y
 echo
 
-ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/Desktop/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 output/frame%05d.png -y
+ffmpeg -f image2 -vcodec jpegls -r 30 -s 1024x768 -i ~/IRconvert/temp/frame%05d.jpegls -f image2 -pix_fmt gray16be -vcodec png -s 1024x768 output/frame%05d.png -y
 
 ls output/*.avi
 ls output/*.png
-cd ~/Desktop
+cd ~/IRconvert
 rm -r temp
 ```
 
@@ -85,38 +86,40 @@ The above PNG file is a sample image of the 16 bit grayscale image.  Although it
 
 ### Workflow to convert seq (640x480) to avi file
 
-1. Break video into .fff files into temp/ subfolder and extract times from each frame.
-2. Put raw thermal data from fff into one thermalvid.raw file in temp folder.
-3. Break thermalvid.raw video from .CSQ file into .tiff files into temp folder.
-4. Convert all tiff files into avi file.  
-4. Convert all jpegls files into avi file.  
+1. Break video into .fff files into temp/ subfolder.
+2. Extract times from each frame (this is optional but allows a quick check that the fff files are valid).
+3. Put raw thermal data from fff into one thermalvid.raw file in temp folder.
+4. Break thermalvid.raw video from .CSQ file into .tiff files into temp folder.
+5. Convert all tiff files into avi file.  
+6. Convert all jpegls files into avi file.  
 ----- Use -codec png for compatibility, -codec jpegls for greater compression.
 ------Use -pix_fmt gray16be for big endian export format, -pix_fmt gray16le for little endian format.
-5. Import avi into ImageJ using File->Import->Movie(ffmpeg) import routine.
+7. Import avi into ImageJ using File->Import->Movie(ffmpeg) import routine.
 
 
 ```{bash}
-cd ~/Desktop
-perl -f ~/Desktop/perl/split_fff.pl ~/Desktop/SampleFLIR/SampleFLIR.seq
+cd ~/IRconvert
+perl -f ~/IRconvert/scripts/split.pl -i ~/IRconvert/SampleFLIR/SampleFLIR.seq -o temp -b frame -p fff -x fff
 ls temp
 echo
 
-#exiftool -DateTimeOriginal temp/*.fff 
+exiftool -DateTimeOriginal temp/*.fff 
 exiftool -b -RawThermalImage temp/*.fff > temp/thermalvid.raw
 ls temp/*.raw
 echo
 
-perl -f ~/Desktop/perl/split_tiff.pl < temp/thermalvid.raw
-ls temp/*.tiff
+perl ~/IRconvert/scripts/split.pl -i temp/thermalvid.raw -o temp -b frame -p tiff -x tiff
+ls temp/*tiff
 echo
 
-cd ~/Desktop/SampleFLIR
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 output/SEQconvertedjpegls.avi -y
-ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/Desktop/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 output/SEQconvertedpng.avi -y
+cd ~/IRconvert/SampleFLIR
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/IRconvert/temp/frame%05d.tiff -pix_fmt gray16be -vcodec jpegls -s 640x480 SEQconvertedjpegls.avi -y
+
+ffmpeg -f image2 -vcodec tiff -r 30 -s 640x480 -i ~/IRconvert/temp/frame%05d.tiff -pix_fmt gray16be -vcodec png -s 640x480 SEQconvertedpng.avi -y
 echo
 
 ls output/*.avi
-cd ~/Desktop
+cd ~/IRconvert
 rm -r temp
 ```
 
@@ -136,10 +139,10 @@ Note: the above avi should open up in VLC player, but may or may not play proper
 4. Use exiftool to extract calibration constants from file (for use in converting raw values)
 
 ```{bash}
-cd ~/Desktop/SampleFLIR
-exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- output/JPGconverted.png
+cd ~/IRconvert/SampleFLIR
+exiftool ~/IRconvert/SampleFLIR/SampleFLIR.jpg -b -RawThermalImage | convert - gray:- | convert -depth 16 -endian lsb -size 640x480 gray:- output/JPGconverted.png
 
-exiftool ~/Desktop/SampleFLIR/SampleFLIR.jpg -*Planck*
+exiftool ~/IRconvert/SampleFLIR/SampleFLIR.jpg -*Planck*
 ```
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/JPGconverted.png?raw=true)
