@@ -14,6 +14,8 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   # http://cactuslab.com/imagemagick/
   # v. 2.2.3 fixed error in readflirJPG on a windows OS. 
   # Credit to John Al-Alawneh for troubleshooting
+  # v 3.1.1 fixed white space error in readflirJPJG on windows OS
+
  
   if (!exiftoolpath == "installed") {
     exiftoolcheck <- paste0(exiftoolpath, "/exiftool")
@@ -41,7 +43,8 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   }
   if (Sys.info()["sysname"]=="Windows")
   {
-    info <- shell(paste(syscommand,imagefile,vals))
+    info <- shell(paste(syscommand, shQuote(imagefile), vals)) 
+    # add shQuote around imagefile (Thermimage v 3.1.1)
   }
   
   if (exiftoolpath == "") {

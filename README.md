@@ -10,11 +10,14 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2017-11-28: Version 3.1.0 is on Github (development version)
--   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
+-   2018-09-08: Version 3.1.1 is on Github (development version)
+-   Added minor change to readflirJPG function to accomodoate whitespace in file pathing. See Issue \#1.
 
 Previous release notes
 ======================
+
+-   2017-11-28: Version 3.1.0 is on Github (development version)
+-   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
 
 -   2017-10-04: Version 3.0.2 is on Github and Cran
 -   Minor change to getFrames function to provide reverse ordering of vector.
@@ -97,12 +100,6 @@ To load a FLIR JPG, you first must install Exiftool as per instructions above. O
 library(Thermimage)
 f<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
 img<-readflirJPG(f, exiftoolpath="installed")
-```
-
-    ## Warning in strptime(datechar, format = "%Y-%m-%d %H:%M:%S %z"): unknown
-    ## timezone 'default/America/Toronto'
-
-``` r
 dim(img)
 ```
 
@@ -121,7 +118,7 @@ head(cbind(cams$Info), 20) # Large amount of Info, show just the first 20 tages 
     ##                       [,1]    
     ## ExifToolVersionNumber 10.67   
     ## FileName              2412    
-    ## Directory             ".3.4"  
+    ## Directory             ".3.5"  
     ## FileSize              638     
     ## FilePermissions       "-"     
     ## FileType              ""      
@@ -157,12 +154,12 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2017-12-03 14:55:15"
-    ## FileAccessDateTime       "2017-12-03 15:09:14"
-    ## FileInodeChangeDateTime  "2017-12-03 14:55:16"
-    ## ModifyDate               "2013-05-09 20:22:23"
-    ## CreateDate               "2013-05-09 20:22:23"
-    ## DateTimeOriginal         "2013-05-10 02:22:23"
+    ## FileModificationDateTime "2018-04-12 08:13:55"
+    ## FileAccessDateTime       "2018-09-08 09:43:20"
+    ## FileInodeChangeDateTime  "2018-08-07 10:28:21"
+    ## ModifyDate               "2013-05-09 16:22:23"
+    ## CreateDate               "2013-05-09 16:22:23"
+    ## DateTimeOriginal         "2013-05-09 22:22:23"
 
 or just:
 
@@ -170,7 +167,7 @@ or just:
 cams$Dates$DateTimeOriginal
 ```
 
-    ## [1] "2013-05-10 02:22:23"
+    ## [1] "2013-05-09 22:22:23"
 
 The most relevant variables to extract for calculation of temperature values from raw A/D sensor data are listed here. These can all be extracted from the cams output as above. I have simplified the output below, since dealing with lists can be awkward.
 
@@ -227,7 +224,7 @@ library(fields) # should be imported when installing Thermimage
 
     ## Loading required package: grid
 
-    ## Spam version 2.1-1 (2017-07-02) is loaded.
+    ## Spam version 2.2-0 (2018-06-19) is loaded.
     ## Type 'help( Spam)' or 'demo( spam)' for a short introduction 
     ## and overview of this package.
     ## Help for individual functions is also obtained by adding the
@@ -241,6 +238,9 @@ library(fields) # should be imported when installing Thermimage
     ##     backsolve, forwardsolve
 
     ## Loading required package: maps
+
+    ## See www.image.ucar.edu/~nychka/Fields for
+    ##  a vignette and other supplements.
 
 ``` r
 plotTherm(temperature, h=h, w=w, minrangeset=21, maxrangeset=32)
@@ -409,8 +409,8 @@ data.frame(extract.times)
 ```
 
     ##             extract.times
-    ## 1 2012-06-13 19:52:08.698
-    ## 2 2012-06-13 19:52:12.665
+    ## 1 2012-06-13 15:52:08.698
+    ## 2 2012-06-13 15:52:12.665
 
 ``` r
 Interval<-signif(mean(as.numeric(diff(extract.times))),3)
@@ -492,53 +492,62 @@ Convert FLIR JPG from R
 
 If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files. The following methods are available in R, but are based on command line tools that are also described in <https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md>
 
-### Download and extract sample files to SampleFLIR folder on desktop:
+### Download and extract sample files to SampleFLIR folder:
 
 <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip>
 
 ``` bash
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls
 ```
 
+    ## CSQconverted.avi
+    ## SEQconverted.avi
+    ## SEQconvertedjpegls.avi
+    ## SEQconvertedpng.avi
     ## SampleFLIR.csq
     ## SampleFLIR.jpg
     ## SampleFLIR.seq
     ## output
 
-### Download and extract perl scripts to perl folder on desktop:
+### Download and extract perl scripts to scripts folder:
 
 <https://github.com/gtatters/Thermimage/blob/master/Uploads/perl.zip>
 
 ``` bash
-cd ~/Desktop/perl
+cd ~/IRconvert/scripts
 ls
 ```
 
-    ## bash: line 0: cd: /Users/GlennTattersall/Desktop/perl: No such file or directory
-    ## BashConvertFLIR.Rmd
-    ## BashConvertFLIR.md
-    ## DESCRIPTION
-    ## HeatTransferCalculations.Rmd
-    ## HeatTransferCalculations.md
-    ## HeatTransferCalculations_files
-    ## NAMESPACE
-    ## R
-    ## README.Rmd
-    ## README.md
-    ## README_files
-    ## Thermimage.Rproj
-    ## Thermimage.pdf
-    ## Uploads
-    ## data
-    ## inst
-    ## man
+    ## ConvertCSQtoAVI
+    ## ConvertFCFtoAVI
+    ## ConvertFLIRJPGtoTIFF
+    ## ConvertSEQtoAVI
+    ## ConverttoGrayscale
+    ## ExtractAllFLIRJPGs
+    ## IRFileImport.R
+    ## ImageJRad2Temp.txt
+    ## ImportRaw_FCFsettings.jpeg
+    ## Process_Folder GUI mod.ijm
+    ## Process_Folder.ijm
+    ## Process_Folder_TIFF2Temp.ijm
+    ## Rplots.pdf
+    ## exiftool commands.docx
+    ## imagejscript_rad2temp
+    ## split.pl
+    ## split_fff.pl
+    ## split_jpegls.pl
+    ## split_tiff.pl
+    ## test.pl
+    ## test2.pl
+    ## workflow.txt
+    ## workflow_windows.txt
 
 Bulk convert all FLIR jpg files found in folder:
 
 ``` r
 library(Thermimage)
-setwd("~/Desktop/SampleFLIR")
+setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 
 l.files<-list.files(pattern=".jpg", recursive=T, full.names=F, include.dirs=T, no..=T)
@@ -569,12 +578,19 @@ for(f in l.files){
 Converted files are in output folder:
 
 ``` bash
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
-    ## SampleFLIR.csq.avi
+    ## JPGconverted.png
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 Here is a sample image:
 
@@ -589,7 +605,7 @@ Bulk convert all FLIR csq files found in folder:
 
 ``` r
 library(Thermimage)
-setwd("~/Desktop/SampleFLIR")
+setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 perlpath <- "installed"
 
@@ -615,15 +631,26 @@ for(f in l.files){
 }
 ```
 
+    ## 
+    ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output/SampleFLIR.csq.avi' -y
+
 Converted files are in output folder:
 
 ``` bash
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
+    ## JPGconverted.png
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
@@ -717,13 +744,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 33.864193 38.78898 38.86389 413.1984 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 36.975612 41.23547 40.75229 312.1223 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 33.323807 38.96935 38.10164 394.8620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4  5.391861 11.02376 10.38540 412.6889 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 32.175619 37.12136 37.14450 410.6511 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.250135 39.04242 40.86267 463.8461 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 16.68631 21.29455 20.54116 318.5827 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 36.31322 42.37016 40.68954 361.6793 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 32.56870 38.67924 37.48797 406.5513 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 29.70769 34.90791 34.34270 383.0593 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.55947 27.81732 28.21977 385.1488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 20.86798 24.84883 26.79109 489.5131 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -903,25 +930,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 302.5069 212.3262 280.5062 301.7773 299.8841 357.7433 274.0226
-    ##  [8] 303.1223 314.2798 290.6609 310.5989 205.1192 288.1640 314.5775
-    ## [15] 257.3331 280.4403 298.1104 327.8962 285.4206 296.0118
+    ##  [1] 216.8717 246.6154 288.4081 272.3464 280.2925 379.5590 315.5482
+    ##  [8] 231.6446 360.5331 243.7832 316.0035 259.5243 275.8580 327.6733
+    ## [15] 260.3537 203.0812 212.8969 271.2283 289.9516 376.7986
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -19.88707 -16.57260 -23.59386 -23.86646 -20.00468 -14.33878 -26.24677
-    ##  [8] -13.90488 -17.45568 -15.30192 -16.04610 -32.03522 -25.44462 -17.17779
-    ## [15] -18.83817 -25.20973 -23.31087 -23.34980 -18.73824 -18.15114
+    ##  [1] -18.44055 -25.73677 -26.05442 -21.31906 -16.64744 -15.32436 -17.69527
+    ##  [8] -31.38580 -14.57205 -23.77961 -18.14120 -21.07799 -26.71183 -17.36962
+    ## [15] -12.35732 -29.42694 -21.51311 -22.49855 -14.77803 -19.41227
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -49.78149 -42.92863 -57.09826 -58.98714 -50.07925 -38.28095 -63.02670
-    ##  [8] -37.66356 -45.53536 -40.63074 -41.99227 -74.97346 -60.83288 -44.25694
-    ## [15] -47.85697 -60.72023 -57.31268 -56.93573 -47.92020 -46.17973
+    ##  [1] -47.50473 -61.07782 -61.84877 -52.79258 -43.52342 -40.82263 -45.43122
+    ##  [8] -72.48563 -38.76947 -57.39606 -46.43538 -52.29869 -63.26030 -44.91669
+    ## [15] -34.59421 -67.71395 -52.83262 -55.28518 -39.67548 -49.82548
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -930,20 +957,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 33.864193 38.78898 38.86389 413.1984 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 36.975612 41.23547 40.75229 312.1223 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 33.323807 38.96935 38.10164 394.8620 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4  5.391861 11.02376 10.38540 412.6889 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 32.175619 37.12136 37.14450 410.6511 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.250135 39.04242 40.86267 463.8461 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 16.68631 21.29455 20.54116 318.5827 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 36.31322 42.37016 40.68954 361.6793 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 32.56870 38.67924 37.48797 406.5513 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 29.70769 34.90791 34.34270 383.0593 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.55947 27.81732 28.21977 385.1488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 20.86798 24.84883 26.79109 489.5131 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 121.00276 -19.91260 101.09017
-    ## 2 1 0.58 0.25 forced hcylinder  84.93048 -17.17145  67.75902
-    ## 3 1 0.58 0.25 forced hcylinder 112.20248 -22.83930  89.36318
-    ## 4 1 0.58 0.25 forced hcylinder 120.71090 -23.59486  97.11605
-    ## 5 1 0.58 0.25 forced hcylinder 119.95362 -20.03170  99.92192
-    ## 6 1 0.58 0.25 forced hcylinder 143.09732 -15.31238 127.78494
+    ## 1 1 0.58 0.25 forced hcylinder  86.74870 -19.00189  67.74680
+    ## 2 1 0.58 0.25 forced hcylinder  98.64615 -24.43113  74.21503
+    ## 3 1 0.58 0.25 forced hcylinder 115.36326 -24.73951  90.62375
+    ## 4 1 0.58 0.25 forced hcylinder 108.93854 -21.11703  87.82151
+    ## 5 1 0.58 0.25 forced hcylinder 112.11702 -17.40937  94.70765
+    ## 6 1 0.58 0.25 forced hcylinder 151.82359 -16.32905 135.49454
 
 ### Test the equations out for consistency
 

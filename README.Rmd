@@ -21,11 +21,14 @@ The version here on github is the current, development version.  Archived source
 
 # Current release notes
 
-* 2017-11-28: Version 3.1.0 is on Github (development version)
-   - Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
+* 2018-09-08: Version 3.1.1 is on Github (development version)
+   - Added minor change to readflirJPG function to accomodoate whitespace in file pathing.  See Issue #1.
 
 # Previous release notes
 
+* 2017-11-28: Version 3.1.0 is on Github (development version)
+   - Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
+   
 * 2017-10-04: Version 3.0.2 is on Github and Cran
    - Minor change to getFrames function to provide reverse ordering of vector.
 
@@ -352,19 +355,19 @@ Note: 32-bit video files can be large and difficult to load into ImageJ.  Approa
 
 If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files.  The following methods are available in R, but are based on command line tools that are also described in https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md
 
-### Download and extract sample files to SampleFLIR folder on desktop:
+### Download and extract sample files to SampleFLIR folder:
 https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip
 
 ```{bash}
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls
 ```
 
-### Download and extract perl scripts to perl folder on desktop:
+### Download and extract perl scripts to scripts folder:
 https://github.com/gtatters/Thermimage/blob/master/Uploads/perl.zip
 
 ```{bash}
-cd ~/Desktop/perl
+cd ~/IRconvert/scripts
 ls
 ```
 
@@ -373,7 +376,7 @@ Bulk convert all FLIR jpg files found in folder:
 ```{r}
 
 library(Thermimage)
-setwd("~/Desktop/SampleFLIR")
+setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 
 l.files<-list.files(pattern=".jpg", recursive=T, full.names=F, include.dirs=T, no..=T)
@@ -399,7 +402,7 @@ for(f in l.files){
 
 Converted files are in output folder:
 ```{bash}
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
@@ -416,7 +419,7 @@ Bulk convert all FLIR csq files found in folder:
 
 ```{r}
 library(Thermimage)
-setwd("~/Desktop/SampleFLIR")
+setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 perlpath <- "installed"
 
@@ -441,7 +444,7 @@ for(f in l.files){
 
 Converted files are in output folder:
 ```{bash}
-cd ~/Desktop/SampleFLIR
+cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
