@@ -11,7 +11,7 @@ Current release notes
 =====================
 
 -   2018-09-08: Version 3.1.1 is on Github (development version)
--   Added minor change to readflirJPG function to accomodoate whitespace in file pathing. See Issue \#1.
+-   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
 
 Previous release notes
 ======================
