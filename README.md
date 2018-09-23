@@ -36,7 +36,7 @@ Previous release notes
 Features
 ========
 
--   Functions for importing FLIR image and video files into R.
+-   Functions for importing FLIR image and video files (limited) into R.
 -   Functions for converting thermal image data from FLIR based files, incorporating calibration information stored within each radiometric image file.
 -   Functions for exporting calibrated thermal image data for analysis in open source platforms, such as ImageJ.
 -   Functions for running command line conversion tools to prepare FLIR thermal image files for direct import into ImageJ.
@@ -154,9 +154,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2018-04-12 08:13:55"
-    ## FileAccessDateTime       "2018-09-08 09:43:20"
-    ## FileInodeChangeDateTime  "2018-08-07 10:28:21"
+    ## FileModificationDateTime "2018-09-08 10:40:14"
+    ## FileAccessDateTime       "2018-09-22 22:30:47"
+    ## FileInodeChangeDateTime  "2018-09-08 10:40:16"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -521,7 +521,9 @@ ls
 
     ## ConvertCSQtoAVI
     ## ConvertFCFtoAVI
+    ## ConvertFLIRJPGtoRAW
     ## ConvertFLIRJPGtoTIFF
+    ## ConvertFLIRRAWtoTIFF
     ## ConvertSEQtoAVI
     ## ConverttoGrayscale
     ## ExtractAllFLIRJPGs
@@ -531,7 +533,6 @@ ls
     ## Process_Folder GUI mod.ijm
     ## Process_Folder.ijm
     ## Process_Folder_TIFF2Temp.ijm
-    ## Rplots.pdf
     ## exiftool commands.docx
     ## imagejscript_rad2temp
     ## split.pl
@@ -583,6 +584,7 @@ ls output/
 ```
 
     ## JPGconverted.png
+    ## SampleFLIR.csq.avi
     ## SampleFLIR.png
     ## frame00001.png
     ## frame00002.png
@@ -745,12 +747,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 16.68631 21.29455 20.54116 318.5827 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 36.31322 42.37016 40.68954 361.6793 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 32.56870 38.67924 37.48797 406.5513 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 29.70769 34.90791 34.34270 383.0593 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.55947 27.81732 28.21977 385.1488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 20.86798 24.84883 26.79109 489.5131 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 37.97261 42.54663 42.99063 414.7125 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 35.59014 42.03201 40.29302 388.6671 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 13.96547 18.48012 18.99618 415.7613 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 24.59074 29.24312 30.13254 458.0001 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 17.18198 22.05137 22.18723 413.6570 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 17.24925 22.70638 22.66834 447.8586 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -930,25 +932,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 216.8717 246.6154 288.4081 272.3464 280.2925 379.5590 315.5482
-    ##  [8] 231.6446 360.5331 243.7832 316.0035 259.5243 275.8580 327.6733
-    ## [15] 260.3537 203.0812 212.8969 271.2283 289.9516 376.7986
+    ##  [1] 306.7567 269.3383 308.4174 346.0350 304.0063 332.6027 272.4901
+    ##  [8] 280.4144 207.2280 304.5664 208.3905 308.3683 368.1117 298.1171
+    ## [15] 317.5704 334.3493 250.9221 189.7696 327.7157 310.3796
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -18.44055 -25.73677 -26.05442 -21.31906 -16.64744 -15.32436 -17.69527
-    ##  [8] -31.38580 -14.57205 -23.77961 -18.14120 -21.07799 -26.71183 -17.36962
-    ## [15] -12.35732 -29.42694 -21.51311 -22.49855 -14.77803 -19.41227
+    ##  [1] -18.10876 -27.80368 -18.00136 -18.58885 -19.75060 -22.77337 -21.15733
+    ##  [8] -19.36673 -27.43417 -21.03178 -27.87352 -22.70360 -29.50349 -11.34028
+    ## [15] -16.22296 -20.93172 -18.53922 -23.49901 -25.72782 -22.19389
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -47.50473 -61.07782 -61.84877 -52.79258 -43.52342 -40.82263 -45.43122
-    ##  [8] -72.48563 -38.76947 -57.39606 -46.43538 -52.29869 -63.26030 -44.91669
-    ## [15] -34.59421 -67.71395 -52.83262 -55.28518 -39.67548 -49.82548
+    ##  [1] -46.05090 -65.00518 -46.70718 -47.49950 -50.16472 -56.21487 -52.62306
+    ##  [8] -49.62127 -64.63843 -52.15055 -65.64355 -55.38225 -68.83404 -31.57650
+    ## [15] -42.32578 -52.46572 -47.21599 -57.48509 -61.70537 -54.31319
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -958,19 +960,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 16.68631 21.29455 20.54116 318.5827 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 36.31322 42.37016 40.68954 361.6793 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 32.56870 38.67924 37.48797 406.5513 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 29.70769 34.90791 34.34270 383.0593 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.55947 27.81732 28.21977 385.1488 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 20.86798 24.84883 26.79109 489.5131 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder  86.74870 -19.00189  67.74680
-    ## 2 1 0.58 0.25 forced hcylinder  98.64615 -24.43113  74.21503
-    ## 3 1 0.58 0.25 forced hcylinder 115.36326 -24.73951  90.62375
-    ## 4 1 0.58 0.25 forced hcylinder 108.93854 -21.11703  87.82151
-    ## 5 1 0.58 0.25 forced hcylinder 112.11702 -17.40937  94.70765
-    ## 6 1 0.58 0.25 forced hcylinder 151.82359 -16.32905 135.49454
+    ## 1 37.97261 42.54663 42.99063 414.7125 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 35.59014 42.03201 40.29302 388.6671 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 13.96547 18.48012 18.99618 415.7613 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 24.59074 29.24312 30.13254 458.0001 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 17.18198 22.05137 22.18723 413.6570 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 17.24925 22.70638 22.66834 447.8586 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 122.7027 -18.42036 104.28232
+    ## 2 1 0.58 0.25 forced hcylinder 107.7353 -26.00207  81.73325
+    ## 3 1 0.58 0.25 forced hcylinder 123.3669 -18.68287 104.68407
+    ## 4 1 0.58 0.25 forced hcylinder 138.4140 -18.99980 119.41420
+    ## 5 1 0.58 0.25 forced hcylinder 121.6025 -20.06589 101.53665
+    ## 6 1 0.58 0.25 forced hcylinder 133.0411 -22.48595 110.55515
 
 ### Test the equations out for consistency
 

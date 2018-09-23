@@ -18,8 +18,9 @@ License: GPL (>=2)
 Depends: R (>= 2.10)
 SystemRequirements: exiftool, perl, ffmpeg, imagemagick
 Suggests: fields
-Imports: tiff, png
+Imports: tiff, png, roxygen2
 LazyData: true
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage
 BugReports: http://github.com/gtatters/Thermimage/issues
-RoxygenNote: 6.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.0

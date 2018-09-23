@@ -45,7 +45,7 @@ The version here on github is the current, development version.  Archived source
 
 # Features
 
-* Functions for importing FLIR image and video files into R.
+* Functions for importing FLIR image and video files (limited) into R.
 * Functions for converting thermal image data from FLIR based files, incorporating calibration information stored within each radiometric image file.
 * Functions for exporting calibrated thermal image data for analysis in open source platforms, such as ImageJ.
 * Functions for running command line conversion tools to prepare FLIR thermal image files for direct import into ImageJ.
