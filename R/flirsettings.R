@@ -10,14 +10,6 @@ flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
   # Need to have exiftool installed in your OS's system folder or equivalent
   # http://www.sno.phy.queensu.ca/~phil/exiftool/
   
-  if(!exiftoolpath=="installed"){
-    exiftoolcheck<-paste0(exiftoolpath, "/exiftool")
-    
-    if(!file.exists(exiftoolcheck)) {
-      stop("Exiftool not installed at this location.  Please check path usage.")
-    }
-    
-  }
   
   if(exiftoolpath=="installed"){
     exiftoolpath<-""

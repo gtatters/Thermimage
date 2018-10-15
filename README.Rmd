@@ -20,11 +20,14 @@ The version here on github is the current, development version.  Archived source
 
 # Current release notes
 
-* 2018-09-08: Version 3.1.1 is on Github (development version)
-   - Added minor change to readflirJPG function to accomodate whitespace in file pathing.  See Issue #1.
+* 2018-10-14: Version 3.1.2 is on Github (development version)
+   - Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
 
 # Previous release notes
 
+* 2018-09-08: Version 3.1.1 is on Github (development version)
+   - Added minor change to readflirJPG function to accomodate whitespace in file pathing.  See Issue #1.
+   
 * 2017-11-28: Version 3.1.0 is on Github (development version)
    - Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
    

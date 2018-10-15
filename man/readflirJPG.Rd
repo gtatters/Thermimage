@@ -20,7 +20,7 @@ A character string that determines whether Exiftool has been "installed" (http:/
 \details{
 Only tested on a select number of FLIR JPGs.  Usage depends on functionality provided by Exiftool.  At present this function first makes use of readBin to read in thermal image jpgs and searches for the magic start byte sequence ("54", "49", "46", "46","49", "49") for TIFF type images or ("89", "50", "4e", "47", "0d", "0a", "1a", "0a") for PNG type images, and then uses the readTIFF or readPNG functions to load into R.
 
-Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool perl scripts and set exiftoolpath to the custom folder location to access the perl scripts that are attached with this package.  The version of Exiftool installed with Thermimage package has not been tested on all OS.
+Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool and set exiftoolpath to the custom folder location.  To test if the custom path to Exiftool will work on your OS, try your own system or system2 call: system2("/custompath/exiftool") to see if you get an error or not.
 
 v 2.2.3: updated to fix a problem calling shell commands requiring folder write access 
 on a windows OS (thanks to John Al-Alawneh)
@@ -56,6 +56,7 @@ Alternatively, convertflirjpg and convertflirvid functions are wrappers that wil
 
 \dontrun{
 ## Example using the flirsettings and readflirjpg functions
+
 library(Thermimage)
 ## Sample flir jpg included with Thermimage package:
 

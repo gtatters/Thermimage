@@ -15,14 +15,7 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   # v. 2.2.3 fixed error in readflirJPG on a windows OS. 
   # Credit to John Al-Alawneh for troubleshooting
   # v 3.1.1 fixed white space error in readflirJPJG on windows OS
-
- 
-  if (!exiftoolpath == "installed") {
-    exiftoolcheck <- paste0(exiftoolpath, "/exiftool")
-    if (!file.exists(exiftoolcheck)) {
-      stop("Exiftool not installed at this location.  Please check path usage.")
-    }
-  }
+  # v 3.1.2 removed "stop" check for custom path to exiftool
   
   if (exiftoolpath == "installed") {
     exiftoolpath <- ""
