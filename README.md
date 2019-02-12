@@ -10,7 +10,7 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2018-10-14: Version 3.1.3 is on Github (development version)
+-   2019-02-12: Version 3.1.3 is on Github (development version)
 -   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
 
 Previous release notes
