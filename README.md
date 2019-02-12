@@ -10,16 +10,19 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2018-10-14: Version 3.1.2 is on Github (development version)
--   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
+-   2018-10-14: Version 3.1.3 is on Github (development version)
+-   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
 
 Previous release notes
 ======================
 
--   2018-09-08: Version 3.1.1 is on Github (development version)
+-   2018-10-14: Version 3.1.2
+-   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
+
+-   2018-09-08: Version 3.1.1
 -   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
 
--   2017-11-28: Version 3.1.0 is on Github (development version)
+-   2017-11-28: Version 3.1.0
 -   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
 
 -   2017-10-04: Version 3.0.2 is on Github and Cran
@@ -157,9 +160,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2018-09-08 10:40:14"
-    ## FileAccessDateTime       "2018-10-14 22:13:33"
-    ## FileInodeChangeDateTime  "2018-09-08 10:40:16"
+    ## FileModificationDateTime "2018-11-05 17:57:42"
+    ## FileAccessDateTime       "2019-02-12 14:20:55"
+    ## FileInodeChangeDateTime  "2019-01-26 17:04:55"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -227,7 +230,7 @@ library(fields) # should be imported when installing Thermimage
 
     ## Loading required package: grid
 
-    ## Spam version 2.2-0 (2018-06-19) is loaded.
+    ## Spam version 2.2-1 (2018-12-20) is loaded.
     ## Type 'help( Spam)' or 'demo( spam)' for a short introduction 
     ## and overview of this package.
     ## Help for individual functions is also obtained by adding the
@@ -749,13 +752,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  6.159769 11.61843 11.71374 459.0061 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 20.981386 26.66849 26.12098 424.7596 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 19.593788 25.87648 25.40136 479.9649 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 35.890540 38.76122 40.55279 385.3097 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 27.571628 32.46646 32.06414 371.2824 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 33.294565 38.17605 37.44378 342.9100 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 22.21482 27.30497 27.91104 470.7619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 20.67742 26.85842 25.19638 373.4682 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.56716 21.18703 23.06583 454.4355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 11.62766 16.60798 16.24952 381.9716 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.95182 29.94810 29.98175 415.6967 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 38.45699 43.52556 42.91785 368.6663 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -935,26 +938,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 345.4658 309.1244 357.4379 290.1850 263.2921 236.7925 288.9896
-    ##  [8] 181.2254 254.8669 302.8349 346.8717 302.2640 324.5073 316.1663
-    ## [15] 304.8076 309.3230 336.6723 231.7181 251.2848 283.6932
+    ##  [1] 355.4901 258.3649 348.9836 274.9054 304.3616 260.1194 223.8014
+    ##  [8] 276.0040 319.3510 262.2627 290.1396 244.6225 345.0244 260.1750
+    ## [15] 292.1613 163.7033 335.3300 284.8133 229.3535 251.1235
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -22.939596 -23.933323 -27.125063 -10.122250 -19.782430 -19.672569
-    ##  [7] -15.603487 -22.733873 -26.733643 -24.045724 -15.814523 -18.523922
-    ## [13] -15.558869 -35.443245 -21.276334 -16.435861  -8.113847 -19.548590
-    ## [19] -26.875343 -20.011859
+    ##  [1] -20.82301 -26.56298 -13.63055 -20.38029 -20.31881 -20.58541 -20.79001
+    ##  [8] -19.44882 -13.22493 -26.05424 -22.15112 -18.54617 -14.39844 -24.12031
+    ## [15] -16.61077 -25.71858 -21.36603 -19.62434 -21.02132 -25.86261
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -57.10596 -58.31189 -64.52822 -28.95968 -49.80743 -49.37213 -41.34539
-    ##  [8] -56.74087 -63.20455 -58.79899 -42.05145 -47.40127 -40.92315 -79.61498
-    ## [15] -52.84572 -43.10781 -24.40422 -49.77670 -63.40004 -50.38028
+    ##  [1] -52.11367 -63.39935 -37.27373 -51.68991 -50.98953 -51.00660 -51.44088
+    ##  [8] -49.26441 -36.81995 -62.36858 -54.16008 -47.54154 -38.40478 -58.67422
+    ## [15] -43.80184 -61.17981 -53.63050 -49.22787 -51.87233 -61.23346
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -963,20 +965,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  6.159769 11.61843 11.71374 459.0061 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 20.981386 26.66849 26.12098 424.7596 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 19.593788 25.87648 25.40136 479.9649 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 35.890540 38.76122 40.55279 385.3097 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 27.571628 32.46646 32.06414 371.2824 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 33.294565 38.17605 37.44378 342.9100 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 138.18634 -22.84238 115.34395
-    ## 2 1 0.58 0.25 forced hcylinder 123.64975 -23.32475 100.32500
-    ## 3 1 0.58 0.25 forced hcylinder 142.97514 -25.81129 117.16386
-    ## 4 1 0.58 0.25 forced hcylinder 116.07400 -11.58387 104.49013
-    ## 5 1 0.58 0.25 forced hcylinder 105.31683 -19.92297  85.39386
-    ## 6 1 0.58 0.25 forced hcylinder  94.71699 -19.74885  74.96814
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 22.21482 27.30497 27.91104 470.7619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 20.67742 26.85842 25.19638 373.4682 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.56716 21.18703 23.06583 454.4355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 11.62766 16.60798 16.24952 381.9716 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.95182 29.94810 29.98175 415.6967 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 38.45699 43.52556 42.91785 368.6663 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 142.1960 -20.84547 121.35057
+    ## 2 1 0.58 0.25 forced hcylinder 103.3460 -25.35974  77.98623
+    ## 3 1 0.58 0.25 forced hcylinder 139.5935 -14.90949 124.68396
+    ## 4 1 0.58 0.25 forced hcylinder 109.9622 -20.67596  89.28620
+    ## 5 1 0.58 0.25 forced hcylinder 121.7446 -20.39581 101.34883
+    ## 6 1 0.58 0.25 forced hcylinder 104.0478 -20.40264  83.64514
 
 ### Test the equations out for consistency
 

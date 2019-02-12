@@ -17,7 +17,11 @@ License: \tab GPL-2\cr
 Primary purpose of the package is to assist with manipulating raw data extracted from thermal image files.  These raw data are stored in a raw data format and require inforamtion about various environmental variables to estimate surface temperatures accurately.  raw2temp is the primary function of use.  Other functions included involve simple scripts for data handling.  
 }
 \author{
-Glenn J. Tattersall <gtatters@brocku.ca>
+Glenn J. Tattersall
+
+Please report issues, upload problems, or provide sample files to the following site:
+https://github.com/gtatters/Thermimage/issues
+
 }
 \references{
 1. http://130.15.24.88/exiftool/forum/index.php/topic,4898.60.html
