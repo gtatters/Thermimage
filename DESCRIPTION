@@ -21,6 +21,6 @@ Imports: tiff, png
 LazyData: true
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage
-Help: http://github.com/gtatters/Thermimage/issues
+BugReports: http://github.com/gtatters/Thermimage/issues
 Encoding: UTF-8
 RoxygenNote: 6.1.1
