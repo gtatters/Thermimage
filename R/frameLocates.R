@@ -41,7 +41,9 @@ frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
       # how many repeats required to create fill whole file
       wh.locate<-cumsum(as.numeric((c(wh.locate[1],rep(gaps,repeats)))))
       # cumulative sum up the 1st locate and repeate gaps
-      wh.locate<-(wh.locate[-c(which(wh.locate>(finfo$size/byte.length)))])
+      
+      #wh.locate<-(wh.locate[-c(which(wh.locate>(finfo$size/byte.length)))])
+      # commented this out (March 2019) - extraneous and prone to error
       # remove any locates that go beyond the length of the data file after import
       header.l<-as.integer(rev(wh.locate)[1]-rev(wh.locate)[2])
     }
@@ -110,6 +112,11 @@ frameLocates<-function(vidfile="", w=640, h=480, res2fram=15)
   # each f.start should correspond to the start of a frame in the video file
   # from my impression, the location of the header is 15 elements in front of the first pixel value
   # res2fram is set to be 15
+
+  # if there are negative valaues for h.start this reflects instances where the header
+  # in front of the first frame is an irregular length and we have incorrectly calculated
+  # h.start[1] location.  Set it to 1
+  h.start[h.start<0] <- 1 # Edit Added March 2019
   
   return(list(h.start=h.start, f.start=f.start))
 }
