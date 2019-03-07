@@ -42,7 +42,7 @@ Previous release notes
 
 *   October 2016: Version 2.2.3 is on CRAN.
   *   Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
-
+ 
 Features
 ========
 
