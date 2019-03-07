@@ -10,18 +10,18 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
-*   2019-03-06: Version 3.1.4 is on Github (development version)
-  *   Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
+-   2019-03-06: Version 3.1.4 is on Github (development version)
+  -   Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
 Previous release notes
 ======================
 
-*   2019-02-12: Version 3.1.3 is on Github
-  *   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
+-   2019-02-12: Version 3.1.3 is on Github
+  -   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
 
-*   2018-10-14: Version 3.1.2 (also on CRAN)
-  *   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
+-   2018-10-14: Version 3.1.2 (also on CRAN)
+  -   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
 
 *   2018-09-08: Version 3.1.1 (also on CRAN)
   *   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
