@@ -11,37 +11,37 @@ Current release notes
 =====================
 
 -   2019-03-06: Version 3.1.4 is on Github (development version)
--   Fixed an issue (#1) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
+--   Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
 Previous release notes
 ======================
 
 -   2019-02-12: Version 3.1.3 is on Github
--   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
+--   Update help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
 
 -   2018-10-14: Version 3.1.2 (also on CRAN)
--   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
+--   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
 
 -   2018-09-08: Version 3.1.1 (also on CRAN)
--   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
+--   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
 
 -   2017-11-28: Version 3.1.0 (also on CRAN)
 -   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
 
 -   2017-10-04: Version 3.0.2 is on Github and Cran
--   Minor change to getFrames function to provide reverse ordering of vector.
+--   Minor change to getFrames function to provide reverse ordering of vector.
 
 -   2017-03-24: Version 3.0.1 is on Github and Cran
--   Minor fix to frameLocates to allow functionality with certain fcf files.
--   Minor edits to help files. Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
+--   Minor fix to frameLocates to allow functionality with certain fcf files.
+--   Minor edits to help files. Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
 
 -   March 2017: Version 3.0.0 is on Github & CRAN.
--   Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
--   Currently testing seq and fcf imports. Please send sample files for testing.
+--   Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
+--   Currently testing seq and fcf imports. Please send sample files for testing.
 
 -   October 2016: Version 2.2.3 is on CRAN.
--   Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
+--   Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
 
 Features
 ========
