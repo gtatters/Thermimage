@@ -10,8 +10,8 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2019-03-06: Version 3.1.4 is on Github (development version)
-  -   Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
+- 2019-03-06: Version 3.1.4 is on Github (development version)
+    - Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
 Previous release notes
