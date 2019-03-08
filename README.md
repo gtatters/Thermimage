@@ -1200,7 +1200,9 @@ EEVBlog:
 -   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
 ======================
+
 Previous release notes
+
 ======================
 
 - 2019-02-12: Version 3.1.3 is on Github
