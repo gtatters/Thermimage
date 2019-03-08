@@ -1199,7 +1199,7 @@ EEVBlog:
 
 -   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
-
+======================
 Previous release notes
 ======================
 
