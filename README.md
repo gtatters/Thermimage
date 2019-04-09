@@ -1,4 +1,4 @@
-Thermimage: Thermal Image Analysis <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5"><img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
+Thermimage: Thermal Image Analysis <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
 ================
 
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
@@ -7,16 +7,14 @@ A collection of functions for assisting in converting extracted raw data from in
 
 The version here on github is the current, development version. Archived sources can be found at CRAN: <https://cran.r-project.org/src/contrib/Archive/Thermimage/>
 
-Current release notes
+Current release notes <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5">
 =====================
 
 - 2019-03-06: Version 3.1.4 is on Github (development version)
     - Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
-
- 
-Features
+Features <img src='Uploads/ThermimageSticker3.png' align="right" height="138.5">
 ========
 
 -   Functions for importing FLIR image and video files (limited) into R.
@@ -1167,7 +1165,7 @@ for(i in 2:3){
 
 ![](README_files/figure-markdown_github/unnamed-chunk-54-1.png)
 
-### References
+## References
 
 Angiletta, M. J. 2009. Thermal Adaptation: A Theoretical and Empirical Synthesis. Oxford University Press, Oxford, UK, 304 pp. Gates, D.M. 2003. Biophysical Ecology. Courier Corporation, 656 pp.
 
@@ -1179,7 +1177,7 @@ Tattersall, GJ, Andrade, DV, and Abe, AS. 2009. Heat exchange from the toucan bi
 
 Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finches. Functional Ecology 2017; 00:1–11. <https://doi.org/10.1111/1365-2435.12990>
 
-### Online Resources
+## Online Resources
 
 The following open source programs and programmers were critical to the development of Thermimage.
 
