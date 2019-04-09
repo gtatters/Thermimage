@@ -1,4 +1,4 @@
-Thermimage: Thermal Image Analysis
+Thermimage: Thermal Image Analysis <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5" /></a>
 ================
 
 ![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
