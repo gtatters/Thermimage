@@ -34,7 +34,7 @@ Installation <img src='Uploads/ThermimageSticker3.png' align="right" height="138
 
 On current R (&gt;= 3.0.0)
 --------------------------
-
+ 
 -   From CRAN (stable releases 1.0.+):
 
 ``` r
