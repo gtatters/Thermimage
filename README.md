@@ -14,7 +14,7 @@ Current release notes
     - Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
-Features <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5">
+Features 
 ========
 
 -   Functions for importing FLIR image and video files (limited) into R.
@@ -29,7 +29,7 @@ How to Cite
 
 Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi: 10.5281/zenodo.1069705 (URL: <http://doi.org/10.5281/zenodo.1069705>), R package version 3.1.0, &lt;URL: <https://CRAN.R-project.org/package=Thermimage>&gt;. [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
-Installation <img src='Uploads/ThermimageSticker3.png' align="right" height="138.5">
+Installation 
 ============
 
 On current R (&gt;= 3.0.0)
@@ -1197,8 +1197,8 @@ EEVBlog:
 
 -   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
-   
-
+Alternative Hex Stickers   <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5"><img src='Uploads/ThermimageSticker3.png' align="right" height="138.5">
+=====================
 
 Previous release notes
 ======================
