@@ -7,14 +7,14 @@ A collection of functions for assisting in converting extracted raw data from in
 
 The version here on github is the current, development version. Archived sources can be found at CRAN: <https://cran.r-project.org/src/contrib/Archive/Thermimage/>
 
-Current release notes <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5">
+Current release notes 
 =====================
 
 - 2019-03-06: Version 3.1.4 is on Github (development version)
     - Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
 
-Features 
+Features <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5">
 ========
 
 -   Functions for importing FLIR image and video files (limited) into R.
