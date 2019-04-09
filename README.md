@@ -1197,9 +1197,11 @@ EEVBlog:
 
 -   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
-Alternative Hex Stickers   <img src='Uploads/ThermimageSticker2.png' align="right" height="138.5"><img src='Uploads/ThermimageSticker3.png' align="right" height="138.5">
+Alternative Hex Stickers  
 =====================
 
+ <img src='Uploads/ThermimageSticker2.png' height="138.5"><img src='Uploads/ThermimageSticker3.png' height="138.5">
+ 
 Previous release notes
 ======================
 
