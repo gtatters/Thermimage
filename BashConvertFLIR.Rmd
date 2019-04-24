@@ -168,7 +168,6 @@ Then try using fairSIM from github - a plug-in for ImageJ that produces the supe
 
 
 
-##### Stay tuned....imageJ macros are in development
 
 
 ### References

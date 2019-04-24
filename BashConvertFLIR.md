@@ -1,4 +1,4 @@
-Command Line Instructions for Converting FLIR Video and JPG files for import to ImageJ
+Command Line Instructions for Converting FLIR Video and JPG files for Image Analysis
 ================
 
 These instructions are for converting certain flir file types using command line tools. Variants of these functions are also incorporated into the Thermimage package through the functions, convertflirJPG(), converflirVID(), and ffmpegcall(). If these functions are not working in R, try following the command line instructions here to diagnose your system.
@@ -454,7 +454,6 @@ ffmpeg -f image2 -vcodec jpegls -i "./Image/%02d.hex" -f image2 -vcodec png PNG/
 
 Then try using fairSIM from github - a plug-in for ImageJ that produces the superresolution image
 
-##### Stay tuned....imageJ macros are in development
 
 ### References
 

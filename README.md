@@ -3,7 +3,7 @@ Thermimage: Thermal Image Analysis <img src='Uploads/ThermimageSticker1.png' ali
 
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
-A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
+A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. 
 
 The version here on github is the current, development version. Archived sources can be found at CRAN: <https://cran.r-project.org/src/contrib/Archive/Thermimage/>
 
@@ -1181,21 +1181,20 @@ Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finche
 
 The following open source programs and programmers were critical to the development of Thermimage.
 
-Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
+- Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
 
-Imagemagick: <http://imagemagick.org>
+- Imagemagick: <http://imagemagick.org>
 
-Perl: <http://www.perl.org>
+- Perl: <http://www.perl.org>
 
-raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
+- raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
 
-EEVBlog:
+- EEVBlog:
+    - raw to temperature conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
 
--   raw to temperature conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
+    - magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
 
--   magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
-
--   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
+    - fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
 Alternative Hex Stickers  
 =====================
