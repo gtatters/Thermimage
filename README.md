@@ -475,7 +475,7 @@ If you have a lot of files and wish simply to analyse images in ImageJ, not in R
 
 ### Download and extract sample files to SampleFLIR folder:
 
-<https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleFLIR.zip>
+<https://github.com/gtatters/ThermImageJ/blob/master/SampleFLIR.zip>
 
 ``` bash
 cd ~/IRconvert/SampleFLIR
