@@ -27,7 +27,7 @@ Features
 How to Cite
 ===========
 
-Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi: 10.5281/zenodo.1069705 (URL: <http://doi.org/10.5281/zenodo.1069705>), R package version 3.1.0, &lt;URL: <https://CRAN.R-project.org/package=Thermimage>&gt;. [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
+Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi: 10.5281/zenodo.1069704 (URL: <http://doi.org/10.5281/zenodo.1069704>), R package, &lt;URL: <https://CRAN.R-project.org/package=Thermimage>&gt;. [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
 Installation 
 ============
