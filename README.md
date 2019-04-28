@@ -473,9 +473,9 @@ Convert FLIR JPG from R
 
 If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files. The following methods are available in R, but are based on command line tools that are also described in <https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md>
 
-### Download and extract sample files to SampleFLIR folder:
+### Download and extract sample files:
 
-<https://github.com/gtatters/ThermImageJ/blob/master/SampleFLIR.zip>
+<https://github.com/gtatters/ThermImageJ/blob/master/SampleFiles.zip>
 
 ``` bash
 cd ~/IRconvert/SampleFLIR
