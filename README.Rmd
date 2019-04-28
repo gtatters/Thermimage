@@ -9,7 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
 
-![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true)
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage)
 [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage)
 [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)
@@ -836,21 +835,21 @@ Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finche
 
 The following open source programs and programmers were critical to the development of Thermimage.
 
-Exiftool: http://www.sno.phy.queensu.ca/~phil/exiftool/ 
+- Exiftool: http://www.sno.phy.queensu.ca/~phil/exiftool/ 
 
-Imagemagick: http://imagemagick.org
+- Imagemagick: http://imagemagick.org
 
-Perl: http://www.perl.org
+- Perl: http://www.perl.org
 
-raw2temp, temp2raw: https://github.com/gtatters/ThermimageCalibration
+- raw2temp, temp2raw: https://github.com/gtatters/ThermimageCalibration
 
 EEVBlog: 
 
-* raw to temperature conversion: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135
+- raw to temperature conversion: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135
 
-* magicbyte import: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0
+- magicbyte import: http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0
 
-* fileformat: https://www.eevblog.com/forum/thermal-imaging/csq-file-format/
+- fileformat: https://www.eevblog.com/forum/thermal-imaging/csq-file-format/
 
 
 # Alternative Hex Stickers  

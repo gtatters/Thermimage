@@ -3,7 +3,7 @@ Thermimage: Thermal Image Analysis
 
 <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
 
-![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
+[![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
 A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
 
@@ -137,7 +137,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-04-27 20:15:07"
+    ## FileAccessDateTime       "2019-04-27 20:18:03"
     ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -719,12 +719,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.66997 26.48261 28.22207 458.8516 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 11.11683 15.65717 15.39952 353.9410 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 46.08426 51.21052 50.26366 345.4046 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 27.17300 31.43456 32.23639 418.4619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 38.79832 43.31211 43.51478 389.7902 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.42050 39.19468 40.13939 389.9912 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 41.33615 46.48998 45.73606 363.6290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.42382 25.01673 26.99827 460.6987 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 21.62256 27.75113 26.77975 426.2138 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 21.00607 26.33950 25.11147 339.2891 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 35.82575 39.92876 40.10932 354.0139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 32.64127 38.40994 37.28323 383.6327 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -904,25 +904,26 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 351.8490 251.2441 239.1228 311.3886 283.8658 288.5111 388.3169
-    ##  [8] 312.0087 248.3155 265.7155 273.5431 371.4438 258.5343 261.0846
-    ## [15] 340.2480 341.8928 239.8099 287.6737 306.2920 262.7956
+    ##  [1] 255.1731 354.8596 307.7788 231.3568 252.5876 269.1571 255.3141
+    ##  [8] 258.8998 295.0199 274.8153 252.3328 321.5406 333.9677 322.9050
+    ## [15] 167.4563 302.9135 294.7605 282.6540 320.6659 403.8604
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -14.50678 -18.16097 -20.83722 -16.63946 -17.80683 -14.25247 -16.71554
-    ##  [8] -23.47235 -17.89623 -20.13843 -32.51348 -16.65699 -27.27271 -25.92963
-    ## [15] -30.27794 -12.81731 -15.14370 -21.58863 -17.42542 -28.01697
+    ##  [1] -21.002117 -13.477319 -26.269557 -22.087223 -15.819140 -24.244606
+    ##  [7] -17.227240 -20.470688 -13.670171  -9.446286 -17.913535 -23.159493
+    ## [13] -14.182158 -17.867835 -20.044167 -18.610347 -25.674709 -19.578729
+    ## [19] -23.035218 -19.609891
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -39.01335 -47.15714 -51.23809 -43.38266 -45.40919 -38.09179 -43.21184
-    ##  [8] -57.11480 -45.76219 -50.74618 -74.76048 -43.36443 -65.75266 -61.37963
-    ## [15] -71.13056 -34.77353 -40.40603 -53.30772 -45.56579 -65.92192
+    ##  [1] -51.72730 -36.81967 -62.78974 -54.68381 -41.39413 -58.38410 -44.50698
+    ##  [8] -51.96070 -37.26509 -27.66443 -46.58033 -56.93277 -38.19701 -45.69962
+    ## [15] -49.99775 -46.84270 -61.53220 -49.48455 -56.36001 -50.36165
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -932,19 +933,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.66997 26.48261 28.22207 458.8516 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 11.11683 15.65717 15.39952 353.9410 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 46.08426 51.21052 50.26366 345.4046 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 27.17300 31.43456 32.23639 418.4619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 38.79832 43.31211 43.51478 389.7902 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.42050 39.19468 40.13939 389.9912 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 41.33615 46.48998 45.73606 363.6290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.42382 25.01673 26.99827 460.6987 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 21.62256 27.75113 26.77975 426.2138 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 21.00607 26.33950 25.11147 339.2891 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 35.82575 39.92876 40.10932 354.0139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 32.64127 38.40994 37.28323 383.6327 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 140.73960 -15.60534 125.13426
-    ## 2 1 0.58 0.25 forced hcylinder 100.49765 -18.86286  81.63479
-    ## 3 1 0.58 0.25 forced hcylinder  95.64911 -20.49523  75.15387
-    ## 4 1 0.58 0.25 forced hcylinder 124.55544 -17.35307 107.20237
-    ## 5 1 0.58 0.25 forced hcylinder 113.54634 -18.16368  95.38266
-    ## 6 1 0.58 0.25 forced hcylinder 115.40446 -15.23672 100.16774
+    ## 1 1 0.58 0.25 forced hcylinder 102.06925 -20.69092  81.37833
+    ## 2 1 0.58 0.25 forced hcylinder 141.94384 -14.72787 127.21597
+    ## 3 1 0.58 0.25 forced hcylinder 123.11154 -25.11590  97.99564
+    ## 4 1 0.58 0.25 forced hcylinder  92.54271 -21.87352  70.66919
+    ## 5 1 0.58 0.25 forced hcylinder 101.03506 -16.55765  84.47741
+    ## 6 1 0.58 0.25 forced hcylinder 107.66284 -23.35364  84.30920
 
 ### Test the equations out for consistency
 
@@ -1172,13 +1173,13 @@ Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finche
 
 The following open source programs and programmers were critical to the development of Thermimage.
 
-Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
+-   Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
 
-Imagemagick: <http://imagemagick.org>
+-   Imagemagick: <http://imagemagick.org>
 
-Perl: <http://www.perl.org>
+-   Perl: <http://www.perl.org>
 
-raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
+-   raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
 
 EEVBlog:
 
