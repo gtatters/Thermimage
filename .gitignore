@@ -11,5 +11,6 @@
 ^README2.Rmd$
 ^README2.md$
 ^README2_files
-^README_old
+README_old.md
+README_old.Rmd
 /ThermimageSticker
