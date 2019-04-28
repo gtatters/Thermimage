@@ -1,21 +1,20 @@
-Thermimage: Thermal Image Analysis
+Thermimage: Thermal Image Analysis <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
 ================
 
-<img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
+[![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
-![Thermimage](https://github.com/gtatters/Thermimage/blob/master/Uploads/Thermimage.png?raw=true) [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
+A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. 
 
-A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
+The version here on github is the current, development version. Archived sources can be found at CRAN: <https://cran.r-project.org/src/contrib/Archive/Thermimage/>
 
-The version here on github is the current, development version. Archived sources can be found: <https://cran.r-project.org/src/contrib/Archive/Thermimage/>
-
-Current release notes
+Current release notes 
 =====================
 
--   2019-03-06: Version 3.1.4 is on Github (development version)
-    -   Fixed an issue (\#2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
+- 2019-03-06: Version 3.1.4 is on Github (development version)
+    - Fixed an issue (#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
 
-Features
+
+Features 
 ========
 
 -   Functions for importing FLIR image and video files (limited) into R.
@@ -30,12 +29,12 @@ How to Cite
 
 Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi: 10.5281/zenodo.1069704 (URL: <http://doi.org/10.5281/zenodo.1069704>), R package, &lt;URL: <https://CRAN.R-project.org/package=Thermimage>&gt;. [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
-Installation
+Installation 
 ============
 
 On current R (&gt;= 3.0.0)
 --------------------------
-
+ 
 -   From CRAN (stable releases 1.0.+):
 
 ``` r
@@ -98,7 +97,7 @@ head(cbind(cams$Info), 20) # Large amount of Info, show just the first 20 tages 
 ```
 
     ##                       [,1]    
-    ## ExifToolVersionNumber 11.37   
+    ## ExifToolVersionNumber 10.67   
     ## FileName              2412    
     ## Directory             ".3.5"  
     ## FileSize              638     
@@ -136,9 +135,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-04-27 20:15:07"
-    ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
+    ## FileModificationDateTime "2018-11-05 17:57:42"
+    ## FileAccessDateTime       "2019-02-12 14:20:55"
+    ## FileInodeChangeDateTime  "2019-01-26 17:04:55"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -206,7 +205,7 @@ library(fields) # should be imported when installing Thermimage
 
     ## Loading required package: grid
 
-    ## Spam version 2.2-2 (2019-03-07) is loaded.
+    ## Spam version 2.2-1 (2018-12-20) is loaded.
     ## Type 'help( Spam)' or 'demo( spam)' for a short introduction 
     ## and overview of this package.
     ## Help for individual functions is also obtained by adding the
@@ -487,7 +486,6 @@ ls
     ## SEQconverted.avi
     ## SEQconvertedjpegls.avi
     ## SEQconvertedpng.avi
-    ## SampleFLIR.avi
     ## SampleFLIR.csq
     ## SampleFLIR.jpg
     ## SampleFLIR.seq
@@ -502,10 +500,8 @@ cd ~/IRconvert/scripts
 ls
 ```
 
-    ## ConvertACQtoTXT
     ## ConvertCSQtoAVI
     ## ConvertFCFtoAVI
-    ## ConvertFLIRJPG.sh
     ## ConvertFLIRJPGtoRAW
     ## ConvertFLIRJPGtoTIFF
     ## ConvertFLIRRAWtoTIFF
@@ -518,9 +514,7 @@ ls
     ## Process_Folder GUI mod.ijm
     ## Process_Folder.ijm
     ## Process_Folder_TIFF2Temp.ijm
-    ## SEQtoVID_Rima
     ## exiftool commands.docx
-    ## ffmpegscript
     ## imagejscript_rad2temp
     ## split.pl
     ## split_fff.pl
@@ -528,7 +522,6 @@ ls
     ## split_tiff.pl
     ## test.pl
     ## test2.pl
-    ## tryopts.sh
     ## workflow.txt
     ## workflow_windows.txt
 
@@ -571,8 +564,16 @@ cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
+    ## JPGconverted.png
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 Here is a sample image:
 
@@ -623,8 +624,16 @@ cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
+    ## JPGconverted.png
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
@@ -719,12 +728,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.66997 26.48261 28.22207 458.8516 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 11.11683 15.65717 15.39952 353.9410 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 46.08426 51.21052 50.26366 345.4046 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 27.17300 31.43456 32.23639 418.4619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 38.79832 43.31211 43.51478 389.7902 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.42050 39.19468 40.13939 389.9912 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 22.21482 27.30497 27.91104 470.7619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 20.67742 26.85842 25.19638 373.4682 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.56716 21.18703 23.06583 454.4355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 11.62766 16.60798 16.24952 381.9716 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.95182 29.94810 29.98175 415.6967 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 38.45699 43.52556 42.91785 368.6663 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -904,25 +913,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 351.8490 251.2441 239.1228 311.3886 283.8658 288.5111 388.3169
-    ##  [8] 312.0087 248.3155 265.7155 273.5431 371.4438 258.5343 261.0846
-    ## [15] 340.2480 341.8928 239.8099 287.6737 306.2920 262.7956
+    ##  [1] 355.4901 258.3649 348.9836 274.9054 304.3616 260.1194 223.8014
+    ##  [8] 276.0040 319.3510 262.2627 290.1396 244.6225 345.0244 260.1750
+    ## [15] 292.1613 163.7033 335.3300 284.8133 229.3535 251.1235
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -14.50678 -18.16097 -20.83722 -16.63946 -17.80683 -14.25247 -16.71554
-    ##  [8] -23.47235 -17.89623 -20.13843 -32.51348 -16.65699 -27.27271 -25.92963
-    ## [15] -30.27794 -12.81731 -15.14370 -21.58863 -17.42542 -28.01697
+    ##  [1] -20.82301 -26.56298 -13.63055 -20.38029 -20.31881 -20.58541 -20.79001
+    ##  [8] -19.44882 -13.22493 -26.05424 -22.15112 -18.54617 -14.39844 -24.12031
+    ## [15] -16.61077 -25.71858 -21.36603 -19.62434 -21.02132 -25.86261
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -39.01335 -47.15714 -51.23809 -43.38266 -45.40919 -38.09179 -43.21184
-    ##  [8] -57.11480 -45.76219 -50.74618 -74.76048 -43.36443 -65.75266 -61.37963
-    ## [15] -71.13056 -34.77353 -40.40603 -53.30772 -45.56579 -65.92192
+    ##  [1] -52.11367 -63.39935 -37.27373 -51.68991 -50.98953 -51.00660 -51.44088
+    ##  [8] -49.26441 -36.81995 -62.36858 -54.16008 -47.54154 -38.40478 -58.67422
+    ## [15] -43.80184 -61.17981 -53.63050 -49.22787 -51.87233 -61.23346
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -932,19 +941,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 22.66997 26.48261 28.22207 458.8516 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 11.11683 15.65717 15.39952 353.9410 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 46.08426 51.21052 50.26366 345.4046 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 27.17300 31.43456 32.23639 418.4619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 38.79832 43.31211 43.51478 389.7902 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.42050 39.19468 40.13939 389.9912 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 140.73960 -15.60534 125.13426
-    ## 2 1 0.58 0.25 forced hcylinder 100.49765 -18.86286  81.63479
-    ## 3 1 0.58 0.25 forced hcylinder  95.64911 -20.49523  75.15387
-    ## 4 1 0.58 0.25 forced hcylinder 124.55544 -17.35307 107.20237
-    ## 5 1 0.58 0.25 forced hcylinder 113.54634 -18.16368  95.38266
-    ## 6 1 0.58 0.25 forced hcylinder 115.40446 -15.23672 100.16774
+    ## 1 22.21482 27.30497 27.91104 470.7619 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 20.67742 26.85842 25.19638 373.4682 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 17.56716 21.18703 23.06583 454.4355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 11.62766 16.60798 16.24952 381.9716 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.95182 29.94810 29.98175 415.6967 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 38.45699 43.52556 42.91785 368.6663 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 142.1960 -20.84547 121.35057
+    ## 2 1 0.58 0.25 forced hcylinder 103.3460 -25.35974  77.98623
+    ## 3 1 0.58 0.25 forced hcylinder 139.5935 -14.90949 124.68396
+    ## 4 1 0.58 0.25 forced hcylinder 109.9622 -20.67596  89.28620
+    ## 5 1 0.58 0.25 forced hcylinder 121.7446 -20.39581 101.34883
+    ## 6 1 0.58 0.25 forced hcylinder 104.0478 -20.40264  83.64514
 
 ### Test the equations out for consistency
 
@@ -1156,7 +1165,7 @@ for(i in 2:3){
 
 ![](README_files/figure-markdown_github/unnamed-chunk-54-1.png)
 
-### References
+## References
 
 Angiletta, M. J. 2009. Thermal Adaptation: A Theoretical and Empirical Synthesis. Oxford University Press, Oxford, UK, 304 pp. Gates, D.M. 2003. Biophysical Ecology. Courier Corporation, 656 pp.
 
@@ -1168,49 +1177,55 @@ Tattersall, GJ, Andrade, DV, and Abe, AS. 2009. Heat exchange from the toucan bi
 
 Tattersall GJ, Chaves JA, Danner RM. Thermoregulatory windows in Darwin's finches. Functional Ecology 2017; 00:1–11. <https://doi.org/10.1111/1365-2435.12990>
 
-### Online Resources
+## Online Resources
 
 The following open source programs and programmers were critical to the development of Thermimage.
 
-Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
+- Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
 
-Imagemagick: <http://imagemagick.org>
+- Imagemagick: <http://imagemagick.org>
 
-Perl: <http://www.perl.org>
+- Perl: <http://www.perl.org>
 
-raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
+- raw2temp, temp2raw: <https://github.com/gtatters/ThermimageCalibration>
 
-EEVBlog:
+- EEVBlog:
+    - raw to temperature conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
 
--   raw to temperature conversion: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
+    - magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
 
--   magicbyte import: <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
+    - fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
--   fileformat: <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
+Alternative Hex Stickers  
+=====================
 
-Alternative Hex Stickers
-========================
-
-<img src='Uploads/ThermimageSticker2.png' height="138.5"><img src='Uploads/ThermimageSticker3.png' height="138.5">
-
+ <img src='Uploads/ThermimageSticker2.png' height="138.5"><img src='Uploads/ThermimageSticker3.png' height="138.5">
+ 
 Previous release notes
 ======================
 
--   2019-02-12: Version 3.1.3 is on Github
-    -   Updated help information to point users to the issues link (<https://github.com/gtatters/Thermimage/issues>)
--   2018-10-14: Version 3.1.2 (also on CRAN)
-    -   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
--   2018-09-08: Version 3.1.1 (also on CRAN)
-    -   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
--   2017-11-28: Version 3.1.0 (also on CRAN)
-    -   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
--   2017-10-04: Version 3.0.2 is on Github and Cran
-    -   Minor change to getFrames function to provide reverse ordering of vector.
--   2017-03-24: Version 3.0.1 is on Github and Cran
-    -   Minor fix to frameLocates to allow functionality with certain fcf files.
-    -   Minor edits to help files. Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
--   March 2017: Version 3.0.0 is on Github & CRAN.
-    -   Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
-    -   Currently testing seq and fcf imports. Please send sample files for testing.
--   October 2016: Version 2.2.3 is on CRAN.
-    -   Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
+- 2019-02-12: Version 3.1.3 is on Github
+    - Updated help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
+
+- 2018-10-14: Version 3.1.2 (also on CRAN)
+    - Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
+
+- 2018-09-08: Version 3.1.1 (also on CRAN)
+    - Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
+
+- 2017-11-28: Version 3.1.0 (also on CRAN)
+    - Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
+
+- 2017-10-04: Version 3.0.2 is on Github and Cran
+    - Minor change to getFrames function to provide reverse ordering of vector.
+
+- 2017-03-24: Version 3.0.1 is on Github and Cran
+    - Minor fix to frameLocates to allow functionality with certain fcf files.
+    - Minor edits to help files. Cautionary notes added to hconv() regarding limitations to estimating convection coefficients without considering turbulence vs. laminar effects
+
+- March 2017: Version 3.0.0 is on Github & CRAN.
+    - Changes in this release include functions for importing thermal video files and exporting for ImageJ functionality
+    - Currently testing seq and fcf imports. Please send sample files for testing.
+
+- October 2016: Version 2.2.3 is on CRAN.
+    - Changes in this release include readflirjpg and flirsettings functions for processing flir jpg meta tag info.
