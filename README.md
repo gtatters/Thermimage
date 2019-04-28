@@ -137,7 +137,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-04-27 20:18:03"
+    ## FileAccessDateTime       "2019-04-27 21:27:43"
     ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -472,7 +472,7 @@ Note: 32-bit video files can be large and difficult to load into ImageJ. Approac
 Convert FLIR JPG from R
 =======================
 
-If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files. The following methods are available in R, but are based on command line tools that are also described in <https://github.com/gtatters/Thermimage/blob/master/BashConvertFLIR.md>
+If you have a lot of files and wish simply to analyse images in ImageJ, not in R, then you will want to bulk convert these files. The following methods are available in R, but are based on command line tools that are also described in <https://github.com/gtatters/ThermimageBash/blob/master/README.md>
 
 ### Download and extract sample files:
 
@@ -571,8 +571,16 @@ cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
+    ## JPGconverted.png
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 Here is a sample image:
 
@@ -623,8 +631,16 @@ cd ~/IRconvert/SampleFLIR
 ls output/
 ```
 
+    ## JPGconverted.png
     ## SampleFLIR.csq.avi
     ## SampleFLIR.png
+    ## frame00001.png
+    ## frame00002.png
+    ## frame00003.png
+    ## frame00004.png
+    ## frame00005.png
+    ## frame00006.png
+    ## frame00007.png
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
@@ -718,13 +734,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 41.33615 46.48998 45.73606 363.6290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.42382 25.01673 26.99827 460.6987 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 21.62256 27.75113 26.77975 426.2138 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 21.00607 26.33950 25.11147 339.2891 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 35.82575 39.92876 40.10932 354.0139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 32.64127 38.40994 37.28323 383.6327 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 14.789238 19.95427 20.77554 494.7354 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2  9.967566 14.42125 14.88159 406.1180 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 16.107185 19.54103 20.58419 370.0008 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 30.578535 35.63192 36.15191 460.6097 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.261509 30.84879 28.14598 403.6757 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 49.273506 54.82541 54.34510 419.1398 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -904,26 +920,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 255.1731 354.8596 307.7788 231.3568 252.5876 269.1571 255.3141
-    ##  [8] 258.8998 295.0199 274.8153 252.3328 321.5406 333.9677 322.9050
-    ## [15] 167.4563 302.9135 294.7605 282.6540 320.6659 403.8604
+    ##  [1] 378.3602 300.4917 271.3580 345.9913 277.5936 306.3549 338.6365
+    ##  [8] 339.1939 246.1389 314.8233 415.8975 227.0405 377.2245 327.1569
+    ## [15] 265.7953 262.0129 289.3983 252.2905 313.6327 283.3797
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -21.002117 -13.477319 -26.269557 -22.087223 -15.819140 -24.244606
-    ##  [7] -17.227240 -20.470688 -13.670171  -9.446286 -17.913535 -23.159493
-    ## [13] -14.182158 -17.867835 -20.044167 -18.610347 -25.674709 -19.578729
-    ## [19] -23.035218 -19.609891
+    ##  [1] -21.28911 -17.74179 -12.77083 -20.56241 -34.27890 -23.00625 -17.95863
+    ##  [8] -19.98938 -24.09371 -16.39836 -18.66548 -24.64091 -24.95738 -13.95140
+    ## [15] -20.23839 -17.35138 -22.70005 -19.83202 -15.42282 -26.49693
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -51.72730 -36.81967 -62.78974 -54.68381 -41.39413 -58.38410 -44.50698
-    ##  [8] -51.96070 -37.26509 -27.66443 -46.58033 -56.93277 -38.19701 -45.69962
-    ## [15] -49.99775 -46.84270 -61.53220 -49.48455 -56.36001 -50.36165
+    ##  [1] -53.37692 -46.33239 -35.42488 -51.25442 -77.58371 -55.34717 -46.43882
+    ##  [8] -49.79734 -57.82409 -43.36659 -47.73994 -59.14900 -59.72725 -37.68016
+    ## [15] -51.20833 -44.96505 -55.20043 -50.39990 -40.60599 -64.67058
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -932,20 +947,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 41.33615 46.48998 45.73606 363.6290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 21.42382 25.01673 26.99827 460.6987 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 21.62256 27.75113 26.77975 426.2138 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 21.00607 26.33950 25.11147 339.2891 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 35.82575 39.92876 40.10932 354.0139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 32.64127 38.40994 37.28323 383.6327 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 102.06925 -20.69092  81.37833
-    ## 2 1 0.58 0.25 forced hcylinder 141.94384 -14.72787 127.21597
-    ## 3 1 0.58 0.25 forced hcylinder 123.11154 -25.11590  97.99564
-    ## 4 1 0.58 0.25 forced hcylinder  92.54271 -21.87352  70.66919
-    ## 5 1 0.58 0.25 forced hcylinder 101.03506 -16.55765  84.47741
-    ## 6 1 0.58 0.25 forced hcylinder 107.66284 -23.35364  84.30920
+    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 14.789238 19.95427 20.77554 494.7354 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2  9.967566 14.42125 14.88159 406.1180 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 16.107185 19.54103 20.58419 370.0008 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 30.578535 35.63192 36.15191 460.6097 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 23.261509 30.84879 28.14598 403.6757 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 49.273506 54.82541 54.34510 419.1398 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 151.3441 -21.35077 129.99331
+    ## 2 1 0.58 0.25 forced hcylinder 120.1967 -18.53296 101.66373
+    ## 3 1 0.58 0.25 forced hcylinder 108.5432 -14.16995  94.37325
+    ## 4 1 0.58 0.25 forced hcylinder 138.3965 -20.50177 117.89475
+    ## 5 1 0.58 0.25 forced hcylinder 111.0374 -31.03348  80.00396
+    ## 6 1 0.58 0.25 forced hcylinder 122.5420 -22.13887 100.40310
 
 ### Test the equations out for consistency
 
