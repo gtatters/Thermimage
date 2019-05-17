@@ -137,7 +137,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-05-17 09:11:41"
+    ## FileAccessDateTime       "2019-05-17 09:22:43"
     ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -576,22 +576,7 @@ for(f in l.files){
     ## 16 -endian msb -size 480x640 gray:- '/Users/GlennTattersall/IRconvert/
     ## SampleFLIR/output/SampleFLIRONE.png'' had status 1
 
-Converted files are in output folder:
-
-``` bash
-cd ~/IRconvert/SampleFLIR
-ls output/
-```
-
-    ## JPGconverted.png
-    ## SampleFLIR.png
-    ## frame00001.png
-    ## frame00002.png
-    ## frame00003.png
-    ## frame00004.png
-    ## frame00005.png
-    ## frame00006.png
-    ## frame00007.png
+Converted files are in an output sub folder
 
 Here is a sample image:
 
@@ -635,22 +620,7 @@ for(f in l.files){
     ## 
     ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output/SampleFLIRCSQ.csq.avi' -y
 
-Converted files are in output folder:
-
-``` bash
-cd ~/IRconvert/SampleFLIR
-ls output/
-```
-
-    ## JPGconverted.png
-    ## SampleFLIR.png
-    ## frame00001.png
-    ## frame00002.png
-    ## frame00003.png
-    ## frame00004.png
-    ## frame00005.png
-    ## frame00006.png
-    ## frame00007.png
+Converted files are in an output subfolder
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
 
@@ -744,13 +714,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  9.224109 13.15518 14.09816 402.8143 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 29.992829 33.83114 35.09637 421.7802 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 38.483487 40.33664 43.61204 423.8474 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 34.265813 37.69713 38.37427 339.5423 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 32.470543 37.56346 36.93083 368.6191 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.453833 39.55317 38.60968 260.8139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 23.26225 28.95200 27.77497 372.9519 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 16.08527 20.94510 20.76008 386.3479 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 29.72138 35.12986 34.05896 358.4774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 26.98084 32.19106 31.26968 354.4494 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 42.25045 45.18612 47.53690 436.8971 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 14.42616 18.78473 19.29771 402.6074 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -930,26 +900,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 300.2499 317.2716 333.9215 243.2258 259.5027 165.0565 210.5353
-    ##  [8] 276.2840 360.4768 356.3752 280.0974 297.8729 317.6528 244.3596
-    ## [15] 351.0306 368.5458 278.3625 322.8394 299.1312 265.2230
+    ##  [1] 260.3691 278.7619 247.9834 245.6056 340.0823 296.9308 233.9319
+    ##  [8] 221.2944 219.5014 332.8898 320.8459 356.1348 362.9882 260.8174
+    ## [15] 317.1956 260.4975 282.5485 294.3802 288.7267 251.9394
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -15.186231 -14.583724  -5.852444 -12.657639 -20.749364 -15.803348
-    ##  [7] -28.180423 -23.580450 -17.222918 -19.632407 -29.520043 -26.903139
-    ## [13] -24.012260 -20.162201 -20.100487 -24.491791 -15.832889 -28.891299
-    ## [19] -13.558436 -17.739720
+    ##  [1] -23.92136 -19.71399 -22.39141 -21.39358 -10.39034 -17.22215 -33.21654
+    ##  [8] -23.26697 -26.42540 -19.42500 -27.83468 -15.23334 -13.99248 -22.07148
+    ## [15] -10.50669 -20.49741 -31.68316 -14.17898 -22.39839 -15.05367
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -40.93931 -38.95464 -18.64835 -34.67096 -51.55387 -41.37216 -65.95701
-    ##  [8] -57.39923 -44.03260 -49.75047 -68.60052 -62.93676 -58.63084 -50.42711
-    ## [15] -50.79502 -58.74041 -42.07069 -66.46926 -36.52731 -46.06185
+    ##  [1] -58.18051 -50.13730 -54.90591 -53.05137 -29.44026 -45.06450 -75.21374
+    ##  [8] -57.18510 -62.03119 -49.03109 -65.99522 -40.64276 -37.49025 -54.21392
+    ## [15] -30.16643 -51.30234 -72.51811 -38.30379 -55.09464 -40.29322
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -958,20 +927,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1  9.224109 13.15518 14.09816 402.8143 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 29.992829 33.83114 35.09637 421.7802 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 38.483487 40.33664 43.61204 423.8474 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 34.265813 37.69713 38.37427 339.5423 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 32.470543 37.56346 36.93083 368.6191 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 35.453833 39.55317 38.60968 260.8139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 23.26225 28.95200 27.77497 372.9519 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 16.08527 20.94510 20.76008 386.3479 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 29.72138 35.12986 34.05896 358.4774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 26.98084 32.19106 31.26968 354.4494 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 42.25045 45.18612 47.53690 436.8971 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 14.42616 18.78473 19.29771 402.6074 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 120.09998 -16.37573 103.72425
-    ## 2 1 0.58 0.25 forced hcylinder 126.90866 -15.58186 111.32680
-    ## 3 1 0.58 0.25 forced hcylinder 133.56860  -7.45934 126.10926
-    ## 4 1 0.58 0.25 forced hcylinder  97.29031 -13.86838  83.42193
-    ## 5 1 0.58 0.25 forced hcylinder 103.80110 -20.62155  83.17955
-    ## 6 1 0.58 0.25 forced hcylinder  66.02259 -16.54886  49.47372
+    ## 1 1 0.58 0.25 forced hcylinder 104.14764 -23.27220  80.87543
+    ## 2 1 0.58 0.25 forced hcylinder 111.50476 -20.05492  91.44984
+    ## 3 1 0.58 0.25 forced hcylinder  99.19334 -21.96236  77.23098
+    ## 4 1 0.58 0.25 forced hcylinder  98.24223 -21.22055  77.02168
+    ## 5 1 0.58 0.25 forced hcylinder 136.03293 -11.77610 124.25683
+    ## 6 1 0.58 0.25 forced hcylinder 118.77232 -18.02580 100.74652
 
 ### Test the equations out for consistency
 
@@ -1080,7 +1049,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-51-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-49-1.png)
 
 ### Model operative temperature with varying wind speeds
 
@@ -1115,7 +1084,7 @@ for(i in 2:12){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-50-1.png)
 
 ### Model operative temperature with varying RH
 
@@ -1148,7 +1117,7 @@ for(i in 2:3){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-53-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-51-1.png)
 
 ### Model operative temperature with varying cloud cover
 
@@ -1181,7 +1150,7 @@ for(i in 2:3){
 }
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-54-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
 
 ### References
 
@@ -1224,7 +1193,7 @@ Previous release notes
 ======================
 
 -   2019-03-06: Version 3.1.4 is on Github (development version)
-    -   Fixed an issue (\#2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
+    -   Fixed an issue ([\#2](../issues/2)) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
 -   2019-02-12: Version 3.1.3 is on Github
     -   Updated help information to point users to the issues link (<https://github.com/gtatters/Thermimage/issues>)
 -   2018-10-14: Version 3.1.2 (also on CRAN)

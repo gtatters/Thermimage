@@ -383,11 +383,7 @@ for(f in l.files){
 }
 ```
 
-Converted files are in output folder:
-```{bash}
-cd ~/IRconvert/SampleFLIR
-ls output/
-```
+Converted files are in an output sub folder
 
 Here is a sample image:
 
@@ -425,11 +421,7 @@ for(f in l.files){
 }
 ```
 
-Converted files are in output folder:
-```{bash}
-cd ~/IRconvert/SampleFLIR
-ls output/
-```
+Converted files are in an output subfolder
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true)
 The above PNG file is a sample image of the 16 bit grayscale image.  Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.  
@@ -859,7 +851,7 @@ EEVBlog:
 # Previous release notes
 
 - 2019-03-06: Version 3.1.4 is on Github (development version)
-    - Fixed an issue (\#2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
+    - Fixed an issue ([#2](../issues/2)) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
     
 - 2019-02-12: Version 3.1.3 is on Github
     - Updated help information to point users to the issues link (https://github.com/gtatters/Thermimage/issues)
