@@ -8,14 +8,14 @@ Extracts raw binary thermal image data in integer format as a vector from a flir
 }
 \usage{
 getFrames(vidfile, framestarts, w = 640, h = 480, l = w * h, byte.length = 2, 
-reverse=FALSE)
+reverse=FALSE, magic2pixel=32)
 }
 \arguments{
   \item{vidfile}{
-Filename or filepath (as character) of the thermal video.  Should end in .seq or .fcf.  Not tested comprehensively so it may only work for certain camera models and software packages.
+Filename or filepath (as character) of the thermal video.  Should end in .seq or .fcf.  Not tested comprehensively with .fcf files, so it may only work for certain camera models and software packages.
 }
   \item{framestarts}{
-An integer value corresponding to the actual pixel read byte start position in the thermal video file.  Acquired using the frameLocates function.
+An integer value corresponding to the actual pixel read byte start position in the thermal video file.  Acquired using the frameLocates function.  
 }
   \item{w}{
 Width of thermal image.
