@@ -13,7 +13,7 @@ Current release notes
 =====================
 
 -   2019-05-17: Version 3.2.0 is on Github (development version)
-    -   Fixed an issue (\#3) with **getTimes()** not working, based on inaccurate **frameLocates()**. Completely re-wrote the **frameLocates()**, **locate.fid()**, **getTimes()**, and **getFrames()** functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times. Note: this series of functions are hacks and users are advised to use with caution.
+    -   Fixed an issue [\#3](https://github.com/gtatters/Thermimage/issues/3) with **getTimes()** not working, based on inaccurate **frameLocates()**. Completely re-wrote the **frameLocates()**, **locate.fid()**, **getTimes()**, and **getFrames()** functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times. Note: this series of functions are hacks and users are advised to use with caution.
 
 Features
 ========
@@ -137,7 +137,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-05-17 09:22:43"
+    ## FileAccessDateTime       "2019-05-17 09:28:46"
     ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -715,12 +715,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 23.26225 28.95200 27.77497 372.9519 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 16.08527 20.94510 20.76008 386.3479 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 29.72138 35.12986 34.05896 358.4774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 26.98084 32.19106 31.26968 354.4494 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 42.25045 45.18612 47.53690 436.8971 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 14.42616 18.78473 19.29771 402.6074 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 13.04609 17.25750 17.99528 409.0237 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.52447 27.57749 27.92610 363.7718 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 24.89461 30.24904 29.57187 386.5499 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 37.66432 42.56706 42.78218 422.9635 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 27.76920 33.33490 33.56045 478.6161 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 34.24559 40.87811 37.95750 306.7694 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -900,25 +900,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 260.3691 278.7619 247.9834 245.6056 340.0823 296.9308 233.9319
-    ##  [8] 221.2944 219.5014 332.8898 320.8459 356.1348 362.9882 260.8174
-    ## [15] 317.1956 260.4975 282.5485 294.3802 288.7267 251.9394
+    ##  [1] 303.9142 261.5225 274.9241 312.2181 359.6265 191.2076 349.6725
+    ##  [8] 270.0530 312.3463 182.7660 302.2658 322.7729 357.1737 282.2769
+    ## [15] 262.9323 270.0791 367.7563 380.5831 323.3692 262.0375
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -23.92136 -19.71399 -22.39141 -21.39358 -10.39034 -17.22215 -33.21654
-    ##  [8] -23.26697 -26.42540 -19.42500 -27.83468 -15.23334 -13.99248 -22.07148
-    ## [15] -10.50669 -20.49741 -31.68316 -14.17898 -22.39839 -15.05367
+    ##  [1] -16.51187 -15.65276 -22.15603 -19.75168 -23.22590 -28.84884 -20.89196
+    ##  [8] -23.18645 -23.19973 -27.81643 -18.58787 -21.24583 -19.85018 -29.17429
+    ## [15] -16.13793 -22.43382 -20.16137 -25.11269 -16.48682 -24.84037
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -58.18051 -50.13730 -54.90591 -53.05137 -29.44026 -45.06450 -75.21374
-    ##  [8] -57.18510 -62.03119 -49.03109 -65.99522 -40.64276 -37.49025 -54.21392
-    ## [15] -30.16643 -51.30234 -72.51811 -38.30379 -55.09464 -40.29322
+    ##  [1] -43.62420 -41.43144 -54.64817 -49.37478 -56.62159 -67.01820 -51.98264
+    ##  [8] -55.92725 -57.53231 -66.21561 -47.17882 -53.29166 -50.49801 -68.39439
+    ## [15] -42.03596 -55.70715 -50.84887 -60.27133 -43.54274 -60.01849
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -928,19 +928,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 23.26225 28.95200 27.77497 372.9519 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 16.08527 20.94510 20.76008 386.3479 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 29.72138 35.12986 34.05896 358.4774 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 26.98084 32.19106 31.26968 354.4494 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 42.25045 45.18612 47.53690 436.8971 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 14.42616 18.78473 19.29771 402.6074 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 13.04609 17.25750 17.99528 409.0237 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 23.52447 27.57749 27.92610 363.7718 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 24.89461 30.24904 29.57187 386.5499 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 37.66432 42.56706 42.78218 422.9635 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 27.76920 33.33490 33.56045 478.6161 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 34.24559 40.87811 37.95750 306.7694 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 104.14764 -23.27220  80.87543
-    ## 2 1 0.58 0.25 forced hcylinder 111.50476 -20.05492  91.44984
-    ## 3 1 0.58 0.25 forced hcylinder  99.19334 -21.96236  77.23098
-    ## 4 1 0.58 0.25 forced hcylinder  98.24223 -21.22055  77.02168
-    ## 5 1 0.58 0.25 forced hcylinder 136.03293 -11.77610 124.25683
-    ## 6 1 0.58 0.25 forced hcylinder 118.77232 -18.02580 100.74652
+    ## 1 1 0.58 0.25 forced hcylinder 121.56568 -17.44968 104.11600
+    ## 2 1 0.58 0.25 forced hcylinder 104.60898 -16.57258  88.03641
+    ## 3 1 0.58 0.25 forced hcylinder 109.96963 -21.85927  88.11036
+    ## 4 1 0.58 0.25 forced hcylinder 124.88726 -19.74991 105.13735
+    ## 5 1 0.58 0.25 forced hcylinder 143.85061 -22.64864 121.20198
+    ## 6 1 0.58 0.25 forced hcylinder  76.48305 -26.80728  49.67577
 
 ### Test the equations out for consistency
 
@@ -1193,13 +1193,13 @@ Previous release notes
 ======================
 
 -   2019-03-06: Version 3.1.4 is on Github (development version)
-    -   Fixed an issue ([\#2](../issues/2)) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
+    -   Fixed an issue [\#2](https://github.com/gtatters/Thermimage/issues/2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
 -   2019-02-12: Version 3.1.3 is on Github
     -   Updated help information to point users to the issues link (<https://github.com/gtatters/Thermimage/issues>)
 -   2018-10-14: Version 3.1.2 (also on CRAN)
     -   Removed stop check in readflirJPG and flirsettings functions for troubleshooting custom pathing.
 -   2018-09-08: Version 3.1.1 (also on CRAN)
-    -   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue \#1.
+    -   Added minor change to readflirJPG function to accomodate whitespace in file pathing. See Issue [\#1](https://github.com/gtatters/Thermimage/issues/1)
 -   2017-11-28: Version 3.1.0 (also on CRAN)
     -   Added three new functions for converting FLIR jpg, seq, and csq files calling on command line tools.
 -   2017-10-04: Version 3.0.2 is on Github and Cran
