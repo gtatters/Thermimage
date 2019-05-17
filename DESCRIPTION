@@ -1,8 +1,8 @@
 Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
-Version: 3.1.4
-Date: 2019-04-09
+Version: 3.2.0
+Date: 2019-05-17
 Author: Glenn J. Tattersall
 Description: A collection of functions and routines for inputting thermal
     image video files, plotting and converting binary raw data into estimates of
@@ -12,7 +12,7 @@ Description: A collection of functions and routines for inputting thermal
     equations for providing heat transfer calculations and an import function for thermal
     image files (v2.2.3 fixed error importing thermal image to windows OS). v3. Added numerous
     functions for converting thermal image, videos, rewriting and exporting.  
-    v3.1. Added new functions to convert files.
+    v3.1. Added new functions to convert files. v3.2.  Fixed the frameLocates, getTimes, and getFrames functions.
 License: GPL (>=2)
 Depends: R (>= 2.10)
 SystemRequirements: exiftool, perl, ffmpeg, imagemagick

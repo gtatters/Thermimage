@@ -12,8 +12,8 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2019-03-06: Version 3.1.4 is on Github (development version)
-    -   Fixed an issue (\#2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
+-   2019-05-17: Version 3.2.0 is on Github (development version)
+    -   Fixed an issue (\#3) with **getTimes()** not working, based on inaccurate **frameLocates()**. Completely re-wrote the **frameLocates()**, **locate.fid()**, **getTimes()**, and **getFrames()** functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times. Note: this series of functions are hacks and users are advised to use with caution.
 
 Features
 ========
@@ -137,7 +137,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-05-01 07:42:34"
+    ## FileAccessDateTime       "2019-05-17 09:11:41"
     ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -488,10 +488,14 @@ ls
     ## SEQconvertedjpegls.avi
     ## SEQconvertedpng.avi
     ## SampleFLIR.avi
-    ## SampleFLIR.csq
     ## SampleFLIR.jpg
-    ## SampleFLIR.seq
+    ## SampleFLIRCSQ
+    ## SampleFLIRCSQ.avi
+    ## SampleFLIRCSQ.csq
     ## SampleFLIRONE.jpg
+    ## SampleFLIRSEQ.avi
+    ## SampleFLIRSEQ.seq
+    ## SampleRTV
     ## converted
     ## output
 
@@ -580,7 +584,6 @@ ls output/
 ```
 
     ## JPGconverted.png
-    ## SampleFLIR.csq.avi
     ## SampleFLIR.png
     ## frame00001.png
     ## frame00002.png
@@ -612,7 +615,7 @@ l.files<-list.files(pattern=".csq", recursive=F, full.names=F, include.dirs=T, n
 l.files
 ```
 
-    ## [1] "SampleFLIR.csq"
+    ## [1] "SampleFLIRCSQ.csq"
 
 ``` r
 # if JPG contains raw thermal image as TIFF, endian = "lsb"
@@ -630,7 +633,7 @@ for(f in l.files){
 ```
 
     ## 
-    ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output/SampleFLIR.csq.avi' -y
+    ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output/SampleFLIRCSQ.csq.avi' -y
 
 Converted files are in output folder:
 
@@ -640,7 +643,6 @@ ls output/
 ```
 
     ## JPGconverted.png
-    ## SampleFLIR.csq.avi
     ## SampleFLIR.png
     ## frame00001.png
     ## frame00002.png
@@ -743,12 +745,12 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 31.627378 38.13436 36.25891 382.7713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 33.093247 39.27257 37.06006 327.8360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 41.815298 47.76319 46.97226 426.1955 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 37.220372 42.03764 41.56852 359.3508 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 31.320553 36.74768 35.11671 313.7318 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6  7.503285 13.85420 12.03982 374.9202 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1  9.224109 13.15518 14.09816 402.8143 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 29.992829 33.83114 35.09637 421.7802 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 38.483487 40.33664 43.61204 423.8474 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 34.265813 37.69713 38.37427 339.5423 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 32.470543 37.56346 36.93083 368.6191 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 35.453833 39.55317 38.60968 260.8139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -928,25 +930,26 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 263.5379 214.0795 308.4803 252.9485 205.8651 262.3487 241.5620
-    ##  [8] 375.0191 303.5611 236.7382 280.8321 223.1815 239.1055 289.4630
-    ## [15] 336.3904 342.9216 250.7966 320.7684 267.5666 260.3154
+    ##  [1] 300.2499 317.2716 333.9215 243.2258 259.5027 165.0565 210.5353
+    ##  [8] 276.2840 360.4768 356.3752 280.0974 297.8729 317.6528 244.3596
+    ## [15] 351.0306 368.5458 278.3625 322.8394 299.1312 265.2230
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -28.19375 -26.41664 -25.11878 -19.32483 -22.47448 -27.69252 -18.68785
-    ##  [8] -11.12239 -10.44513 -18.33715 -23.10281 -22.54468 -31.00146 -16.36820
-    ## [15] -20.85431 -17.68810 -25.49996 -14.19655 -15.96467 -14.97930
+    ##  [1] -15.186231 -14.583724  -5.852444 -12.657639 -20.749364 -15.803348
+    ##  [7] -28.180423 -23.580450 -17.222918 -19.632407 -29.520043 -26.903139
+    ## [13] -24.012260 -20.162201 -20.100487 -24.491791 -15.832889 -28.891299
+    ## [19] -13.558436 -17.739720
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -65.92533 -62.51144 -59.67130 -48.53459 -55.00240 -66.30685 -47.66317
-    ##  [8] -31.48042 -29.93053 -46.83152 -56.57636 -55.34285 -71.91082 -43.03000
-    ## [15] -51.43149 -45.66129 -61.91719 -38.49529 -42.10081 -39.84503
+    ##  [1] -40.93931 -38.95464 -18.64835 -34.67096 -51.55387 -41.37216 -65.95701
+    ##  [8] -57.39923 -44.03260 -49.75047 -68.60052 -62.93676 -58.63084 -50.42711
+    ## [15] -50.79502 -58.74041 -42.07069 -66.46926 -36.52731 -46.06185
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -956,19 +959,19 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 31.627378 38.13436 36.25891 382.7713 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 33.093247 39.27257 37.06006 327.8360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 41.815298 47.76319 46.97226 426.1955 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 37.220372 42.03764 41.56852 359.3508 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 31.320553 36.74768 35.11671 313.7318 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6  7.503285 13.85420 12.03982 374.9202 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv   qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 105.41517 -26.37013 79.04504
-    ## 2 1 0.58 0.25 forced hcylinder  85.63180 -25.00458 60.62723
-    ## 3 1 0.58 0.25 forced hcylinder 123.39213 -23.86852 99.52361
-    ## 4 1 0.58 0.25 forced hcylinder 101.17939 -19.41383 81.76555
-    ## 5 1 0.58 0.25 forced hcylinder  82.34604 -22.00096 60.34508
-    ## 6 1 0.58 0.25 forced hcylinder 104.93947 -26.52274 78.41674
+    ## 1  9.224109 13.15518 14.09816 402.8143 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 29.992829 33.83114 35.09637 421.7802 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 38.483487 40.33664 43.61204 423.8474 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 34.265813 37.69713 38.37427 339.5423 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 32.470543 37.56346 36.93083 368.6191 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 35.453833 39.55317 38.60968 260.8139 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape      qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 120.09998 -16.37573 103.72425
+    ## 2 1 0.58 0.25 forced hcylinder 126.90866 -15.58186 111.32680
+    ## 3 1 0.58 0.25 forced hcylinder 133.56860  -7.45934 126.10926
+    ## 4 1 0.58 0.25 forced hcylinder  97.29031 -13.86838  83.42193
+    ## 5 1 0.58 0.25 forced hcylinder 103.80110 -20.62155  83.17955
+    ## 6 1 0.58 0.25 forced hcylinder  66.02259 -16.54886  49.47372
 
 ### Test the equations out for consistency
 
@@ -1220,6 +1223,8 @@ Alternative Hex Stickers
 Previous release notes
 ======================
 
+-   2019-03-06: Version 3.1.4 is on Github (development version)
+    -   Fixed an issue (\#2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
 -   2019-02-12: Version 3.1.3 is on Github
     -   Updated help information to point users to the issues link (<https://github.com/gtatters/Thermimage/issues>)
 -   2018-10-14: Version 3.1.2 (also on CRAN)

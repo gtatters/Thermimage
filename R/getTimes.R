@@ -1,25 +1,36 @@
 #' @export
 #' 
-getTimes<-function(vidfile, headstarts, timestart=448, byte.length=2)
-  {
+getTimes<-function(vidfile, headstarts, timestart=900, byte.length=1)
+{
   save.time<-strptime(file.info(vidfile)$mtime,"%Y-%m-%d %H:%M:%OS")
   # time at which the file was saved.  this almost corresponds to the last frame of the file 
   # compare to dateOriginal from exiftool
   
-  to.read <- file(vidfile, "rb") # set to.read file.  rb means read binary
-  seek(to.read,where=(headstarts+timestart)*byte.length, origin="start")
-  timeplace<-readBin(to.read, integer(), n=3, size=byte.length, endian = "little", signed=FALSE)
-  close(to.read)
-  
-  # thus: 452nd byte contains msec, 450th contains sec, 451st contains day info
+  # 904th byte contains msec, 900th contains sec, 902nd contains day info
   # timeplace[2] = dayplace, timeplace[1]=secplace, timeplace[3]=msecplace
   
-  options(digits.secs=3)
-  hex.time.day<-as.hexmode(timeplace[2])
-  hex.time.sec<-as.hexmode((timeplace[1]))
-  time.char<-paste("0x",hex.time.day, hex.time.sec, sep="")
-  time.num<-as.numeric(time.char)+timeplace[3]/1000
+  to.read <- file(vidfile, "rb") # set to.read file.  rb means read binary
+  seek(to.read, where=headstarts+timestart, origin="start")
+  timeplace<-readBin(to.read, raw(), n=6, size=byte.length)
+  close(to.read)
+  
+  # Native Order from hex fiend:
+  # 45F9 745C 6F01
+  # 63813 23668   367   (little endian converted from Thermimage current integer conversion)
+  # sec   day  msec
+  
+  hex.time.day<-as.character(timeplace[4:3]) # bytes are little endian so need to switch
+  hex.time.sec<-as.character(timeplace[2:1]) # bytes are little endian so need to switch
+  hex.time.msec<-as.character(timeplace[6:5]) # bytes are little endian so need to switch
+  
+  time.char<-paste0("0x", paste0(c(hex.time.day, hex.time.sec), collapse=""), collapse="")
+  msec.char<-paste0( paste0(c("0x",hex.time.msec, collapse="")), collapse="")
+  # time.char is the number of seconds since 1970
+  
+  time.num<-as.numeric(time.char)+as.numeric(msec.char)/1000
   extract.times<-as.POSIXct(time.num, origin="1970-01-01")
+  # extract.times
   rownames(extract.times)<-NULL
+  
   return(extract.times)
 }

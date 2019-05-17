@@ -1,7 +1,7 @@
 #' @export
 #' @importFrom stats embed
 #' 
-locate.fid<-function(fid,vect,long=TRUE)
+locate.fid<-function(fid, vect, long=TRUE, zeroindex=TRUE)
 {
   if(long==FALSE)
   {
@@ -24,9 +24,14 @@ locate.fid<-function(fid,vect,long=TRUE)
   
   if(long==TRUE)
   {
-    fid.rev<-rev(fid)       
-    system.time(vect.embed<- embed(vect,length(fid)))
-    system.time(output<-which(rowSums(vect.embed == rep(fid.rev, each=nrow(vect.embed))) == ncol(vect.embed))) 
+   fid.rev<-rev(fid)       
+   vect.embed<- embed(vect,length(fid))
+   output<-which(rowSums(vect.embed == rep(fid.rev, each=nrow(vect.embed))) == ncol(vect.embed)) 
   }
-  output
+  if(zeroindex==TRUE){
+    return(output-1)
+  }
+  if(zeroindex==FALSE){
+    return(output)
+  }
 }

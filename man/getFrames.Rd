@@ -32,9 +32,12 @@ Set to 2 by default.  Each pixel information is encoded in two bytes (i.e. 16 bi
  \item{reverse}{
 Set to FALSE by default.  Will provide the vector in reverse order.
 }
+ \item{magic2pixel}{
+Set to 32 by default.  This is the number of bytes ahead of the magicbyte where pixel information generally starts.  User does not need to set this, but this might help diagnose oddly aligned frames.
+}
 }
 \details{
-This function will load into memory the raw binary pixel data from the entire thermal video file.  Data are stored linearly as read in using the readBin function, but the number of frames read in can be determined by dividing the length of the vector by (w*h).  Depending on the size of the video, this can become quite large.  
+This function will load into memory the raw binary pixel data from the entire thermal video file.  Data are stored as read in using the readBin function, but the number of frames read in can be determined by dividing the length of the vector by (w*h*byte.length).  Depending on the size of the video, this can become quite large.  
 
 Frame data is stored as a vector to speed calculations.  Thermal video files may exceed memory capacity of some systems, so processing as arrays or dataframes is generally avoided.
 
