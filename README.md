@@ -3,7 +3,7 @@ Thermimage: Thermal Image Analysis
 
 <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
 
-[![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage) [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
+[![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage) [![total downloads](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage)](https://cranlogs.r-pkg.org/badges/grand-total/Thermimage) [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage) [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
 A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography. Provides an open source proxy tool for assisting with infrared thermographic analysis. Ongoing development in file conversion to facilitate transfer to ImageJ.
 
@@ -136,9 +136,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-05-17 22:07:13"
-    ## FileAccessDateTime       "2019-05-17 22:11:09"
-    ## FileInodeChangeDateTime  "2019-05-17 22:07:15"
+    ## FileModificationDateTime "2019-05-17 22:15:46"
+    ## FileAccessDateTime       "2019-05-18 14:38:58"
+    ## FileInodeChangeDateTime  "2019-05-17 22:15:48"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -479,25 +479,14 @@ If you have a lot of files and wish simply to analyse images in ImageJ, not in R
 <https://github.com/gtatters/ThermImageJ/blob/master/SampleFiles.zip>
 
 ``` bash
-cd ~/IRconvert/SampleFLIR
-ls
+ls SampleFLIR
 ```
 
-    ## CSQconverted.avi
-    ## SEQconverted.avi
-    ## SEQconvertedjpegls.avi
-    ## SEQconvertedpng.avi
-    ## SampleFLIR.avi
     ## SampleFLIR.jpg
-    ## SampleFLIRCSQ
-    ## SampleFLIRCSQ.avi
+    ## SampleFLIR.png
     ## SampleFLIRCSQ.csq
     ## SampleFLIRONE.jpg
-    ## SampleFLIRSEQ.avi
     ## SampleFLIRSEQ.seq
-    ## SampleRTV
-    ## converted
-    ## output
 
 ### Download and extract perl scripts to scripts folder:
 
@@ -538,56 +527,31 @@ ls
     ## workflow.txt
     ## workflow_windows.txt
 
-Bulk convert all FLIR jpg files found in folder:
+Bulk FLIR jpg file:
 
 ``` r
 library(Thermimage)
-# setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 
-l.files<-list.files(path="~/IRConvert/SampleFLIR", pattern=".jpg", recursive=T, full.names=T, include.dirs=T, no..=T)
-l.files
-```
+f<-paste0("SampleFLIR/SampleFLIR.jpg")
 
-    ## [1] "/Users/GlennTattersall/IRConvert/SampleFLIR/SampleFLIR.jpg"   
-    ## [2] "/Users/GlennTattersall/IRConvert/SampleFLIR/SampleFLIRONE.jpg"
-
-``` r
 # if JPG contains raw thermal image as TIFF, endian = "lsb"
 # if JPG contains raw thermal image as PNG, endian = "msb"?
 
-for(f in l.files){
-  imagefile<-f
-  vals<-flirsettings(imagefile)
-  w<-vals$Info$ImageWidth
-  h<-vals$Info$ImageHeight
-  res.in<-paste0(w,"x",h)
+vals<-flirsettings(f)
+w<-vals$Info$ImageWidth
+h<-vals$Info$ImageHeight
+res.in<-paste0(w,"x",h)
   
-  if(vals$Info$RawThermalImageType=="PNG") endian="msb"
-  if(vals$Info$RawThermalImageType=="TIFF") endian="lsb"
+if(vals$Info$RawThermalImageType=="PNG") endian="msb" 
+if(vals$Info$RawThermalImageType=="TIFF") endian="lsb"
   
-  convertflirJPG(imagefile, exiftoolpath="installed", res.in=res.in, endian=endian, outputfolder="output", verbose=FALSE)
-  cat("\n")
-}
+convertflirJPG(f, exiftoolpath="installed", res.in=res.in, endian=endian, outputfolder="", verbose=FALSE)
+  
+cat("\n")
 ```
 
-    ## Warning in system2(exiftool, args = exifvalsrawunix, stdout = TRUE):
-    ## running command ''exiftool' '/Users/GlennTattersall/Documents/GitHub/
-    ## ThermimageProjects/Thermimage//Users/GlennTattersall/IRConvert/SampleFLIR/
-    ## SampleFLIR.jpg' -b -RawThermalImage | convert - gray:- | convert -depth 16
-    ## -endian lsb -size 640x480 gray:- '/Users/GlennTattersall/Documents/GitHub/
-    ## ThermimageProjects/Thermimage/output//Users/GlennTattersall/IRConvert/
-    ## SampleFLIR/SampleFLIR.png'' had status 1
-
-    ## Warning in system2(exiftool, args = exifvalsrawunix, stdout = TRUE):
-    ## running command ''exiftool' '/Users/GlennTattersall/Documents/GitHub/
-    ## ThermimageProjects/Thermimage//Users/GlennTattersall/IRConvert/SampleFLIR/
-    ## SampleFLIRONE.jpg' -b -RawThermalImage | convert - gray:- | convert -depth
-    ## 16 -endian msb -size 480x640 gray:- '/Users/GlennTattersall/Documents/
-    ## GitHub/ThermimageProjects/Thermimage/output//Users/GlennTattersall/
-    ## IRConvert/SampleFLIR/SampleFLIRONE.png'' had status 1
-
-Converted files are in an output sub folder
+Converted files are in the output subfolder
 
 Here is a sample image:
 
@@ -598,44 +562,33 @@ The above PNG file is a sample image of the 16 bit grayscale image. Although it 
 Convert FLIR SEQ or CSQ from R
 ==============================
 
-Bulk convert all FLIR csq files found in folder:
+Convert FLIR csq file
 
 ``` r
 library(Thermimage)
-# setwd("~/IRconvert/SampleFLIR")
+setwd("/Users/GlennTattersall/Documents/GitHub/ThermimageProjects/Thermimage")
 exiftoolpath <- "installed"
 perlpath <- "installed"
 
-# Convert CSQ and SEQ
-l.files<-list.files(path="~/IRconvert/SampleFLIR", pattern=".csq", recursive=F, full.names=T, include.dirs=T, no..=T)
-l.files
-```
+f<-"SampleFLIRCSQ.csq"
 
-    ## [1] "/Users/GlennTattersall/IRconvert/SampleFLIR/SampleFLIRCSQ.csq"
-
-``` r
 # if JPG contains raw thermal image as TIFF, endian = "lsb"
 # if JPG contains raw thermal image as PNG,  endian = "msb"
-for(f in l.files){
-  imagefile<-f
-  vals<-flirsettings(imagefile)
-  w<-vals$Info$RawThermalImageWidth
-  h<-vals$Info$RawThermalImageHeight
-  res.in<-paste0(w,"x",h)
-  info<-convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed", 
+
+vals<-flirsettings(f)
+w<-vals$Info$RawThermalImageWidth
+h<-vals$Info$RawThermalImageHeight
+res.in<-paste0(w,"x",h)
+
+convertflirVID(f, exiftoolpath="installed", perlpath="installed", 
                        fr=30, res.in=res.in, res.out=res.in, outputcompresstype="jpegls", outputfilenameroot=NULL,
-                       outputfiletype="avi", outputfolder="output", verbose=FALSE)
-}
+                       outputfiletype="avi", outputfolder="./output", verbose=FALSE)
 ```
 
     ## 
-    ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output//Users/GlennTattersall/IRconvert/SampleFLIR/SampleFLIRCSQ.csq.avi' -y
+    ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 './output/SampleFLIRCSQ.csq.avi' -y
 
-    ## Warning in system2("ffmpeg", args = args, stdout = TRUE): running
-    ## command ''ffmpeg' -r 30 -f image2 -vcodec jpegls -s 1024x768 -
-    ## i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output//Users/
-    ## GlennTattersall/IRconvert/SampleFLIR/SampleFLIRCSQ.csq.avi' -y' had status
-    ## 1
+    ## [1] TRUE
 
 Converted files are in an output subfolder
 
@@ -732,12 +685,12 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 20.748461 24.74018 25.55666 397.3722 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2  8.162830 12.96160 12.43085 352.7290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 12.422372 17.62376 17.51754 421.0885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4  6.230553 11.03964 10.78727 376.5885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 37.941684 44.36217 43.04391 421.6717 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 49.454546 54.72589 55.04309 461.8633 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 31.395175 35.60294 36.83462 449.5413 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 17.414128 21.54946 23.00523 462.0745 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 25.956804 33.13282 30.99876 416.6903 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.870085 41.68232 41.35704 453.4673 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5  8.488847 12.91455 12.35144 319.2230 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 25.426420 30.51598 30.74975 439.9446 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -917,25 +870,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 293.4174 249.4737 309.9789 272.1044 300.5392 348.9406 296.2706
-    ##  [8] 349.3077 258.8705 289.0605 303.8094 352.7191 265.6573 278.0894
-    ## [15] 230.9002 268.3216 338.8652 250.7460 299.1690 274.9732
+    ##  [1] 341.0795 353.2563 291.7477 334.5131 220.1421 326.4580 314.7410
+    ##  [8] 263.5590 304.2037 238.7698 237.5109 212.1647 313.6958 270.3524
+    ## [15] 294.1401 309.4965 259.2756 282.8084 304.6136 329.1577
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -15.37758 -19.49995 -21.50681 -19.57871 -27.66811 -21.56149 -18.28062
-    ##  [8] -22.22241 -24.54106 -20.92759 -22.98118 -11.56815 -30.16813 -15.77945
-    ## [15] -22.46895 -14.98968 -20.12050 -21.20488 -16.05649 -19.41864
+    ##  [1] -16.35043 -16.09983 -31.93412 -24.44713 -17.61987 -20.78976 -24.29929
+    ##  [8] -22.21900 -18.31720 -22.57900 -21.17792 -24.07007 -23.65456 -31.47103
+    ## [15] -15.50485 -18.98218 -29.34926 -16.61470 -16.92603 -29.35129
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -40.94004 -50.05301 -53.92508 -50.30502 -64.64281 -52.54257 -47.05260
-    ##  [8] -55.35841 -59.14841 -51.80618 -57.06759 -32.52451 -69.42013 -42.26341
-    ## [15] -54.27605 -40.05728 -50.83839 -53.05453 -42.30770 -49.60204
+    ##  [1] -42.64116 -42.58980 -73.15124 -58.63553 -46.13976 -51.91332 -57.82569
+    ##  [8] -55.31376 -46.70884 -55.32328 -53.39635 -58.28059 -57.54291 -72.99115
+    ## [15] -40.98683 -48.01904 -68.43538 -43.45850 -43.99485 -68.70259
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -945,19 +898,19 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 20.748461 24.74018 25.55666 397.3722 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2  8.162830 12.96160 12.43085 352.7290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 12.422372 17.62376 17.51754 421.0885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4  6.230553 11.03964 10.78727 376.5885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 37.941684 44.36217 43.04391 421.6717 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 49.454546 54.72589 55.04309 461.8633 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 31.395175 35.60294 36.83462 449.5413 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 17.414128 21.54946 23.00523 462.0745 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 25.956804 33.13282 30.99876 416.6903 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 35.870085 41.68232 41.35704 453.4673 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5  8.488847 12.91455 12.35144 319.2230 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 25.426420 30.51598 30.74975 439.9446 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 117.36697 -16.37601 100.99096
-    ## 2 1 0.58 0.25 forced hcylinder  99.78948 -20.02121  79.76827
-    ## 3 1 0.58 0.25 forced hcylinder 123.99157 -21.57003 102.42153
-    ## 4 1 0.58 0.25 forced hcylinder 108.84178 -20.12201  88.71977
-    ## 5 1 0.58 0.25 forced hcylinder 120.21569 -25.85712  94.35857
-    ## 6 1 0.58 0.25 forced hcylinder 139.57623 -21.01703 118.55920
+    ## 1 1 0.58 0.25 forced hcylinder 136.43181 -17.05646 119.37534
+    ## 2 1 0.58 0.25 forced hcylinder 141.30252 -17.03592 124.26660
+    ## 3 1 0.58 0.25 forced hcylinder 116.69906 -29.26050  87.43856
+    ## 4 1 0.58 0.25 forced hcylinder 133.80524 -23.45421 110.35103
+    ## 5 1 0.58 0.25 forced hcylinder  88.05682 -18.45590  69.60092
+    ## 6 1 0.58 0.25 forced hcylinder 130.58321 -20.76533 109.81788
 
 ### Test the equations out for consistency
 

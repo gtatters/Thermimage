@@ -5,10 +5,10 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(root.dir = '/Users/GlennTattersall/IRconvert/SampleFLIR/')
 ```
 
 <img src='Uploads/ThermimageSticker1.png' align="right" height="138.5">
+
 
 [![cran version](https://www.r-pkg.org/badges/version/Thermimage)](https://www.r-pkg.org/badges/version/Thermimage)
 [![downloads](https://cranlogs.r-pkg.org/badges/Thermimage)](https://cranlogs.r-pkg.org/badges/Thermimage)
@@ -343,8 +343,7 @@ If you have a lot of files and wish simply to analyse images in ImageJ, not in R
 https://github.com/gtatters/ThermImageJ/blob/master/SampleFiles.zip
 
 ```{bash}
-cd ~/IRconvert/SampleFLIR
-ls
+ls SampleFLIR
 ```
 
 ### Download and extract perl scripts to scripts folder:
@@ -355,36 +354,33 @@ cd ~/IRconvert/scripts
 ls
 ```
 
-Bulk convert all FLIR jpg files found in folder:
+Bulk FLIR jpg file:
 
 ```{r}
-
 library(Thermimage)
-# setwd("~/IRconvert/SampleFLIR")
 exiftoolpath <- "installed"
 
-l.files<-list.files(path="~/IRConvert/SampleFLIR", pattern=".jpg", recursive=T, full.names=T, include.dirs=T, no..=T)
-l.files
+f<-paste0("SampleFLIR/SampleFLIR.jpg")
 
 # if JPG contains raw thermal image as TIFF, endian = "lsb"
 # if JPG contains raw thermal image as PNG, endian = "msb"?
 
-for(f in l.files){
-  imagefile<-f
-  vals<-flirsettings(imagefile)
-  w<-vals$Info$ImageWidth
-  h<-vals$Info$ImageHeight
-  res.in<-paste0(w,"x",h)
+vals<-flirsettings(f)
+w<-vals$Info$ImageWidth
+h<-vals$Info$ImageHeight
+res.in<-paste0(w,"x",h)
   
-  if(vals$Info$RawThermalImageType=="PNG") endian="msb"
-  if(vals$Info$RawThermalImageType=="TIFF") endian="lsb"
+if(vals$Info$RawThermalImageType=="PNG") endian="msb" 
+if(vals$Info$RawThermalImageType=="TIFF") endian="lsb"
   
-  convertflirJPG(imagefile, exiftoolpath="installed", res.in=res.in, endian=endian, outputfolder="output", verbose=FALSE)
-  cat("\n")
-}
+convertflirJPG(f, exiftoolpath="installed", res.in=res.in, endian=endian, outputfolder="", verbose=FALSE)
+  
+cat("\n")
+
+
 ```
 
-Converted files are in an output sub folder
+Converted files are in the output subfolder
 
 Here is a sample image:
 
@@ -395,31 +391,28 @@ The above PNG file is a sample image of the 16 bit grayscale image.  Although it
 
 # Convert FLIR SEQ or CSQ from R 
 
-Bulk convert all FLIR csq files found in folder:
+Convert FLIR csq file
 
 ```{r}
 library(Thermimage)
-# setwd("~/IRconvert/SampleFLIR")
+setwd("/Users/GlennTattersall/Documents/GitHub/ThermimageProjects/Thermimage")
 exiftoolpath <- "installed"
 perlpath <- "installed"
 
-# Convert CSQ and SEQ
-l.files<-list.files(path="~/IRconvert/SampleFLIR", pattern=".csq", recursive=F, full.names=T, include.dirs=T, no..=T)
-l.files
-
+f<-"SampleFLIRCSQ.csq"
 
 # if JPG contains raw thermal image as TIFF, endian = "lsb"
 # if JPG contains raw thermal image as PNG,  endian = "msb"
-for(f in l.files){
-  imagefile<-f
-  vals<-flirsettings(imagefile)
-  w<-vals$Info$RawThermalImageWidth
-  h<-vals$Info$RawThermalImageHeight
-  res.in<-paste0(w,"x",h)
-  info<-convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed", 
+
+vals<-flirsettings(f)
+w<-vals$Info$RawThermalImageWidth
+h<-vals$Info$RawThermalImageHeight
+res.in<-paste0(w,"x",h)
+
+convertflirVID(f, exiftoolpath="installed", perlpath="installed", 
                        fr=30, res.in=res.in, res.out=res.in, outputcompresstype="jpegls", outputfilenameroot=NULL,
-                       outputfiletype="avi", outputfolder="output", verbose=FALSE)
-}
+                       outputfiletype="avi", outputfolder="./output", verbose=FALSE)
+
 ```
 
 Converted files are in an output subfolder
