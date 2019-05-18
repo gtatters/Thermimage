@@ -1,7 +1,7 @@
 Package: Thermimage
 Type: Package
 Title: Thermal Image Analysis
-Version: 3.2.0
+Version: 3.2.1
 Date: 2019-05-17
 Author: Glenn J. Tattersall
 Description: A collection of functions and routines for inputting thermal
