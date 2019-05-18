@@ -1,7 +1,7 @@
 \name{getTimes}
 \alias{getTimes}
 \title{
-Extracts time values as POSIX from binary imported thermal video file
+Extracts time values from binary imported thermal video file
 }
 \description{
 Extracts time values for each image frame from a thermal camera video file (.seq or with some .fcf).  For time lapse or video capture, computer time is stored for each image frame in 3 chunks, denoting msec, sec, and date information.  
@@ -25,7 +25,7 @@ Set to 1 by default. User does not need to set this.  Deprecated option from an 
 
 }
 \details{
-Somewhat empirically determined, but also information provided on the exiftool website below describes where time stamp information is stored in each file.  This function concatentates the 3 time stamps corresponding to msec, sec, and date into one POSIX variable that gives the actual time each image was captured.
+Somewhat empirically determined, but also information provided on the exiftool website below describes where time stamp information is stored in each file.  This function concatentates the 3 time stamps corresponding to msec, sec, and date into one variable that gives the actual time each image was captured.
 
 As written, this is a vectorised function, so to extract multiple frames of data (i.e. length(headstarts)>1), use a loop or the apply function as shown in the example below. 
 
@@ -38,7 +38,7 @@ Has not been fully tested on file types from all cameras or thermal imaging soft
 
 }
 \value{
-Returns a vector of times (POSIXct) corresponding to the frame capture times as extracted from the thermal video file.
+Returns a vector of times as characters corresponding to the frame capture times as extracted from the thermal video file.  Times should resemble those returned using Exiftool.
 }
 \references{
 1. http://www.sno.phy.queensu.ca/~phil/exiftool/
@@ -65,7 +65,6 @@ x<-frameLocates(f)
 getTimes(f, x$h.start)
 
 # only returns the first frame of data, must use lapply to get all frames
-# POSIX type data do not play well with lists, so try the following:
 
 # Using lapply
 extract.times<-do.call("c", lapply(x$h.start, getTimes, vidfile=f))
