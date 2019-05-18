@@ -136,9 +136,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-04-02 10:53:59"
-    ## FileAccessDateTime       "2019-05-17 09:46:17"
-    ## FileInodeChangeDateTime  "2019-04-02 10:54:01"
+    ## FileModificationDateTime "2019-05-17 22:07:13"
+    ## FileAccessDateTime       "2019-05-17 22:11:09"
+    ## FileInodeChangeDateTime  "2019-05-17 22:07:15"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -376,12 +376,12 @@ n.frames; fl
     ## [1] 2
 
     ## $h.start
-    ## [1]    162 308688
+    ## [1]    320 617372
     ## 
     ## $f.start
-    ## [1]   1391 309917
+    ## [1]   2748 619800
 
-The relative positions of the header start (h.start) are 162 and 308688, and the frame start (f.start) positions are 1391 and 309917. The video file is a short, two frame (n.frames) sequence from a thermal video.
+The relative positions of the header start (h.start) are 320 and 617372, and the frame start (f.start) positions are 2748 and 619800. The video file is a short, two frame (n.frames) sequence from a thermal video.
 
 Then pass the fl data to two different functions, one to extract the time information from the header, and the other to extract the actual pixel data from the image frame itself. The lapply function will have to be used (for efficiency), but to wrap the function across all possible detected image frames. Note: For large files, the parallel function, mclapply, is advised (?getFrames for an example):
 
@@ -390,18 +390,18 @@ extract.times<-do.call("c", lapply(fl$h.start, getTimes, vidfile=v))
 data.frame(extract.times)
 ```
 
-    ##             extract.times
-    ## 1 2012-06-13 15:52:08.698
-    ## 2 2012-06-13 15:52:12.665
+    ##                  extract.times
+    ## 1 2012-06-13 15:52:08.698-0500
+    ## 2 2012-06-13 15:52:12.665-0500
 
 ``` r
-Interval<-signif(mean(as.numeric(diff(extract.times))),3)
+Interval<-signif(mean(as.numeric(diff(as.POSIXct(extract.times)))),3)
 Interval
 ```
 
     ## [1] 3.97
 
-This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN. At present, the getTimes function cannot accurately render the time on the first frame. On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files). Precise time capture is not crucial but is helpful for verifying data conversion.
+This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN. At present, the getTimes function might not accurately render the time on the first frame. On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files). Precise time capture is not crucial but is helpful for verifying data conversion.
 
 After extracting times, then extract the frame data, with the getFrames function:
 
@@ -631,6 +631,12 @@ for(f in l.files){
     ## 
     ## ffmpeg -r 30 -f image2 -vcodec jpegls -s 1024x768 -i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output//Users/GlennTattersall/IRconvert/SampleFLIR/SampleFLIRCSQ.csq.avi' -y
 
+    ## Warning in system2("ffmpeg", args = args, stdout = TRUE): running
+    ## command ''ffmpeg' -r 30 -f image2 -vcodec jpegls -s 1024x768 -
+    ## i 'temp/frame%05d.jpegls' -vcodec jpegls -s 1024x768 'output//Users/
+    ## GlennTattersall/IRconvert/SampleFLIR/SampleFLIRCSQ.csq.avi' -y' had status
+    ## 1
+
 Converted files are in an output subfolder
 
 ![Sample PNG](https://github.com/gtatters/Thermimage/blob/master/Uploads/frame00001.png?raw=true) The above PNG file is a sample image of the 16 bit grayscale image. Although it looks washed out, it can be imported into ImageJ and the Brightness/Contrast changed for optimal viewing.
@@ -726,12 +732,12 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 40.072768 45.14752 44.83725 393.7584 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 15.571311 18.69838 19.95029 361.8992 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 18.183832 23.50433 23.47411 437.2130 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 39.078930 45.90120 43.39540 356.7328 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  4.386518 12.11682  9.19349 397.2704 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 42.031865 47.13651 46.30865 353.4530 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 20.748461 24.74018 25.55666 397.3722 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2  8.162830 12.96160 12.43085 352.7290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 12.422372 17.62376 17.51754 421.0885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4  6.230553 11.03964 10.78727 376.5885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 37.941684 44.36217 43.04391 421.6717 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 49.454546 54.72589 55.04309 461.8633 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -911,25 +917,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 283.8971 265.5203 323.2911 236.6717 277.2795 246.0551 308.4166
-    ##  [8] 206.6543 236.4296 349.6444 382.6790 290.3839 228.1761 302.0773
-    ## [15] 311.0374 280.6384 280.5745 289.9197 326.7519 283.6560
+    ##  [1] 293.4174 249.4737 309.9789 272.1044 300.5392 348.9406 296.2706
+    ##  [8] 349.3077 258.8705 289.0605 303.8094 352.7191 265.6573 278.0894
+    ## [15] 230.9002 268.3216 338.8652 250.7460 299.1690 274.9732
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -20.60724 -11.36437 -22.05189 -29.83906 -35.48441 -20.74804 -24.03264
-    ##  [8] -15.51285 -26.94827 -20.02720 -16.17207 -16.24568 -12.74984 -22.54504
-    ## [15] -21.92386 -22.30212 -25.26244 -19.86180 -20.85108 -18.76504
+    ##  [1] -15.37758 -19.49995 -21.50681 -19.57871 -27.66811 -21.56149 -18.28062
+    ##  [8] -22.22241 -24.54106 -20.92759 -22.98118 -11.56815 -30.16813 -15.77945
+    ## [15] -22.46895 -14.98968 -20.12050 -21.20488 -16.05649 -19.41864
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -50.99223 -32.28269 -54.74224 -68.61470 -81.09081 -51.20167 -57.81900
-    ##  [8] -40.76902 -63.96809 -51.00901 -42.51418 -43.15993 -34.89482 -55.47329
-    ## [15] -53.99219 -54.47191 -60.59404 -50.80559 -52.20110 -47.67081
+    ##  [1] -40.94004 -50.05301 -53.92508 -50.30502 -64.64281 -52.54257 -47.05260
+    ##  [8] -55.35841 -59.14841 -51.80618 -57.06759 -32.52451 -69.42013 -42.26341
+    ## [15] -54.27605 -40.05728 -50.83839 -53.05453 -42.30770 -49.60204
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -939,19 +945,19 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 40.072768 45.14752 44.83725 393.7584 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 15.571311 18.69838 19.95029 361.8992 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 18.183832 23.50433 23.47411 437.2130 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 39.078930 45.90120 43.39540 356.7328 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  4.386518 12.11682  9.19349 397.2704 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 42.031865 47.13651 46.30865 353.4530 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 20.748461 24.74018 25.55666 397.3722 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2  8.162830 12.96160 12.43085 352.7290 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 12.422372 17.62376 17.51754 421.0885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4  6.230553 11.03964 10.78727 376.5885 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 37.941684 44.36217 43.04391 421.6717 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 49.454546 54.72589 55.04309 461.8633 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 113.55884 -20.39689  93.16195
-    ## 2 1 0.58 0.25 forced hcylinder 106.20812 -12.91308  93.29504
-    ## 3 1 0.58 0.25 forced hcylinder 129.31643 -21.89690 107.41953
-    ## 4 1 0.58 0.25 forced hcylinder  94.66867 -27.44588  67.22278
-    ## 5 1 0.58 0.25 forced hcylinder 110.91180 -32.43632  78.47547
-    ## 6 1 0.58 0.25 forced hcylinder  98.42205 -20.48067  77.94139
+    ## 1 1 0.58 0.25 forced hcylinder 117.36697 -16.37601 100.99096
+    ## 2 1 0.58 0.25 forced hcylinder  99.78948 -20.02121  79.76827
+    ## 3 1 0.58 0.25 forced hcylinder 123.99157 -21.57003 102.42153
+    ## 4 1 0.58 0.25 forced hcylinder 108.84178 -20.12201  88.71977
+    ## 5 1 0.58 0.25 forced hcylinder 120.21569 -25.85712  94.35857
+    ## 6 1 0.58 0.25 forced hcylinder 139.57623 -21.01703 118.55920
 
 ### Test the equations out for consistency
 

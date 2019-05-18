@@ -51,7 +51,7 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   alldata <- readBin(to.read, raw(), n = file.info("tempfile")$size)
   close(to.read)
   if (cams$Info$RawThermalImageType == "TIFF") {
-    TIFF <- Thermimage::locate.fid(c("54", "49", "46", "46","49", "49"), alldata)
+    TIFF <- Thermimage::locate.fid(c("54", "49", "46", "46","49", "49"), alldata, zeroindex = FALSE)
     if (length(TIFF) == 1) {
       alldata <- alldata[-c(1:(TIFF + 3))]
       
@@ -63,7 +63,7 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
     }
   }
   if (cams$Info$RawThermalImageType == "PNG") {
-    PNG <- Thermimage::locate.fid(c("89", "50", "4e", "47", "0d", "0a", "1a", "0a"), alldata)
+    PNG <- Thermimage::locate.fid(c("89", "50", "4e", "47", "0d", "0a", "1a", "0a"), alldata, zeroindex = FALSE)
     if (length(PNG) == 1) {
       alldata <- alldata[-c(1:(PNG - 1))]
       

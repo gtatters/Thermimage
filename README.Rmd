@@ -268,7 +268,7 @@ n.frames<-length(fl$f.start)
 n.frames; fl
 ```
 
-The relative positions of the header start (h.start) are 162 and 308688, and the frame start (f.start) positions are 1391 and 309917.  The video file is a short, two frame (n.frames) sequence from a thermal video.
+The relative positions of the header start (h.start) are 320 and 617372, and the frame start (f.start) positions are 2748 and 619800.  The video file is a short, two frame (n.frames) sequence from a thermal video.
 
 Then pass the fl data to two different functions, one to extract the time information from the header, and the other to extract the actual pixel data from the image frame itself.  The lapply function will have to be used (for efficiency), but to wrap the function across all possible detected image frames.  Note: For large files, the parallel function, mclapply, is advised (?getFrames for an example):
 
@@ -276,12 +276,12 @@ Then pass the fl data to two different functions, one to extract the time inform
 extract.times<-do.call("c", lapply(fl$h.start, getTimes, vidfile=v))
 data.frame(extract.times)
 
-Interval<-signif(mean(as.numeric(diff(extract.times))),3)
+Interval<-signif(mean(as.numeric(diff(as.POSIXct(extract.times)))),3)
 Interval
 
 ```
 
-This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function cannot accurately render the time on the first frame.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
+This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function might not accurately render the time on the first frame.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
 
 After extracting times, then extract the frame data, with the getFrames function:
 
