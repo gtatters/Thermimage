@@ -1,6 +1,6 @@
 #' @export
 #' 
-readflirJPG<-function(imagefile,  exiftoolpath="installed")
+readflirJPG<-function(imagefile,  exiftoolpath="installed", headerindex=1)
 {
   # source: http://timelyportfolio.github.io/rCharts_catcorrjs/exif/
   # see also here for converting thermal image values
@@ -16,6 +16,11 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   # Credit to John Al-Alawneh for troubleshooting
   # v 3.1.1 fixed white space error in readflirJPJG on windows OS
   # v 3.1.2 removed "stop" check for custom path to exiftool
+  # v 3.2.2 added headerindex option in case there is more than one header
+  # in the tempfile.  This arose from a jpg that was captured with dual 
+  # digital and thermal image, and it is likely that the thermal image is
+  # extracted as headerindex=1.  
+  
   
   if (exiftoolpath == "installed") {
     exiftoolpath <- ""
@@ -52,7 +57,11 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
   close(to.read)
   if (cams$Info$RawThermalImageType == "TIFF") {
     TIFF <- Thermimage::locate.fid(c("54", "49", "46", "46","49", "49"), alldata, zeroindex = FALSE)
-    if (length(TIFF) == 1) {
+    
+    if(length(TIFF)>1){
+      TIFF<-TIFF[headerindex]
+    }
+  
       alldata <- alldata[-c(1:(TIFF + 3))]
       
       to.write <- file("tempfile", "wb")
@@ -60,11 +69,15 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
       close(to.write)
       img <- tiff::readTIFF(paste0(currentpath, "/tempfile"),as.is = TRUE)
       #img <- tiff::readTIFF(as.raw(alldata),as.is = TRUE) # can rem out above 4 lines
-    }
+    
   }
   if (cams$Info$RawThermalImageType == "PNG") {
     PNG <- Thermimage::locate.fid(c("89", "50", "4e", "47", "0d", "0a", "1a", "0a"), alldata, zeroindex = FALSE)
-    if (length(PNG) == 1) {
+    
+    if(length(PNG)>1){
+      PNG<-PNG[headerindex]
+    }
+      
       alldata <- alldata[-c(1:(PNG - 1))]
       
       to.write <- file("tempfile", "wb")
@@ -73,7 +86,7 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed")
       img.reverse <- png::readPNG(paste0(currentpath, "/tempfile"))
       #img.reverse<-png::readPNG(as.raw(alldata)) # can rem out above 4 lines
       img <- (img.reverse/256 + (floor(img.reverse * (2^16 - 1))%%256)/256) * (2^16 - 1)
-    }
+    
   }
   if (file.exists("tempfile")) file.remove("tempfile")
   rm(exiftoolpath)

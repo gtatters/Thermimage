@@ -16,14 +16,16 @@ Name of the FLIR JPG file to read from, as captured by the thermal camera.  A ch
   \item{exiftoolpath}{
 A character string that determines whether Exiftool has been "installed" (http://www.sno.phy.queensu.ca/~phil/exiftool/) or not.  If Exiftool has been installed in a specific location, use to direct to the folder location.
 }
+\item{headerindex}{
+An integer defining which TIFF or PNG detected header to use as the thermal image data.  Default = 1, since most files will only have one detected header, but sometimes when exiftool extracts the raw thermal data, it produces more than one head in the tempfile.  This might be the case with FLIR cameras and files with fused digital and thermal image data.
+}
 }
 \details{
 Only tested on a select number of FLIR JPGs.  Usage depends on functionality provided by Exiftool.  At present this function first makes use of readBin to read in thermal image jpgs and searches for the magic start byte sequence ("54", "49", "46", "46","49", "49") for TIFF type images or ("89", "50", "4e", "47", "0d", "0a", "1a", "0a") for PNG type images, and then uses the readTIFF or readPNG functions to load into R.
 
 Exiftool should install on most operating systems.  Consult with http://www.sno.phy.queensu.ca/~phil/exiftool/ for information on installing Exiftool.  If trouble installing, download Exiftool and set exiftoolpath to the custom folder location.  To test if the custom path to Exiftool will work on your OS, try your own system or system2 call: system2("/custompath/exiftool") to see if you get an error or not.
 
-v 2.2.3: updated to fix a problem calling shell commands requiring folder write access 
-on a windows OS (thanks to John Al-Alawneh)
+v 2.2.3: updated to fix a problem calling shell commands requiring folder write access on a windows OS (thanks to John Al-Alawneh)
 
 }
 \value{

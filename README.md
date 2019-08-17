@@ -12,8 +12,8 @@ The version here on github is the current, development version. Archived sources
 Current release notes
 =====================
 
--   2019-05-17: Version 3.2.0 is on Github (development version)
-    -   Fixed an issue [\#3](https://github.com/gtatters/Thermimage/issues/3) with **getTimes()** not working, based on inaccurate **frameLocates()**. Completely re-wrote the **frameLocates()**, **locate.fid()**, **getTimes()**, and **getFrames()** functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times. Note: this series of functions are hacks and users are advised to use with caution.
+-   2019-08-17: Version 3.2.2 is on Github (development version)
+    -   Added headerindex choice in readflirJPG function as a workaround for images that have been captured in dual digital/thermal mode. Not fully tested. Default headerindex = 1 so should not break other code.
 
 Features
 ========
@@ -98,11 +98,11 @@ head(cbind(cams$Info), 20) # Large amount of Info, show just the first 20 tages 
 ```
 
     ##                       [,1]    
-    ## ExifToolVersionNumber 11.37   
+    ## ExifToolVersionNumber 11.62   
     ## FileName              2412    
     ## Directory             ".3.5"  
     ## FileSize              638     
-    ## FilePermissions       "-"     
+    ## FilePermissions       "--"    
     ## FileType              ""      
     ## FileTypeExtension     ""      
     ## MIMEType              ""      
@@ -136,9 +136,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-05-17 22:15:46"
-    ## FileAccessDateTime       "2019-05-18 16:05:03"
-    ## FileInodeChangeDateTime  "2019-05-17 22:15:48"
+    ## FileModificationDateTime "2019-05-19 02:17:31"
+    ## FileAccessDateTime       "2019-08-17 16:18:17"
+    ## FileInodeChangeDateTime  "2019-07-07 17:06:50"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -497,6 +497,7 @@ cd ~/IRconvert/scripts
 ls
 ```
 
+    ## CompleteCSQConvert
     ## ConvertACQtoTXT
     ## ConvertCSQtoAVI
     ## ConvertFCFtoAVI
@@ -507,25 +508,18 @@ ls
     ## ConvertSEQtoAVI
     ## ConverttoGrayscale
     ## ExtractAllFLIRJPGs
+    ## FFFTimeStamps
+    ## FLIRMedianRangeExtracts.pl
     ## IRFileImport.R
-    ## ImageJRad2Temp.txt
-    ## ImportRaw_FCFsettings.jpeg
-    ## Process_Folder GUI mod.ijm
-    ## Process_Folder.ijm
-    ## Process_Folder_TIFF2Temp.ijm
-    ## SEQtoVID_Rima
+    ## OldFiles
+    ## RenumberFiles
+    ## convertcsq.pl
     ## exiftool commands.docx
     ## ffmpegscript
     ## imagejscript_rad2temp
+    ## scrapcode
     ## split.pl
-    ## split_fff.pl
-    ## split_jpegls.pl
-    ## split_tiff.pl
-    ## test.pl
-    ## test2.pl
-    ## tryopts.sh
-    ## workflow.txt
-    ## workflow_windows.txt
+    ## ~$iftool commands.docx
 
 Bulk FLIR jpg file:
 
@@ -685,12 +679,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 17.47730 21.66157 21.57300 338.4871 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 15.28050 19.69706 18.63169 276.9580 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.05130 24.59153 25.87262 481.1014 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 43.85540 49.07823 49.33189 452.6019 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  7.26791 13.32997 11.58257 356.5833 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 37.15607 42.21054 43.16485 496.5936 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 20.96175 26.40495 26.14428 428.3087 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 38.04348 42.61044 42.85812 397.9042 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 30.66073 36.74313 35.65959 413.1286 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 16.44451 21.57369 21.40394 409.8707 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 34.20486 39.84220 39.22203 414.6426 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 28.12952 33.10262 33.35993 432.2654 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -870,25 +864,25 @@ Ideally, you have all parameters estimated or measured and put into a data frame
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 237.6758 179.3833 368.5209 338.9870 246.8647 380.3484 306.9372
-    ##  [8] 328.6006 242.9192 304.2527 301.4150 309.6555 342.4525 308.7384
-    ## [15] 326.1603 329.1661 347.8287 237.0666 316.0709 267.7671
+    ##  [1] 313.8723 291.0105 294.8347 299.1404 299.1470 319.9064 308.2442
+    ##  [8] 305.6677 248.0119 291.2940 265.7559 240.6608 302.0240 300.1150
+    ## [15] 232.4777 280.1907 219.9219 207.5084 341.6623 292.8149
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -16.33775 -17.50045 -18.06908 -21.34030 -26.13145 -20.52190 -24.91364
-    ##  [8] -23.23780 -18.35596 -18.60567 -11.96400 -24.01321 -20.99189 -25.62821
-    ## [15] -12.53297 -19.74016 -18.95277 -20.05284 -21.93009 -21.38447
+    ##  [1] -22.65744 -18.07341 -25.92251 -21.08498 -23.54397 -20.17405 -35.09557
+    ##  [8] -16.98428 -23.01373 -22.05640 -23.61274 -20.52126 -24.14775 -22.23728
+    ## [15] -23.66085 -21.55403 -22.68873 -26.13122 -14.63027 -32.90995
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -43.09026 -45.61229 -46.60547 -52.30296 -63.31318 -50.92755 -59.90845
-    ##  [8] -56.78141 -47.44202 -47.43449 -33.30915 -58.51094 -52.14763 -62.13239
-    ## [15] -34.47746 -49.81518 -48.48542 -51.13925 -54.37012 -53.42291
+    ##  [1] -55.81236 -45.97666 -61.68603 -52.89151 -56.96483 -50.57289 -79.46792
+    ##  [8] -44.09729 -56.47596 -55.63551 -56.72255 -51.33190 -58.11291 -54.88470
+    ## [15] -56.49340 -53.26587 -55.38870 -61.84838 -39.54107 -75.45859
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -898,19 +892,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 17.47730 21.66157 21.57300 338.4871 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2 15.28050 19.69706 18.63169 276.9580 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 20.05130 24.59153 25.87262 481.1014 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 43.85540 49.07823 49.33189 452.6019 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5  7.26791 13.32997 11.58257 356.5833 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 37.15607 42.21054 43.16485 496.5936 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder  95.07031 -17.23611  77.83420
-    ## 2 1 0.58 0.25 forced hcylinder  71.75333 -18.24492  53.50842
-    ## 3 1 0.58 0.25 forced hcylinder 147.40836 -18.64219 128.76617
-    ## 4 1 0.58 0.25 forced hcylinder 135.59478 -20.92118 114.67360
-    ## 5 1 0.58 0.25 forced hcylinder  98.74589 -25.32527  73.42062
-    ## 6 1 0.58 0.25 forced hcylinder 152.13936 -20.37102 131.76833
+    ## 1 20.96175 26.40495 26.14428 428.3087 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 38.04348 42.61044 42.85812 397.9042 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 30.66073 36.74313 35.65959 413.1286 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 16.44451 21.57369 21.40394 409.8707 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 34.20486 39.84220 39.22203 414.6426 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 28.12952 33.10262 33.35993 432.2654 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape     qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 125.5489 -22.32495 103.22396
+    ## 2 1 0.58 0.25 forced hcylinder 116.4042 -18.39066  98.01354
+    ## 3 1 0.58 0.25 forced hcylinder 117.9339 -24.67441  93.25948
+    ## 4 1 0.58 0.25 forced hcylinder 119.6562 -21.15660  98.49956
+    ## 5 1 0.58 0.25 forced hcylinder 119.6588 -22.78593  96.87285
+    ## 6 1 0.58 0.25 forced hcylinder 127.9626 -20.22916 107.73340
 
 ### Test the equations out for consistency
 
@@ -1162,6 +1156,8 @@ Alternative Hex Stickers
 Previous release notes
 ======================
 
+-   2019-05-17: Version 3.2.0 is on Github (development version)
+    -   Fixed an issue [\#3](https://github.com/gtatters/Thermimage/issues/3) with **getTimes()** not working, based on inaccurate **frameLocates()**. Completely re-wrote the **frameLocates()**, **locate.fid()**, **getTimes()**, and **getFrames()** functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times. Note: this series of functions are hacks and users are advised to use with caution.
 -   2019-03-06: Version 3.1.4 is on Github (development version)
     -   Fixed an issue [\#2](https://github.com/gtatters/Thermimage/issues/2) with **frameLocates()**. This function may not remain in the package in the future, especially if file types change. Recommend users consider **convertflirVID()** or **convertflirJPG()** instead to convert files to an easier to import file type.
 -   2019-02-12: Version 3.1.3 is on Github

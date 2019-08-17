@@ -24,8 +24,8 @@ The version here on github is the current, development version.  Archived source
 # Current release notes 
 
 
-- 2019-05-17: Version 3.2.0 is on Github (development version)
-    - Fixed an issue [#3](https://github.com/gtatters/Thermimage/issues/3) with __getTimes()__ not working, based on inaccurate __frameLocates()__.  Completely re-wrote the __frameLocates()__, __locate.fid()__, __getTimes()__, and __getFrames()__ functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times.  Note: this series of functions are hacks and users are advised to use with caution.
+- 2019-08-17: Version 3.2.2 is on Github (development version)
+    - Added headerindex choice in readflirJPG function as a workaround for images that have been captured in dual digital/thermal mode.  Not fully tested.  Default headerindex = 1 so should not break other code.
   
 
 # Features
@@ -844,6 +844,9 @@ EEVBlog:
  
 # Previous release notes
 
+- 2019-05-17: Version 3.2.0 is on Github (development version)
+    - Fixed an issue [#3](https://github.com/gtatters/Thermimage/issues/3) with __getTimes()__ not working, based on inaccurate __frameLocates()__.  Completely re-wrote the __frameLocates()__, __locate.fid()__, __getTimes()__, and __getFrames()__ functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times.  Note: this series of functions are hacks and users are advised to use with caution.
+  
 - 2019-03-06: Version 3.1.4 is on Github (development version)
     - Fixed an issue [#2](https://github.com/gtatters/Thermimage/issues/2) with __frameLocates()__.  This function may not remain in the package in the future, especially if file types change.  Recommend users consider __convertflirVID()__ or __convertflirJPG()__ instead to convert files to an easier to import file type.
     
