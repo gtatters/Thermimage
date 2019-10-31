@@ -1,7 +1,6 @@
 #' @export
 #' 
-raw2temp <-
-function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
+raw2temp <-function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
                    PR1=21106.77,PB=1501,PF=1,PO=-7340,PR2=0.012545258,
          ATA1=0.006569, ATA2=0.01262, ATB1=-0.002276, ATB2=-0.00667, ATX=1.9)
 {
