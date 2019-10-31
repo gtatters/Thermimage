@@ -74,6 +74,11 @@ PlanckB<-     cams$Info$PlanckB                       # Planck B constant for ca
 PlanckF<-     cams$Info$PlanckF                       # Planck F constant for camera
 PlanckO<-     cams$Info$PlanckO                       # Planck O constant for camera
 PlanckR2<-    cams$Info$PlanckR2                      # Planck R2 constant for camera
+ATA1<-        cams$Info$AtmosphericTransAlpha1        # Atmospheric attenuation constant
+ATA2<-        cams$Info$AtmosphericTransAlpha2        # Atmospheric attenuation constant
+ATB1<-        cams$Info$AtmosphericTransBeta1         # Atmospheric attenuation constant
+ATB2<-        cams$Info$AtmosphericTransBeta2         # Atmospheric attenuation constant
+ATX<-         cams$Info$AtmosphericTransX             # Atmospheric attenuation constant
 OD<-          cams$Info$ObjectDistance                # object distance in metres
 FD<-          cams$Info$FocusDistance                 # focus distance in metres
 ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature

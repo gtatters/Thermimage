@@ -2,7 +2,8 @@
 #' 
 raw2temp <-
 function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
-                   PR1=21106.77,PB=1501,PF=1,PO=-7340,PR2=0.012545258)
+                   PR1=21106.77,PB=1501,PF=1,PO=-7340,PR2=0.012545258,
+         ATA1=0.006569, ATA2=0.01262, ATB1=-0.002276, ATB2=-0.00667, ATX=1.9)
 {
   # how to call this function: 
   # raw2temp(raw,E,OD,RTemp,ATemp,IRWTemp,IRT,RH,PR1,PB,PF,PO,PR2)
@@ -42,12 +43,7 @@ function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
   # PF: PlanckF calibration constant from FLIR file    1              1             1               29.37648768
   # PO: PlanckO calibration constant from FLIR file    -7340          -5753         -7261           1278.907078
   # PR2: PlanckR2 calibration constant form FLIR file  0.012545258    0.010603162   0.010956882     0.0376637583528285
-  
-  # PR1=14906.216,PB=1396.5,PF=1,PO=-7261,PR2=0.010956882       
-  #  Uncomment this line above to reveal calibration values for Ray's T300 camera
-  # PR1=21106.77,PB=9758.743281,PF=29.37648768,PO=1278.907078,PR2=0.0376637583528285
-  #  Uncomment this line above to reveal calibration values for Glenn's Mikron camera
-  
+ 
   # Set constants below. Comment out those that are variables in this function
   # Keep those that should remain constants.  
   # These are here to make troubleshooting calculations easier if not running this as a function call
@@ -55,14 +51,13 @@ function(raw,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
   # RTemp<-20; IRWTemp<-RTemp; ATemp<-20; RH<-50
   # PR1<-21106.77; PB<-1501; PF<-1; PO<--7340; PR2<-0.012545258
   
-  # Keep these humidity parameters in since they are set constants required for a calculation
+  # These humidity parameters were extracted from the FLIR SC660 camera
   # ATA1: Atmospheric Trans Alpha 1  0.006569 constant for calculating humidity effects on transmission 
   # ATA2: Atmospheric Trans Alpha 2  0.012620 constant for calculating humidity effects on transmission
   # ATB1: Atmospheric Trans Beta 1  -0.002276 constant for calculating humidity effects on transmission
   # ATB2: Atmospheric Trans Beta 2  -0.006670 constant for calculating humidity effects on transmission
   # ATX:  Atmospheric Trans X        1.900000 constant for calculating humidity effects on transmission
-  ATA1<-0.006569; ATA2<-0.01262; ATB1<--0.002276; ATB2<--0.00667; ATX<-1.9
-  
+ 
   # Equations to convert to temperature
   # See http://130.15.24.88/exiftool/forum/index.php/topic,4898.60.html
   # Standard equation: temperature<-PB/log(PR1/(PR2*(raw+PO))+PF)-273.15

@@ -23,10 +23,9 @@ The version here on github is the current, development version.  Archived source
 
 # Current release notes 
 
+- 2019-10-31: Version 4.0.0 is on Github (development version)
+    - Fixed an error/issue [#6](https://github.com/gtatters/Thermimage/issues/6) in calculation of the atmospheric tau values, and added the option for the user to specify the 5 atmospheric constants (ATA1, ATA2, ATB1, ATB2, ATX) supplied in FLIR files.  Should not break earlier code, as the default constants can be assumed as in previous versions.  This update makes alterations to raw2temp, temp2raw, and flirsettings.
 
-- 2019-08-17: Version 3.2.2 is on Github (development version)
-    - Added headerindex choice in readflirJPG function as a workaround for images that have been captured in dual digital/thermal mode.  Not fully tested.  Default headerindex = 1 so should not break other code.
-  
 
 # Features
 
@@ -395,7 +394,7 @@ Convert FLIR csq file
 
 ```{r}
 library(Thermimage)
-setwd("/Users/GlennTattersall/Documents/GitHub/ThermimageProjects/Thermimage")
+setwd("/Users/GlennTattersall/Documents/GitHub/ThermimageProjects/Thermimage/SampleFLIR")
 exiftoolpath <- "installed"
 perlpath <- "installed"
 
@@ -843,7 +842,10 @@ EEVBlog:
 <img src='Uploads/ThermimageSticker3.png' height="138.5">
  
 # Previous release notes
-
+  
+- 2019-08-17: Version 3.2.2
+    - Added headerindex choice in readflirJPG function as a workaround for images that have been captured in dual digital/thermal mode.  Not fully tested.  Default headerindex = 1 so should not break other code.
+    
 - 2019-05-17: Version 3.2.0 is on Github (development version)
     - Fixed an issue [#3](https://github.com/gtatters/Thermimage/issues/3) with __getTimes()__ not working, based on inaccurate __frameLocates()__.  Completely re-wrote the __frameLocates()__, __locate.fid()__, __getTimes()__, and __getFrames()__ functions to search raw bytes, rather than integers in files and return hopefully more robust frame and times.  Note: this series of functions are hacks and users are advised to use with caution.
   

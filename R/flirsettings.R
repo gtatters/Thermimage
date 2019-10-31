@@ -17,7 +17,7 @@ flirsettings<-function(imagefile, exiftoolpath="installed", camvals=NULL)
  
 
   if(is.null(camvals)) {
-    camvals<-"-flir -*Emissivity -*Original -*Date -*Planck* -*Distance -*Temperature* -*Transmission -*Humidity -*Height -*Width -*Model* -*Median -*Range -*Raw*"
+    camvals<-"-flir -*Emissivity -*Original -*Date -*Planck* -*AtmosphericTrans* -*Distance -*Temperature* -*Transmission -*Humidity -*Height -*Width -*Model* -*Median -*Range -*Raw*"
   }
   
   syscommand<-paste0(exiftoolpath, "exiftool")

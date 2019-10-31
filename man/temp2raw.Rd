@@ -11,7 +11,8 @@ be known, since the conversion to raw will take those into account.
 }
 \usage{
 temp2raw(temp, E = 1, OD = 1, RTemp = 20, ATemp = RTemp, IRWTemp = RTemp, IRT = 1, 
-RH = 50, PR1 = 21106.77, PB = 1501, PF = 1, PO = -7340, PR2 = 0.012545258)
+RH = 50, PR1 = 21106.77, PB = 1501, PF = 1, PO = -7340, PR2 = 0.012545258,
+  ATA1=0.006569, ATA2=0.01262, ATB1=-0.002276, ATB2=-0.00667, ATX=1.9)
 }
 \arguments{
   \item{temp}{
@@ -53,6 +54,21 @@ PlanckO - a calibration constant for FLIR cameras
   \item{PR2}{
 PlanckR2 - a calibration constant for FLIR cameras
 }
+ \item{ATA1}{
+ATA1 - an atmospheric attenuation constant to calculate atmospheric tau
+}
+  \item{ATA2}{
+ATA2 - an atmospheric attenuation constant to calculate atmospheric tau
+}
+  \item{ATB1}{
+ATB1 - an atmospheric attenuation constant to calculate atmospheric tau
+}
+  \item{ATB2}{
+ATB2 - an atmospheric attenuation constant to calculate atmospheric tau
+}
+  \item{ATX}{
+ATX - an atmospheric attenuation constant to calculate atmospheric tau
+}
 }
 \details{
 Note: PR1, PR2, PB, PF, and PO are specific to each camera and result from the calibration
@@ -82,19 +98,18 @@ predicted radiance of a blackbody, using the standard equation:
 temperature<-PB/log(PR1/(PR2*(raw+PO))+PF)-273.15
 
 Also used in calculations for transmission loss are the following constants:
-
 ATA1: Atmospheric Trans Alpha 1  0.006569 
-
 ATA2: Atmospheric Trans Alpha 2  0.012620
-
 ATB1: Atmospheric Trans Beta 1  -0.002276
-
 ATB2: Atmospheric Trans Beta 2  -0.006670
-
 ATX:  Atmospheric Trans X        1.900000
+
+Some files may return slightly different ATA1, ATA2, ATB1, ATB2, and ATX values. 
+Use the flirsettings function to find out what constants are used for your files.
+
 }
 \value{
-Returns numeric value.  Can handle vector or matrix objects
+Returns numeric value.  Can handle vector or matrix objects.
 }
 \references{
 1. http://130.15.24.88/exiftool/forum/index.php/topic,4898.60.html

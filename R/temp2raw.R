@@ -2,7 +2,8 @@
 #' 
 temp2raw <-
 function(temp,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
-                   PR1=21106.77,PB=1501,PF=1,PO=-7340,PR2=0.012545258)
+                   PR1=21106.77,PB=1501,PF=1,PO=-7340,PR2=0.012545258,
+         ATA1=0.006569, ATA2=0.01262, ATB1=-0.002276, ATB2=-0.00667, ATX=1.9)
 {
   # This function is complementary to the raw2temp command,
   # except it converts a temperature estimate (in deg C) into a raw value
@@ -26,19 +27,11 @@ function(temp,E=1,OD=1,RTemp=20,ATemp=RTemp,IRWTemp=RTemp,IRT=1,RH=50,
   # PO: PlanckO calibration constant from FLIR file    -7340          -5753         -7261           1278.907078
   # PR2: PlanckR2 calibration constant form FLIR file  0.012545258    0.010603162   0.010956882     0.0376637583528285
   
-  # PR1=14906.216,PB=1396.5,PF=1,PO=-7261,PR2=0.010956882       
-  #  Uncomment this line above to reveal calibration values for Ray's T300 camera
-  # PR1=21106.77,PB=9758.743281,PF=29.37648768,PO=1278.907078,PR2=0.0376637583528285
-  #  Uncomment this line above to reveal calibration values for Glenn's Mikron camera
-  
   # Set constants below. Comment out those that are variables in this function
   # Keep those that should remain constants.  These are here to make troubleshooting calculations easier
   # temp<-25; E<-0.95; OD<-20; IRT<-0.96
   # RTemp<-20; IRWTemp<-RTemp; ATemp<-20; RH<-50
   # PR1<-21106.77; PB<-1501; PF<-1; PO<--7340; PR2<-0.012545258
-  
-  # Keep these humidity parameters in since they are set constants required for a calculation
-  ATA1<-0.006569; ATA2<-0.01262; ATB1<--0.002276; ATB2<--0.00667; ATX<-1.9
   
   # Equations to convert to temperature
   # See http://130.15.24.88/exiftool/forum/index.php/topic,4898.60.html

@@ -7,7 +7,7 @@ Reads an image from a FLIR JPG file into an integer array.
 Reads an image from a FLIR JPG file into an integer matrix, w pixels wide x h pixels high, depending on image size.
 }
 \usage{
-readflirJPG(imagefile, exiftoolpath = "installed")
+readflirJPG(imagefile, exiftoolpath = "installed", headerindex=1)
 }
 \arguments{
   \item{imagefile}{
