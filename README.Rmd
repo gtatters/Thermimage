@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [![Research software impact](http://depsy.org/api/package/cran/Thermimage/badge.svg)](http://depsy.org/package/r/Thermimage)
 [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
-A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography.  Provides an open source proxy tool for assisting with infrared thermographic analysis.  Ongoing development in file conversion to facilitate transfer to ImageJ.  
+A collection of functions for assisting in converting extracted raw data from infrared thermal images and converting them to estimated temperatures using standard equations in thermography.  Provides an open source proxy tool for assisting with infrared thermographic analysis.  
 
 The version here on github is the current, development version.  Archived sources can be found: https://cran.r-project.org/src/contrib/Archive/Thermimage/
 
@@ -24,7 +24,7 @@ The version here on github is the current, development version.  Archived source
 # Current release notes 
 
 - 2019-10-31: Version 4.0.0 is on Github (development version)
-    - Fixed an error/issue [#6](https://github.com/gtatters/Thermimage/issues/6) in calculation of the atmospheric tau values, and added the option for the user to specify the 5 atmospheric constants (ATA1, ATA2, ATB1, ATB2, ATX) supplied in FLIR files.  Should not break earlier code, as the default constants can be assumed as in previous versions.  This update makes alterations to raw2temp, temp2raw, and flirsettings.
+    - Fixed an error/issue [#6](https://github.com/gtatters/Thermimage/issues/6) in calculation of the atmospheric tau values, and added the option for the user to specify the 5 atmospheric constants (ATA1, ATA2, ATB1, ATB2, ATX) supplied in FLIR files. This update makes alterations to raw2temp, temp2raw, and flirsettings.  Earlier versions will have slight error in temperature conversion that could be significant for long distances.  Users are advised to upgrade if they are using object distances >3m for calculations.
 
 
 # Features
@@ -133,7 +133,7 @@ ATA1<-        cams$Info$AtmosphericTransAlpha1        # Atmospheric Transmittanc
 ATA2<-        cams$Info$AtmosphericTransAlpha2        # Atmospheric Transmittance Alpha 2
 ATB1<-        cams$Info$AtmosphericTransBeta1         # Atmospheric Transmittance Beta 1
 ATB2<-        cams$Info$AtmosphericTransBeta2         # Atmospheric Transmittance Beta 2
-ATX<-         cams$Info$AtmosphericTransX              # Atmospheric Transmittance X
+ATX<-         cams$Info$AtmosphericTransX             # Atmospheric Transmittance X
 OD<-          cams$Info$ObjectDistance                # object distance in metres
 FD<-          cams$Info$FocusDistance                 # focus distance in metres
 ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature

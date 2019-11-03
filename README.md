@@ -14,7 +14,6 @@ A collection of functions for assisting in converting extracted raw data
 from infrared thermal images and converting them to estimated
 temperatures using standard equations in thermography. Provides an open
 source proxy tool for assisting with infrared thermographic analysis.
-Ongoing development in file conversion to facilitate transfer to ImageJ.
 
 The version here on github is the current, development version. Archived
 sources can be found:
@@ -27,10 +26,12 @@ sources can be found:
         [\#6](https://github.com/gtatters/Thermimage/issues/6) in
         calculation of the atmospheric tau values, and added the option
         for the user to specify the 5 atmospheric constants (ATA1, ATA2,
-        ATB1, ATB2, ATX) supplied in FLIR files. Should not break
-        earlier code, as the default constants can be assumed as in
-        previous versions. This update makes alterations to raw2temp,
-        temp2raw, and flirsettings.
+        ATB1, ATB2, ATX) supplied in FLIR files. This update makes
+        alterations to raw2temp, temp2raw, and flirsettings. Earlier
+        versions will have slight error in temperature conversion that
+        could be significant for long distances. Users are advised to
+        upgrade if they are using object distances \>3m for
+        calculations.
 
 # Features
 
@@ -177,7 +178,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-10-31 18:41:57"
-    ## FileAccessDateTime       "2019-11-03 15:49:39"
+    ## FileAccessDateTime       "2019-11-03 17:14:02"
     ## FileInodeChangeDateTime  "2019-10-31 18:42:00"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -210,7 +211,7 @@ ATA1<-        cams$Info$AtmosphericTransAlpha1        # Atmospheric Transmittanc
 ATA2<-        cams$Info$AtmosphericTransAlpha2        # Atmospheric Transmittance Alpha 2
 ATB1<-        cams$Info$AtmosphericTransBeta1         # Atmospheric Transmittance Beta 1
 ATB2<-        cams$Info$AtmosphericTransBeta2         # Atmospheric Transmittance Beta 2
-ATX<-         cams$Info$AtmosphericTransX              # Atmospheric Transmittance X
+ATX<-         cams$Info$AtmosphericTransX             # Atmospheric Transmittance X
 OD<-          cams$Info$ObjectDistance                # object distance in metres
 FD<-          cams$Info$FocusDistance                 # focus distance in metres
 ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature
@@ -843,20 +844,20 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta        Ts        Tg       SE  RH rho cloud   A V   L     c
-    ## 1 25.731054 30.290573 31.189225 451.0885 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 2 -6.855502 -1.645015 -1.876815 411.4617 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 3 11.909296 17.841335 17.584171 468.9979 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 4 24.918280 29.867848 29.259722 358.7968 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 5 22.870105 27.925468 27.665502 396.3138 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 6 22.458879 26.160372 26.975937 373.3106 0.5 0.1     0 0.4 1 0.1 0.174
-    ##       n a    b    m   type     shape
-    ## 1 0.618 1 0.58 0.25 forced hcylinder
-    ## 2 0.618 1 0.58 0.25 forced hcylinder
-    ## 3 0.618 1 0.58 0.25 forced hcylinder
-    ## 4 0.618 1 0.58 0.25 forced hcylinder
-    ## 5 0.618 1 0.58 0.25 forced hcylinder
-    ## 6 0.618 1 0.58 0.25 forced hcylinder
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 29.82715 35.02254 34.47992 384.5265 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 15.00016 19.27317 18.89204 321.6426 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 34.99486 39.31291 40.45312 451.0957 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 25.46864 31.17896 29.59844 341.3062 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 37.42918 41.55927 42.76883 441.2933 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 19.36257 23.93127 23.14356 312.4786 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape
+    ## 1 1 0.58 0.25 forced hcylinder
+    ## 2 1 0.58 0.25 forced hcylinder
+    ## 3 1 0.58 0.25 forced hcylinder
+    ## 4 1 0.58 0.25 forced hcylinder
+    ## 5 1 0.58 0.25 forced hcylinder
+    ## 6 1 0.58 0.25 forced hcylinder
 
 ## Basic calculations
 
@@ -1092,26 +1093,25 @@ data frame. Using the dataframe, d we constructed
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 340.1069 306.8177 350.8037 251.4193 286.0424 272.5423 278.2208
-    ##  [8] 281.7588 359.7940 240.3275 335.4309 282.0216 246.1685 332.3213
-    ## [15] 293.9807 328.0326 291.1140 218.8958 173.1274 404.9752
+    ##  [1] 273.7501 221.8529 342.2354 230.3654 334.6844 210.9876 270.1717
+    ##  [8] 320.7904 276.9491 208.6746 237.3119 322.8180 253.6549 272.5700
+    ## [15] 315.9646 275.2696 278.7584 338.5279 230.1515 361.2822
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -18.117211 -21.882422 -25.355285 -20.081911 -20.638985 -13.981456
-    ##  [7] -13.365212 -19.953661 -26.427386 -12.672826 -25.182412 -18.253830
-    ## [13] -25.482631 -12.993058  -9.235898  -9.409627 -18.115643 -18.652866
-    ## [19] -19.172325 -17.751979
+    ##  [1] -21.29331 -16.79505 -16.86677 -24.00588 -15.94174 -18.21716 -22.83953
+    ##  [8] -14.89796 -27.37414 -19.56228 -14.44571 -15.18184 -31.85318 -22.61747
+    ## [15] -19.55594 -16.00304 -14.58754 -19.76435 -22.79902 -25.51980
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -46.49090 -55.70857 -61.54362 -50.51472 -51.71742 -37.88547 -36.26069
-    ##  [8] -49.86525 -63.10298 -34.74373 -60.74067 -46.99013 -61.14088 -35.97540
-    ## [15] -26.86862 -27.80262 -46.44552 -47.07630 -48.35233 -45.71494
+    ##  [1] -52.73678 -44.14616 -43.59924 -58.24234 -41.60284 -46.93764 -55.53110
+    ##  [8] -39.96074 -64.88502 -49.41752 -39.17701 -40.03537 -73.20016 -54.76495
+    ## [15] -49.56047 -42.09826 -39.32261 -49.69105 -55.72493 -61.30763
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1120,20 +1120,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta        Ts        Tg       SE  RH rho cloud   A V   L     c
-    ## 1 25.731054 30.290573 31.189225 451.0885 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 2 -6.855502 -1.645015 -1.876815 411.4617 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 3 11.909296 17.841335 17.584171 468.9979 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 4 24.918280 29.867848 29.259722 358.7968 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 5 22.870105 27.925468 27.665502 396.3138 0.5 0.1     0 0.4 1 0.1 0.174
-    ## 6 22.458879 26.160372 26.975937 373.3106 0.5 0.1     0 0.4 1 0.1 0.174
-    ##       n a    b    m   type     shape     qrad     qconv    qtotal
-    ## 1 0.618 1 0.58 0.25 forced hcylinder 136.0427 -18.59636 117.44638
-    ## 2 0.618 1 0.58 0.25 forced hcylinder 122.7271 -22.28343 100.44366
-    ## 3 0.618 1 0.58 0.25 forced hcylinder 140.3215 -24.61745 115.70402
-    ## 4 0.618 1 0.58 0.25 forced hcylinder 100.5677 -20.20589  80.36182
-    ## 5 0.618 1 0.58 0.25 forced hcylinder 114.4170 -20.68697  93.73001
-    ## 6 0.618 1 0.58 0.25 forced hcylinder 109.0169 -15.15419  93.86275
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
+    ## 1 29.82715 35.02254 34.47992 384.5265 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 15.00016 19.27317 18.89204 321.6426 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3 34.99486 39.31291 40.45312 451.0957 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 25.46864 31.17896 29.59844 341.3062 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 37.42918 41.55927 42.76883 441.2933 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 19.36257 23.93127 23.14356 312.4786 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ##   a    b    m   type     shape      qrad     qconv    qtotal
+    ## 1 1 0.58 0.25 forced hcylinder 109.50003 -21.09471  88.40532
+    ## 2 1 0.58 0.25 forced hcylinder  88.74114 -17.65846  71.08268
+    ## 3 1 0.58 0.25 forced hcylinder 136.89418 -17.43969 119.45448
+    ## 4 1 0.58 0.25 forced hcylinder  92.14618 -23.29694  68.84924
+    ## 5 1 0.58 0.25 forced hcylinder 133.87375 -16.64113 117.23262
+    ## 6 1 0.58 0.25 forced hcylinder  84.39504 -18.77506  65.61998
 
 ### Test the equations out for consistency
 
