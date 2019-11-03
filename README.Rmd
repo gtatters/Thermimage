@@ -223,6 +223,7 @@ The raw file can be found here: https://github.com/gtatters/Thermimage/blob/mast
 
 
 ## Import Raw File into ImageJ
+
 The .raw file is simply the pixel data saved in raw format but with real 32-bit precision.  This means that the temperature data (negative or positive values) are encoded in 4 byte chunks.  ImageJ has a plethora of import functions, and the File-->Import-->Raw option provides great flexibility.  Once opening the .raw file in ImageJ, set the width, height, number of images (i.e. frames or stacks), byte storage order (little endian), and hyperstack (if desired):
 
 ![ImageJ Import Settings](https://github.com/gtatters/Thermimage/blob/master/Uploads/ImageJImport.png?raw=true)
@@ -234,7 +235,9 @@ The image imports clearly just as it would in a thermal image program.  Each pix
 
 ## Importing Thermal Videos
 
-Importing thermal videos (March 2017: still in development) is a little more involved and less automated, but below are steps that have worked for seq and fcf files tested.
+Importing thermal videos (March 2017: still in development) is a little more involved and less automated.  I don't really recommend using R to work with thermal videos since the memory limitations and speed are not efficient for large video files.  It is better to convert videos to individual files and import them frame by frame, or use an ImageJ alternative. 
+
+But below are steps that have worked for seq and fcf files tested.
 
 Set file info and extract meta-tags as done above:
 
