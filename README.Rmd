@@ -129,6 +129,11 @@ PlanckB<-     cams$Info$PlanckB                       # Planck B constant for ca
 PlanckF<-     cams$Info$PlanckF                       # Planck F constant for camera
 PlanckO<-     cams$Info$PlanckO                       # Planck O constant for camera
 PlanckR2<-    cams$Info$PlanckR2                      # Planck R2 constant for camera
+ATA1<-        cams$Info$AtmosphericTransAlpha1        # Atmospheric Transmittance Alpha 1
+ATA2<-        cams$Info$AtmosphericTransAlpha2        # Atmospheric Transmittance Alpha 2
+ATB1<-        cams$Info$AtmosphericTransBeta1         # Atmospheric Transmittance Beta 1
+ATB2<-        cams$Info$AtmosphericTransBeta2         # Atmospheric Transmittance Beta 2
+ATX<-         cams$Info$AtmosphericTransX              # Atmospheric Transmittance X
 OD<-          cams$Info$ObjectDistance                # object distance in metres
 FD<-          cams$Info$FocusDistance                 # focus distance in metres
 ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature
@@ -151,13 +156,14 @@ If stored with a TIFF header, the data load in as a pre-allocated matrix of the 
 
 ```{r}
 temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
-                      PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2)
+                      PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2, 
+                      ATA1, ATA2, ATB1, ATB2, ATX)
 str(temperature)      
 ```
 
 The raw binary values are now expressed as temperature in degrees Celsius (apologies to Lord Kelvin).  Let's plot the temperature data: 
 
-```{r}
+```{r, message=FALSE}
 library(fields) # should be imported when installing Thermimage
 plotTherm(temperature, h=h, w=w, minrangeset=21, maxrangeset=32)
 ```

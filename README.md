@@ -176,9 +176,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-10-31 17:38:36"
-    ## FileAccessDateTime       "2019-10-31 17:47:45"
-    ## FileInodeChangeDateTime  "2019-10-31 17:38:39"
+    ## FileModificationDateTime "2019-10-31 18:41:57"
+    ## FileAccessDateTime       "2019-11-03 15:44:12"
+    ## FileInodeChangeDateTime  "2019-10-31 18:42:00"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -206,6 +206,11 @@ PlanckB<-     cams$Info$PlanckB                       # Planck B constant for ca
 PlanckF<-     cams$Info$PlanckF                       # Planck F constant for camera
 PlanckO<-     cams$Info$PlanckO                       # Planck O constant for camera
 PlanckR2<-    cams$Info$PlanckR2                      # Planck R2 constant for camera
+ATA1<-        cams$Info$AtmosphericTransAlpha1        # Atmospheric Transmittance Alpha 1
+ATA2<-        cams$Info$AtmosphericTransAlpha2        # Atmospheric Transmittance Alpha 2
+ATB1<-        cams$Info$AtmosphericTransBeta1         # Atmospheric Transmittance Beta 1
+ATB2<-        cams$Info$AtmosphericTransBeta2         # Atmospheric Transmittance Beta 2
+ATX<-         cams$Info$AtmosphericTransX              # Atmospheric Transmittance X
 OD<-          cams$Info$ObjectDistance                # object distance in metres
 FD<-          cams$Info$FocusDistance                 # focus distance in metres
 ReflT<-       cams$Info$ReflectedApparentTemperature  # Reflected apparent temperature
@@ -243,7 +248,8 @@ function:
 
 ``` r
 temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
-                      PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2)
+                      PlanckR1, PlanckB, PlanckF, PlanckO, PlanckR2, 
+                      ATA1, ATA2, ATB1, ATB2, ATX)
 str(temperature)      
 ```
 
@@ -254,33 +260,6 @@ Celsius (apologies to Lord Kelvin). Let’s plot the temperature data:
 
 ``` r
 library(fields) # should be imported when installing Thermimage
-```
-
-    ## Loading required package: spam
-
-    ## Loading required package: dotCall64
-
-    ## Loading required package: grid
-
-    ## Spam version 2.3-0 (2019-09-13) is loaded.
-    ## Type 'help( Spam)' or 'demo( spam)' for a short introduction 
-    ## and overview of this package.
-    ## Help for individual functions is also obtained by adding the
-    ## suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
-
-    ## 
-    ## Attaching package: 'spam'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     backsolve, forwardsolve
-
-    ## Loading required package: maps
-
-    ## See https://github.com/NCAR/Fields for
-    ##  an extensive vignette, other supplements and source code
-
-``` r
 plotTherm(temperature, h=h, w=w, minrangeset=21, maxrangeset=32)
 ```
 
@@ -860,12 +839,12 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.595272 30.39430 31.34202 392.2929 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2  8.293746 11.90939 13.70524 447.2310 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 21.941834 26.25544 26.34908 364.2355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 17.432807 20.01966 22.42336 412.4427 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.369274 29.61378 28.18346 397.8666 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 20.581787 25.95689 24.28322 305.9034 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 27.413637 32.25299 31.26764 318.5127 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.079463 26.51225 25.90659 398.9360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3  8.028855 13.52635 12.53663 372.5432 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 29.208450 32.87311 34.09183 403.5853 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.231121 28.28563 29.04697 398.0037 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 43.788569 48.45793 48.93851 425.6149 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape
     ## 1 1 0.58 0.25 forced hcylinder
     ## 2 1 0.58 0.25 forced hcylinder
@@ -1108,26 +1087,25 @@ data frame. Using the dataframe, d we constructed
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 289.7072 343.3294 260.5140 315.5063 280.3044 200.0089 303.5176
-    ##  [8] 182.7368 249.8575 282.9751 263.6827 278.6291 288.8946 344.3743
-    ## [15] 314.5521 195.5668 282.5979 228.3942 300.7240 330.7404
+    ##  [1] 214.2409 286.4768 264.3593 301.2448 293.5021 317.5483 352.7365
+    ##  [8] 254.6955 255.6181 324.4882 260.5461 333.2992 323.9356 263.2997
+    ## [15] 223.8486 287.0166 299.3650 348.2332 195.9367 333.3692
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -14.416956 -13.687192 -16.933150  -8.956601 -26.870155 -22.307853
-    ##  [7] -17.990351 -21.481211 -20.948306 -17.765598 -15.599762 -20.794727
-    ## [13] -33.005820  -9.603418 -23.778266 -28.267303 -17.902905 -13.665664
-    ## [19] -13.740047 -22.317570
+    ##  [1] -19.50385 -22.60199 -23.11353 -13.76786 -15.65495 -18.55226 -22.41052
+    ##  [8] -16.97183 -26.52089 -14.35017 -25.71820 -17.18532 -22.28995 -22.45136
+    ## [15] -18.42539 -27.09910 -20.16967 -19.65369 -28.26473 -33.32756
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -38.69896 -37.70532 -44.17774 -26.64135 -63.84510 -55.13962 -46.74147
-    ##  [8] -53.24716 -52.07117 -45.91627 -41.22036 -51.60820 -75.04247 -27.99531
-    ## [15] -58.18634 -66.18334 -46.03621 -36.87648 -37.53584 -54.64516
+    ##  [1] -49.25155 -55.69766 -57.35222 -37.22347 -41.41263 -46.76306 -55.24414
+    ##  [8] -44.21290 -63.59892 -38.98981 -60.88479 -44.44682 -54.40804 -54.60477
+    ## [15] -47.69427 -63.57709 -50.63921 -49.50123 -66.72379 -75.54937
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1137,19 +1115,19 @@ head(d)
 ```
 
     ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n
-    ## 1 26.595272 30.39430 31.34202 392.2929 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 2  8.293746 11.90939 13.70524 447.2310 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 3 21.941834 26.25544 26.34908 364.2355 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 4 17.432807 20.01966 22.42336 412.4427 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 5 23.369274 29.61378 28.18346 397.8666 0.5 0.1     0 0.4 1 0.1 0.174 0.618
-    ## 6 20.581787 25.95689 24.28322 305.9034 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 1 27.413637 32.25299 31.26764 318.5127 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 2 21.079463 26.51225 25.90659 398.9360 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 3  8.028855 13.52635 12.53663 372.5432 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 4 29.208450 32.87311 34.09183 403.5853 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 5 24.231121 28.28563 29.04697 398.0037 0.5 0.1     0 0.4 1 0.1 0.174 0.618
+    ## 6 43.788569 48.45793 48.93851 425.6149 0.5 0.1     0 0.4 1 0.1 0.174 0.618
     ##   a    b    m   type     shape      qrad     qconv    qtotal
-    ## 1 1 0.58 0.25 forced hcylinder 115.88286 -15.47958 100.40328
-    ## 2 1 0.58 0.25 forced hcylinder 137.33177 -15.08213 122.24964
-    ## 3 1 0.58 0.25 forced hcylinder 104.20561 -17.67110  86.53451
-    ## 4 1 0.58 0.25 forced hcylinder 126.20253 -10.65654 115.54599
-    ## 5 1 0.58 0.25 forced hcylinder 112.12177 -25.53804  86.58373
-    ## 6 1 0.58 0.25 forced hcylinder  80.00357 -22.05585  57.94772
+    ## 1 1 0.58 0.25 forced hcylinder  85.69637 -19.70062  65.99575
+    ## 2 1 0.58 0.25 forced hcylinder 114.59074 -22.27906  92.31167
+    ## 3 1 0.58 0.25 forced hcylinder 105.74371 -22.94089  82.80282
+    ## 4 1 0.58 0.25 forced hcylinder 120.49794 -14.88939 105.60855
+    ## 5 1 0.58 0.25 forced hcylinder 117.40082 -16.56505 100.83577
+    ## 6 1 0.58 0.25 forced hcylinder 127.01932 -18.70522 108.31410
 
 ### Test the equations out for consistency
 
