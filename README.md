@@ -23,20 +23,8 @@ sources can be found:
 
   - 2019-11-26: Version 4.0.1 is on Github (development version) -
     trying to fix flawed ffmpeg call on windows machine. Need
-    confirmation this works
-
-  - 2019-10-31: Version 4.0.0 is on Github
-    
-      - Fixed an error/issue
-        [\#6](https://github.com/gtatters/Thermimage/issues/6) in
-        calculation of the atmospheric tau values, and added the option
-        for the user to specify the 5 atmospheric constants (ATA1, ATA2,
-        ATB1, ATB2, ATX) supplied in FLIR files. This update makes
-        alterations to raw2temp, temp2raw, and flirsettings. Earlier
-        versions will have slight error in temperature conversion that
-        could be significant for long distances. Users are advised to
-        upgrade if they are using object distances \>3m for
-        calculations.
+    confirmation that this fixed issue
+    [\#8](https://github.com/gtatters/Thermimage/issues/8)
 
 # Features
 
@@ -183,7 +171,7 @@ cbind(unlist(cams$Dates))
 
     ##                          [,1]                 
     ## FileModificationDateTime "2019-11-26 14:25:32"
-    ## FileAccessDateTime       "2019-11-26 14:34:47"
+    ## FileAccessDateTime       "2019-11-26 14:54:34"
     ## FileInodeChangeDateTime  "2019-11-26 14:25:34"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
@@ -851,12 +839,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 10.67642 14.97763 15.00196 357.4829 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 27.99854 32.85025 33.02866 415.7126 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 16.96339 18.82749 22.19613 432.4584 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 12.82933 17.36194 17.45386 382.1930 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 24.75071 30.31841 29.56615 397.9704 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 46.94901 52.03645 52.44007 453.8070 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 1 35.88910 41.82154 41.93718 499.8416 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 16.24406 24.18627 19.75659 290.2913 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 31.00881 34.93379 36.43372 448.3398 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 16.13722 19.28475 21.15027 414.3017 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 26.18323 30.90733 31.13449 409.1957 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 36.94496 42.32905 41.31751 361.3676 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
     ##      b    m   type     shape
     ## 1 0.58 0.25 forced hcylinder
     ## 2 0.58 0.25 forced hcylinder
@@ -1099,26 +1087,25 @@ data frame. Using the dataframe, d we constructed
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 255.8818 305.1603 338.1187 277.2464 284.3239 341.9362 291.9292 385.8934
-    ##  [9] 209.8030 272.9629 328.3235 306.2822 192.5008 282.2175 237.5034 246.6596
-    ## [17] 244.3627 295.6805 316.6492 314.1490
+    ##  [1] 377.2824 171.8123 341.7213 314.2262 299.8818 250.9497 305.9210 309.1887
+    ##  [9] 264.1042 309.9676 350.3395 307.3023 295.3114 235.7704 272.3929 275.6230
+    ## [17] 235.5016 335.3288 315.5704 269.9184
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -16.978080 -19.561431  -5.948083 -18.103140 -23.266070 -20.636176
-    ##  [7] -19.471872 -22.363650 -13.627650 -24.869595 -18.771565 -21.187507
-    ## [13] -19.935046 -14.544349 -27.345465 -22.729810 -10.434189 -29.580861
-    ## [19] -15.334695 -21.494384
+    ##  [1] -25.08060 -36.42395 -14.99077 -11.45377 -18.93466 -22.20967 -19.24684
+    ##  [8] -16.54881 -11.71102 -34.62021 -16.74103 -23.07179 -19.90921 -22.87928
+    ## [15] -19.44240 -12.91004 -20.58194 -20.11250 -19.12782 -12.22075
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -44.70120 -49.34550 -19.20953 -46.96525 -56.83425 -50.81331 -49.33931
-    ##  [8] -54.89040 -36.78153 -60.64956 -47.15669 -52.47020 -50.24842 -39.27543
-    ## [15] -64.93374 -57.05164 -29.57502 -68.42383 -40.92105 -53.70885
+    ##  [1] -59.84708 -81.92033 -39.79153 -32.46987 -48.14448 -54.25974 -49.59345
+    ##  [8] -43.74165 -32.90189 -78.03726 -43.77393 -57.11037 -49.98261 -56.69334
+    ## [15] -49.15559 -35.65857 -52.10470 -51.03341 -48.79137 -34.13789
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1128,19 +1115,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 10.67642 14.97763 15.00196 357.4829 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 27.99854 32.85025 33.02866 415.7126 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 16.96339 18.82749 22.19613 432.4584 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 12.82933 17.36194 17.45386 382.1930 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 24.75071 30.31841 29.56615 397.9704 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 46.94901 52.03645 52.44007 453.8070 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ##      b    m   type     shape     qrad      qconv    qtotal
-    ## 1 0.58 0.25 forced hcylinder 102.3527 -17.880478  84.47225
-    ## 2 0.58 0.25 forced hcylinder 122.0641 -19.738201 102.32593
-    ## 3 0.58 0.25 forced hcylinder 135.2475  -7.683811 127.56367
-    ## 4 0.58 0.25 forced hcylinder 110.8985 -18.786100  92.11244
-    ## 5 0.58 0.25 forced hcylinder 113.7296 -22.733701  90.99588
-    ## 6 0.58 0.25 forced hcylinder 136.7745 -20.325324 116.44918
+    ## 1 35.88910 41.82154 41.93718 499.8416 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 16.24406 24.18627 19.75659 290.2913 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 31.00881 34.93379 36.43372 448.3398 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 16.13722 19.28475 21.15027 414.3017 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 26.18323 30.90733 31.13449 409.1957 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 36.94496 42.32905 41.31751 361.3676 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##      b    m   type     shape      qrad     qconv    qtotal
+    ## 1 0.58 0.25 forced hcylinder 150.91295 -23.93883 126.97412
+    ## 2 0.58 0.25 forced hcylinder  68.72494 -32.76813  35.95681
+    ## 3 0.58 0.25 forced hcylinder 136.68851 -15.91661 120.77190
+    ## 4 0.58 0.25 forced hcylinder 125.69049 -12.98795 112.70254
+    ## 5 0.58 0.25 forced hcylinder 119.95271 -19.25779 100.69492
+    ## 6 0.58 0.25 forced hcylinder 100.37988 -21.70390  78.67599
 
 ### Test the equations out for consistency
 
@@ -1432,6 +1419,17 @@ EEVBlog:
 
 # Previous release notes
 
+  - 2019-10-31: Version 4.0.0 is on Github
+      - Fixed an error/issue
+        [\#6](https://github.com/gtatters/Thermimage/issues/6) in
+        calculation of the atmospheric tau values, and added the option
+        for the user to specify the 5 atmospheric constants (ATA1, ATA2,
+        ATB1, ATB2, ATX) supplied in FLIR files. This update makes
+        alterations to raw2temp, temp2raw, and flirsettings. Earlier
+        versions will have slight error in temperature conversion that
+        could be significant for long distances. Users are advised to
+        upgrade if they are using object distances \>3m for
+        calculations.
   - 2019-08-17: Version 3.2.2
       - Added headerindex choice in readflirJPG function as a workaround
         for images that have been captured in dual digital/thermal mode.
