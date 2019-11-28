@@ -67,19 +67,21 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   # Framerates: "exiftool -DateTimeOriginal *.fff"  
   
   if(verbose==TRUE){
-    cat("\nBreak video into .fff files into temp folder:")
+    cat("\nBreak video into .fff files into temp folder using:")
     cat("\n")
     cat(paste(c(perl, perlvalsfff), sep=" ", collapse=" "))
   }
   
   # break video into .fff files into temp folder (inside of working folder):
-  if(verbose==TRUE) cat("\n\nVideo split into fff frames in temp folder\n\n")
   info <- system2(perl, args = perlvalsfff, stdout = "")
-  
+  times <- system2(exiftool, args = exifvalsdate, stdout = TRUE)
+  nf <- length(times)
+    
   # display frame times to screen derived from .fff files
   if(verbose==TRUE) {
+    cat(paste0("\n\nVideo split into ", nf, " fff frames in temp folder\n"))
     cat("\nVideo frame times:\n")
-    info <- system2(exiftool, args = exifvalsdate, stdout = "")
+    print(times)
   }
  
   # put raw thermal data from fff into one thermalvid.raw file in temp folder:
@@ -87,13 +89,13 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   {
     if(verbose==TRUE){
       cat("\n")
-      cat("Put binary raw thermal data from fff into one thermalvid.raw file in temp folder:")
+      cat("Put binary raw thermal data from fff into one thermalvid.raw file in temp folder using:")
       cat("\n")
       cat(paste(c(exiftool, exifvalsrawunix), sep=" ", collapse=" "))
     }
       info <- system2(exiftool, args=exifvalsrawunix, stdout="")
     if(verbose==TRUE){
-      cat("\n\nfff files merged into thermalvid.raw file in temp folder. \n\n")
+      cat("\n\nfff files merged into thermalvid.raw file in temp folder.\n")
       cat("\n")
     }
   }
@@ -102,7 +104,7 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   {
     if(verbose==TRUE){
       cat("\n")
-      cat("Put binary raw thermal data from fff into one thermalvid.raw file in temp folder:")
+      cat("Put binary raw thermal data from fff into one thermalvid.raw file in temp folder using:")
       cat("\n")
       cat(paste(c(exiftool, exifvalsrawpc, "> temp/thermalvid.raw"), sep=" ", collapse=" "))
       cat("\n")
@@ -118,17 +120,17 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
     # break thermalvid.raw video into .jpegls files in temp folder:
     if(verbose==TRUE){
       cat("\n")
-      cat("Break thermalvid.raw video into separate files in temp folder:\n")
+      cat("Break thermalvid.raw video into separate files in temp folder using:\n")
       cat("\n")
       cat(paste(c(perl, perlvalsjpegls), sep=" ", collapse=" "))
       cat("\n")
     } 
     info <- system2(perl, args = perlvalsjpegls, stdout = "")
     
-    if(verbose==TRUE) cat("\n\nthermalvid.raw file split into jpegls files in temp folder. \n\n")
+    if(verbose==TRUE) cat("\n\nthermalvid.raw file has been split into jpegls files in temp folder. \n")
     
     # If CSQ files to be converted into png or avi:
-    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg:\n\n")
+    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg using:\n\n")
     ffmpegcall(filenameroot="temp/frame", filenamesuffix="%05d", filenameext="jpegls", incompresstype="jpegls", fr=fr, res.in=res.in, res.out=res.out,
                outputcompresstype=outputcompresstype, outputfilenameroot=outputfilenameroot, outputfiletype=outputfiletype, outputfolder=outputfolder)
     # 
@@ -140,15 +142,15 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
     # break thermalvid.raw video into .tiff files in temp folder:
     if(verbose==TRUE) {
       cat("\n")
-      cat("Break thermalvid.raw video into separate files in temp folder:\n")
+      cat("Break thermalvid.raw video into separate files in temp folder using:\n")
       cat(paste(c(perl, perlvalstiff), sep=" ", collapse=" "))
     }
     info <- system2(perl, args = perlvalstiff, stdin = "")
     
-    if(verbose==TRUE) cat("\n\nthermalvid.raw file split into tiff files in temp folder. \n\n")
+    if(verbose==TRUE) cat("\n\nthermalvid.raw file has been split into tiff files in temp folder. \n")
     
     # If SEQ files to be converted into png or avi:
-    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg:\n\n")
+    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg using:\n\n")
     ffmpegcall(filenameroot="temp/frame", filenamesuffix="%05d", filenameext="tiff", incompresstype="tiff", fr=fr, res.in=res.in, res.out=res.out, 
                outputcompresstype=outputcompresstype, outputfilenameroot=outputfilenameroot, outputfiletype=outputfiletype, outputfolder=outputfolder)
     
@@ -164,7 +166,14 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   
   # Just delete the temp folder creator
   # file.size(list.dirs()[list.dirs()=="./temp"])
-  if(file.exists("./temp")) file.remove("./temp")
+  
+  if (Sys.info()["sysname"]=="Darwin" | Sys.info()["sysname"]=="Linux"){
+    if(file.exists("./temp")) file.remove("./temp")
+  }
+  
+  if (Sys.info()["sysname"]=="Windows"){
+    if(file.exists("./temp")) unlink('./temp', recursive=TRUE)
+  }
   
   
 }
