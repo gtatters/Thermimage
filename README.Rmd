@@ -23,7 +23,7 @@ The version here on github is the current, development version.  Archived source
 
 # Current release notes 
 
-- 2019-11-26: Version 4.0.1 is on Github (development version) - trying to fix flawed ffmpeg call on windows machine.  Need confirmation that this fixed issue [#8](https://github.com/gtatters/Thermimage/issues/8)
+- 2019-11-26: Version 4.0.1 is on Github (development version) - fixed problems with system2 piping calls to ffmpeg on windows machines. See issue [#8](https://github.com/gtatters/Thermimage/issues/8).  Added common perl script to package to facilitate splitting fff, tiff, jpegls filetypes. Minor changes to __convertflirVID()__ and __ffmpegcall()__ functions.  
 
 
 

@@ -130,7 +130,7 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
     if(verbose==TRUE) cat("\n\nthermalvid.raw file has been split into jpegls files in temp folder. \n")
     
     # If CSQ files to be converted into png or avi:
-    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg using:\n\n")
+    if(verbose==TRUE) cat("\n\nConvert files with ffmpeg using:\n\n")
     ffmpegcall(filenameroot="temp/frame", filenamesuffix="%05d", filenameext="jpegls", incompresstype="jpegls", fr=fr, res.in=res.in, res.out=res.out,
                outputcompresstype=outputcompresstype, outputfilenameroot=outputfilenameroot, outputfiletype=outputfiletype, outputfolder=outputfolder)
     # 
@@ -150,7 +150,7 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
     if(verbose==TRUE) cat("\n\nthermalvid.raw file has been split into tiff files in temp folder. \n")
     
     # If SEQ files to be converted into png or avi:
-    if(verbose==TRUE) cat("\n\nConvert files with call to ffmpeg using:\n\n")
+    if(verbose==TRUE) cat("\n\nConvert files with ffmpeg using:\n\n")
     ffmpegcall(filenameroot="temp/frame", filenamesuffix="%05d", filenameext="tiff", incompresstype="tiff", fr=fr, res.in=res.in, res.out=res.out, 
                outputcompresstype=outputcompresstype, outputfilenameroot=outputfilenameroot, outputfiletype=outputfiletype, outputfolder=outputfolder)
     
