@@ -1,6 +1,6 @@
 #' @export
 #'
-convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installed",
+convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installed", fffsplitpattern="fff",
                          fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", 
                          outputfilenameroot=NULL, outputfiletype="avi", outputfolder="output", verbose=FALSE, ...){
   
@@ -44,18 +44,23 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
   
   # Define the various perl arguments ####
   # Consider fixing and drawing from my generic split.pl script with following syntasx:
-  # perl split -i filename -o outputfoldername -b basename -p splitpattern -x outputfileextension -s skip -v verbose
+  # perl split -i filename -o outputfoldername -b basename -p fffsplitpattern -x outputfileextension -s skip -v verbose
+  
+  # so, normally fff should split properly, but some SEQ files seem to purposely have
+  # extra FFF headers (presumably to confuse matters), so fffsplitpattern should be set to "seq"
+  
+  fffsplitpattern<-tolower(fffsplitpattern)
   perlvalsfff<- c(paste0(system.file(package = "Thermimage"), "/perl/split.pl"), "-i", shQuote(imagefile),
-                  "-o", "temp", "-b", "frame", "-p", "fff", "-x", "fff")
+                  "-o", "temp", "-b", "frame", "-p", fffsplitpattern, "-x", "fff")
   
-  # Split file based on jpegls tags: 
+  # Split thermalvid.raw file based on jpegls tags: 
   perlvalsjpegls<- c(paste0(system.file(package = "Thermimage"), "/perl/split.pl"), "-i", "temp/thermalvid.raw",
-                  "-o", "temp", "-b", "frame", "-p", "jpegls", "-x", "jpegls")
+                     "-o", "temp", "-b", "frame", "-p", "jpegls", "-x", "jpegls")
   
   
-  # Split file based on TIFF tags: perl -f split_tiff.pl < filename.raw
+  # Split thermalvid.raw file based on TIFF tags (use this on thermalvid.raw): perl -f split_tiff.pl < thermalvid.raw
   perlvalstiff<- c(paste0(system.file(package = "Thermimage"), "/perl/split.pl"), "-i", "temp/thermalvid.raw",
-                     "-o", "temp", "-b", "frame", "-p", "tiff", "-x", "tiff")
+                   "-o", "temp", "-b", "frame", "-p", "tiff", "-x", "tiff")
   
   # Define the various exiftool arguments ####
   # Extract Binary data: exiftool -b -RawThermalImage filename.fff  > filename.raw
@@ -70,20 +75,22 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
     cat("\nBreak video into .fff files into temp folder using:")
     cat("\n")
     cat(paste(c(perl, perlvalsfff), sep=" ", collapse=" "))
+    cat("\n")
   }
   
   # break video into .fff files into temp folder (inside of working folder):
-  info <- system2(perl, args = perlvalsfff, stdout = "")
+  info <- system2(perl, args = paste0(perlvalsfff, collapse = " "), stdout = TRUE)
+  
   times <- system2(exiftool, args = exifvalsdate, stdout = TRUE)
   nf <- length(times)
-    
+  
   # display frame times to screen derived from .fff files
   if(verbose==TRUE) {
     cat(paste0("\n\nVideo split into ", nf, " fff frames in temp folder\n"))
     cat("\nVideo frame times:\n")
     print(times)
   }
- 
+  
   # put raw thermal data from fff into one thermalvid.raw file in temp folder:
   if (Sys.info()["sysname"]=="Darwin" | Sys.info()["sysname"]=="Linux")
   {
@@ -93,7 +100,7 @@ convertflirVID<-function(imagefile, exiftoolpath="installed", perlpath="installe
       cat("\n")
       cat(paste(c(exiftool, exifvalsrawunix), sep=" ", collapse=" "))
     }
-      info <- system2(exiftool, args=exifvalsrawunix, stdout="")
+    info <- system2(exiftool, args=exifvalsrawunix, stdout="")
     if(verbose==TRUE){
       cat("\n\nfff files merged into thermalvid.raw file in temp folder.\n")
       cat("\n")

@@ -88,12 +88,12 @@ alldata<-NULL
 system.time(alldata<-unlist(lapply(x$f.start, getFrames, vidfile=f, w=w, h=h)))
 length(alldata)/(w*h)
 
-# Parallel approach (will not be faster on small files)
-library(parallel)
-alldata<-NULL
-# set mc.cores to higher number to use parallel processing
-system.time(alldata<-unlist(mclapply(x$f.start, getFrames, vidfile=f, mc.cores=1)))
-length(alldata)/(w*h) # number of frames in video
+## Parallel approach (requires parallel package. will not be faster on small files)
+# library(parallel)
+# alldata<-NULL
+## set mc.cores to higher number to use parallel processing
+# system.time(alldata<-unlist(mclapply(x$f.start, getFrames, vidfile=f, mc.cores=1)))
+# length(alldata)/(w*h) # number of frames in video
 
 }
 

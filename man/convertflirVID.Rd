@@ -7,9 +7,10 @@ Convert FLIR CSQ or SEQ into PNG or AVI, using shell commands.
 Invoking shell commands to act on a FLIR video (SEQ or CSQ file type) and calls the exiftool -RawThermalImage option to extract the raw, binary thermal image frames in 16 bit format and pass these to ffmpeg to convert the output as a series of png files or as an avi video file.
 }
 \usage{
-convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed",
-fr=30, res.in="1024x768", res.out="1024x768", outputcompresstype="jpegls", 
-outputfilenameroot=NULL, outputfiletype="avi", outputfolder="output", verbose=FALSE,...)
+convertflirVID(imagefile, exiftoolpath="installed", perlpath="installed", 
+fffsplitpattern="fff", fr=30, res.in="1024x768", res.out="1024x768", 
+outputcompresstype="jpegls", outputfilenameroot=NULL, outputfiletype="avi",
+outputfolder="output", verbose=FALSE,...)
 }
 
 \arguments{
@@ -21,6 +22,19 @@ A character string that determines whether Exiftool has been "installed" or not.
 }
 \item{perlpath}{
 A character string that determines whether Perl has been "installed" or not.  If Perl has been installed in a specific location, use to direct to the folder location.
+}
+\item{fffsplitpattern}{
+This split pattern is used to break up thermal video file into their component frames prior to call to exiftool.  Used in call to the built-in perl script, split.pl. The default value, "fff", should work for most files, but sometimes you might need to specify "seq", "fcf", or "csq" if there are problems with the generated output.  
+
+fff splits based on: "46 46 46 00"  
+
+fcf splits based on: "46 46 46 00 43 41 50"  
+
+seq splits based on: "46 46 46 00 43 41 4D"  
+
+csq splits based on: "46 46 46 00 52 54 50"  
+
+
 }
 \item{fr}{
 Frame rate of input video data, frames per sec.  Default = 30.
@@ -68,7 +82,9 @@ No output generated in R.  Shell call to exiftool, imagemagick, and ffmpeg to co
 Glenn J. Tattersall
 }
 \note{
-This function requires that exiftool and imagemagick are installed.  Consult with the references for how to install.
+Use with files <2Gb in size.  Larger files have failed during testing due to internal memory limits during call to perl. 
+
+This function requires that exiftool and ffmpeg are installed.  Consult with the references for how to install.
 }
 
 \seealso{
