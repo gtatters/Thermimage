@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Author: Glenn J Tattersall
-# Date: 2019-04-18
+# Date: 2019-12-20
 # Version: 1.0
 
 #use strict;
@@ -51,6 +51,7 @@ if (!defined $opt{p}){die "Error: Please specify the split pattern.\n"}
 if (!defined $opt{x}){die "Error: Please specify the output file extension.\n"}
 
 my $pattype = "$opt_p";
+
 
 $folder = $opt{o};
 $infilename = $opt{i};
@@ -107,6 +108,7 @@ if ($skip eq "y"){
         for (my $i = 1; $i<$len; $i++) {
             @ind[$i] =  @$ind[($i-1)]+ 2;
         }
+        #print $i;
         # then save 
         for (my $i = 0; $i<$len; $i++) {
             $outfilename = ">$folder/$outfilebase" . sprintf("%05d",++$n) . $outext;
