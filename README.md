@@ -21,9 +21,12 @@ sources can be found:
 
 # Current release notes
 
-2019-12-20: Version 4.1.0 is on Github (development version) - added the
-option to split thermal video files based on different filetype/header
-types. See issue [\#9](https://github.com/gtatters/Thermimage/issues/9).
+2020-08-20: Version 4.1.2 is on Github (development version) - added
+error warning when trying to load a non-radiometric image file with
+readflirjpg. See issues
+[\#7](https://github.com/gtatters/Thermimage/issues/7),
+[\#10](https://github.com/gtatters/Thermimage/issues/10),
+[\#13](https://github.com/gtatters/Thermimage/issues/13).
 
 # Features
 
@@ -61,8 +64,7 @@ Analysis.doi: 10.5281/zenodo.1069704 (URL:
 # install.packages("Thermimage", repos='http://cran.us.r-project.org')
 ```
 
-  - Development version from
-Github:
+  - Development version from Github:
 
 <!-- end list -->
 
@@ -132,7 +134,7 @@ head(cbind(cams$Info), 20) # Large amount of Info, show just the first 20 tages 
     ##                       [,1]    
     ## ExifToolVersionNumber 11.62   
     ## FileName              2412    
-    ## Directory             ".3.6"  
+    ## Directory             ".4.0"  
     ## FileSize              638     
     ## FilePermissions       "-"     
     ## FileType              ""      
@@ -169,9 +171,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2019-12-21 11:29:10"
-    ## FileAccessDateTime       "2019-12-21 11:35:17"
-    ## FileInodeChangeDateTime  "2019-12-21 11:29:12"
+    ## FileModificationDateTime "2020-08-20 08:36:28"
+    ## FileAccessDateTime       "2020-08-20 08:45:16"
+    ## FileInodeChangeDateTime  "2020-08-20 08:36:31"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -187,8 +189,7 @@ cams$Dates$DateTimeOriginal
 The most relevant variables to extract for calculation of temperature
 values from raw A/D sensor data are listed here. These can all be
 extracted from the cams output as above. I have simplified the output
-below, since dealing with lists can be
-awkward.
+below, since dealing with lists can be awkward.
 
 ``` r
 ObjectEmissivity<-  cams$Info$Emissivity              # Image Saved Emissivity - should be ~0.95 or 0.96
@@ -217,8 +218,7 @@ w<-           cams$Info$RawThermalImageWidth          # sensor width (i.e. image
 
 ## Convert raw binary to temperature
 
-Now you have the img loaded, look at the
-    values:
+Now you have the img loaded, look at the values:
 
 ``` r
 str(img)
@@ -228,10 +228,10 @@ str(img)
 
 If stored with a TIFF header, the data load in as a pre-allocated matrix
 of the same dimensions of the thermal image, but the values are integers
-values, in this case ~18000. The data are stored as in binary/raw format
-at 2^16 bits of resolution = 65535 possible values, starting at 1. These
-are not temperature values. They are, in fact, radiance values or
-absorbed infrared energy values in arbitrary units. That is what the
+values, in this case \~18000. The data are stored as in binary/raw
+format at 2^16 bits of resolution = 65535 possible values, starting at
+1. These are not temperature values. They are, in fact, radiance values
+or absorbed infrared energy values in arbitrary units. That is what the
 calibration constants are for. The conversion to temperature is a
 complicated algorithm, incorporating Plank’s law and the Stephan
 Boltzmann relationship, as well as atmospheric absorption, camera IR
@@ -262,8 +262,7 @@ The FLIR jpg imports as a matrix, but default plotting parameters leads
 to it being rotated 270 degrees (counter clockwise) from normal
 perspective, so you should either rotate the matrix data before
 plotting, or include the rotate270.matrix transformation in the call to
-the plotTherm
-function:
+the plotTherm function:
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix")
@@ -271,8 +270,7 @@ plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rota
 
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
-If you prefer a different
-palette:
+If you prefer a different palette:
 
 ``` r
 plotTherm(temperature, w=w, h=h, minrangeset = 21, maxrangeset = 32, trans="rotate270.matrix", 
@@ -320,8 +318,7 @@ temperature back to the raw values (i.e. deconvolute), using the initial
 object parameters used.
 
 For example, convert a temperature estimated at 23 degrees C, under the
-default blackbody
-conditions:
+default blackbody conditions:
 
 ``` r
 temp2raw(23, E=1, OD=0, RTemp=20, ATemp=20, IRWTemp=20, IRT=1, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
@@ -332,8 +329,7 @@ temp2raw(23, E=1, OD=0, RTemp=20, ATemp=20, IRWTemp=20, IRT=1, RH=50, PR1=21106.
 Which yields a raw value of 17994.06 (using the calibration constants
 above). Now you can use raw2temp to calculate a better estimate of an
 object that has emissivity=0.95, distance=1m, window transmission=0.96,
-all temperatures=20C, 50
-RH:
+all temperatures=20C, 50 RH:
 
 ``` r
 raw2temp(17994.06, E=0.95, OD=1, RTemp=20, ATemp=20, IRWTemp=20, IRT=0.96, RH=50, PR1=21106.77, PB=1501, PF=1, PO=-7340, PR2=0.012545258)
@@ -367,8 +363,7 @@ function. The function writeFlirBin is a wrapper for writeBin, and uses
 information on image width, height, frame number and image interval (the
 latter two are included for thermal video saves) but are kept for
 simplicity to contruct a filename that incorporates image information
-required when importing to
-ImageJ:
+required when importing to ImageJ:
 
 ``` r
 writeFlirBin(as.vector(t(temperature)), templookup=NULL, w=w, h=h, I="", rootname="Uploads/FLIRjpg")
@@ -566,15 +561,13 @@ plotTherm(alltemperature[,2], w=w, h=h, trans="mirror.matrix")
 
 ![](README_files/figure-gfm/unnamed-chunk-25-2.png)<!-- -->
 
-These files can be
-found:
+These files can be found:
 
 <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ1.png?raw=true>
 <https://github.com/gtatters/Thermimage/blob/master/Uploads/SampleSEQ2.png?raw=true>
 
 Now, export entire sequence to a raw bin for opening in ImageJ -
-smallish file
-size
+smallish file size
 
 ``` r
 writeFlirBin(bindata=alldata, templookup, w, h, Interval, rootname="Uploads/SampleSEQ")
@@ -622,6 +615,7 @@ ls
 ```
 
     ## CompleteCSQConvert
+    ## CompleteSEQConvert
     ## ConvertACQtoTXT
     ## ConvertCSQtoAVI
     ## ConvertFCFtoAVI
@@ -632,8 +626,12 @@ ls
     ## ConvertFLIRRAWtoTIFF
     ## ConvertSEQtoAVI
     ## ConverttoGrayscale
+    ## Detecting Frozen Frames.docx
     ## ExtractAllFLIRJPGs
     ## FFFTimeStamps
+    ## FLIRFocalDistance
+    ## FLIRFrozenFrameDetect
+    ## FLIRFrozenFrameExtracts.pl
     ## FLIRMedianRangeExtracts.pl
     ## FrameDifference
     ## IRFileImport.R
@@ -764,7 +762,7 @@ If missing ground temperature (Tg) information, we have derived a
 relationship based on empirical data collected using thermal imaging in
 Galapagos that describes Tg as a function of Ta and Solar Radiation:
 
-Tg-Ta ~ Se, (N=516, based on daytime measurements)
+Tg-Ta \~ Se, (N=516, based on daytime measurements)
 
 Range of Ta: 23.7 to 34 C. Range of SE: 6.5 to 1506.0 Watts/m^2
 
@@ -772,7 +770,7 @@ which yielded the following relationship:
 
 Tg = 0.0187128\*SE + Ta
 
-Alternatively, published work by Bartlett et al. (2006) in the Tground()
+Alternatively, published work by Bartlett et al. (2006) in the Tground()
 function, found the following relationship:
 
 Tg = 0.0121\*SE + Ta
@@ -836,12 +834,12 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 22.56230 28.26596 27.54450 411.7528 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 29.68132 32.55933 33.98737 355.8717 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 21.70549 24.74967 26.26390 376.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 16.92633 22.28144 21.25580 357.8073 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 37.60975 41.69347 42.50500 404.5664 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 11.00315 16.71293 16.33470 440.6239 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 1 15.39545 20.29581 21.45119 500.4739 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 21.18618 24.80923 26.49063 438.3842 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 22.64220 27.91990 26.08500 284.5283 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 23.17311 29.86048 28.73732 459.8523 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 23.96522 28.07754 29.29194 440.2248 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 21.79283 26.39536 27.24631 450.7004 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
     ##      b    m   type     shape
     ## 1 0.58 0.25 forced hcylinder
     ## 2 0.58 0.25 forced hcylinder
@@ -917,8 +915,7 @@ qabs() is a function to estimate the area specific amount of solar and
 infrared radiation absorbed by the object from the environment and
 requires information on the air (ambient) temperature, ground
 temperature, relative humidity, emissivity of the object, reflectivity
-of the object, proportion cloud cover, and solar
-energy.
+of the object, proportion cloud cover, and solar energy.
 
 ``` r
 qabs(Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 400)
@@ -949,7 +946,7 @@ qrad(Ts = 27, Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE =
 
     ## [1] -1.486309
 
-Notice how the absorbed environmental radiation is ~440 W/m2, but the
+Notice how the absorbed environmental radiation is \~440 W/m2, but the
 animal is also losing a similar amount, so once we account for the net
 radiative flux, it very nearly balances out at a slightly negative
 number (-1.486 W/m2)
@@ -957,8 +954,7 @@ number (-1.486 W/m2)
 ### How to include Ground temperature?
 
 If you have measured ground temperature, then simply include it in the
-call to
-qrad:
+call to qrad:
 
 ``` r
 qrad(Ts = 30, Ta = 25, Tg = 28, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 100)
@@ -1002,8 +998,7 @@ the air stream. The diameter of a horizontal cylinder is its critical
 dimension. Finally, shape needs to be assigned. see help(qconv) for
 details.
 
-Some
-examples:
+Some examples:
 
 ``` r
 qconv(Ts = 30, Ta = 20, V = 1, L = 0.1, type = "forced", shape="hcylinder")
@@ -1024,13 +1019,12 @@ qconv(Ts = 30, Ta = 20, V = 1, L = 0.1, type = "forced", shape="sphere")
     ## [1] -186.3256
 
 notice how the horizontal cylinder loses less than the horizontal plate
-which loses less than the sphere. Spherical objects lose ~1.8 times as
+which loses less than the sphere. Spherical objects lose \~1.8 times as
 much heat per area as cylinders.
 
 ### Which is higher: convection or radiation?
 
-Take a convection estimate at low wind
-speed:
+Take a convection estimate at low wind speed:
 
 ``` r
 qconv(Ts = 30, Ta = 20, V = 0.1, L = 0.1, type = "forced", shape="hcylinder")
@@ -1038,8 +1032,7 @@ qconv(Ts = 30, Ta = 20, V = 0.1, L = 0.1, type = "forced", shape="hcylinder")
 
     ## [1] -32.58495
 
-compare to a radiative estimate (without any solar
-absorption):
+compare to a radiative estimate (without any solar absorption):
 
 ``` r
 qrad(Ts = 30, Ta = 20, Tg = NULL, RH = 0.5, E = 0.96, rho = 0.1, cloud = 0, SE = 0)
@@ -1054,8 +1047,7 @@ convective exchange works: small objects lose heat from convection more
 readily than large objects (e.g. think about frostbite that occurs on
 fingers and toes)
 
-If L is 10 times
-smaller:
+If L is 10 times smaller:
 
 ``` r
 qconv(Ts = 30, Ta = 20, V = 0.1, L = 0.01, type = "forced", shape="hcylinder")
@@ -1077,32 +1069,31 @@ radiative heat transfer than they would on convective heat transfer
 ## Sample Calculations
 
 Ideally, you have all parameters estimated or measured and put into a
-data frame. Using the dataframe, d we constructed
-    earlier
+data frame. Using the dataframe, d we constructed earlier
 
 ``` r
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 296.6506 261.4812 279.5570 249.2322 300.5004 325.7917 355.1080 288.2079
-    ##  [9] 324.7693 236.6957 244.4855 236.9503 295.9045 251.4005 219.8429 279.8076
-    ## [17] 325.4273 263.2867 394.8722 214.3138
+    ##  [1] 385.0733 333.8367 180.2850 335.6175 332.6513 339.6346 291.0386 255.4178
+    ##  [9] 291.3131 293.1943 288.1635 292.5413 351.9680 273.9916 307.7875 278.7875
+    ## [17] 246.4789 310.9309 233.6725 226.5313
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -24.00232 -10.17679 -10.95401 -22.24630 -15.71750 -24.18711 -19.29719
-    ##  [8] -16.15536 -22.70995 -24.19015 -24.49277 -20.43492 -28.84564 -15.58931
-    ## [15] -21.84624 -20.92412 -20.72979 -22.67992 -21.06859 -28.91830
+    ##  [1] -19.92742 -13.62038 -21.78211 -29.27562 -15.93635 -18.36386 -15.17438
+    ##  [8] -29.25288 -21.05418 -26.40809 -21.59361 -22.14289 -15.13123 -22.99276
+    ## [15] -23.85022 -19.30292 -28.85591 -19.59727 -24.60337 -25.09107
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -58.37097 -29.21837 -31.18570 -55.18676 -41.12875 -59.31270 -49.51982
-    ##  [8] -43.03919 -55.70018 -58.03076 -58.59796 -50.44040 -66.63610 -41.27716
-    ## [15] -54.53215 -52.79829 -51.93861 -56.02404 -52.55811 -66.79102
+    ##  [1] -50.60112 -37.13924 -54.00652 -68.38879 -42.01601 -47.14518 -40.53106
+    ##  [8] -68.81721 -52.47563 -62.16932 -53.57242 -54.88164 -40.05388 -55.40848
+    ## [15] -57.76791 -49.21176 -67.47910 -50.27397 -59.28978 -60.99519
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1112,19 +1103,19 @@ head(d)
 ```
 
     ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 22.56230 28.26596 27.54450 411.7528 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 29.68132 32.55933 33.98737 355.8717 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 21.70549 24.74967 26.26390 376.7277 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 16.92633 22.28144 21.25580 357.8073 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 37.60975 41.69347 42.50500 404.5664 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 11.00315 16.71293 16.33470 440.6239 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ##      b    m   type     shape      qrad     qconv    qtotal
-    ## 1 0.58 0.25 forced hcylinder 118.66025 -23.34839  95.31186
-    ## 2 0.58 0.25 forced hcylinder 104.59249 -11.68735  92.90515
-    ## 3 0.58 0.25 forced hcylinder 111.82280 -12.47428  99.34852
-    ## 4 0.58 0.25 forced hcylinder  99.69287 -22.07471  77.61817
-    ## 5 0.58 0.25 forced hcylinder 120.20017 -16.45150 103.74867
-    ## 6 0.58 0.25 forced hcylinder 130.31667 -23.72508 106.59159
+    ## 1 15.39545 20.29581 21.45119 500.4739 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 21.18618 24.80923 26.49063 438.3842 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 22.64220 27.91990 26.08500 284.5283 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 23.17311 29.86048 28.73732 459.8523 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 23.96522 28.07754 29.29194 440.2248 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 21.79283 26.39536 27.24631 450.7004 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##      b    m   type     shape     qrad     qconv    qtotal
+    ## 1 0.58 0.25 forced hcylinder 154.0293 -20.24045 133.78885
+    ## 2 0.58 0.25 forced hcylinder 133.5347 -14.85570 118.67898
+    ## 3 0.58 0.25 forced hcylinder  72.1140 -21.60261  50.51139
+    ## 4 0.58 0.25 forced hcylinder 134.2470 -27.35551 106.89148
+    ## 5 0.58 0.25 forced hcylinder 133.0605 -16.80640 116.25410
+    ## 6 0.58 0.25 forced hcylinder 135.8539 -18.85807 116.99578
 
 ### Test the equations out for consistency
 
@@ -1197,10 +1188,9 @@ Total heat loss for the proximal area of the bill (Watts) can be as much
 as 2.6 Watts\!  
 This lines up well with the published values in Tattersall et al (2009).
 This was confirmed in van de Van (2016) where they recalculated the area
-specific heat flux from toucan bills to be ~65 W/m2, but they used free
+specific heat flux from toucan bills to be \~65 W/m2, but they used free
 convection estimates and so wind speed of 0 significantly reduces the
-estimated convective heat
-exchange:
+estimated convective heat exchange:
 
 ``` r
 qrad(Ts=Ts, Ta=Ta, Tg=Tg, RH=0.5, E=0.96, rho=rho, cloud=1, SE=0) + qconv(Ts, Ta, V, L, type="free", shape=shape)
@@ -1416,6 +1406,10 @@ EEVBlog:
 
 # Previous release notes
 
+  - 2019-12-20: Version 4.1.0
+      - added the option to split thermal video files based on different
+        filetype/header types. See issue
+        [\#9](https://github.com/gtatters/Thermimage/issues/9).
   - 2019-11-26: Version 4.0.1
       - fixed problems with system2 piping calls to ffmpeg on windows
         machines. See issue
