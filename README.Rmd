@@ -23,8 +23,8 @@ The version here on github is the current, development version.  Archived source
 
 # Current release notes 
 
-2019-12-20: Version 4.1.0 is on Github (development version)
-  - added the option to split thermal video files based on different filetype/header types.  See issue [#9](https://github.com/gtatters/Thermimage/issues/9). 
+2020-08-20: Version 4.1.1 is on Github (development version)
+  - added error warning when trying to load a non-radiometric image file with readflirjpg. See issues [#7](https://github.com/gtatters/Thermimage/issues/7),  [#10](https://github.com/gtatters/Thermimage/issues/10),  [#13](https://github.com/gtatters/Thermimage/issues/13). 
 
 
 
@@ -852,6 +852,9 @@ EEVBlog:
 <img src='Uploads/ThermimageSticker3.png' height="138.5">
  
 # Previous release notes
+
+- 2019-12-20: Version 4.1.0
+  - added the option to split thermal video files based on different filetype/header types.  See issue [#9](https://github.com/gtatters/Thermimage/issues/9). 
 
 
 - 2019-11-26: Version 4.0.1

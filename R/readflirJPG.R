@@ -51,10 +51,16 @@ readflirJPG<-function(imagefile,  exiftoolpath="installed", headerindex=1)
   
   cams <- flirsettings(imagefile, exiftoolpath, camvals = "")
   
+  if(is.null(cams$Info$RawThermalImageType)){
+    warning("Exiftool cannot extract raw thermal image data.\n  Image does not contain FLIR radiometric data.\n  Check with the user manual or manufacturer\n  or ensure camera is set to save radiometric information.")
+  }
+  
   currentpath <- getwd()
   to.read <- file("tempfile", "rb")
   alldata <- readBin(to.read, raw(), n = file.info("tempfile")$size)
   close(to.read)
+  
+  
   if (cams$Info$RawThermalImageType == "TIFF") {
     TIFF <- Thermimage::locate.fid(c("54", "49", "46", "46","49", "49"), alldata, zeroindex = FALSE)
     

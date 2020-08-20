@@ -18,3 +18,5 @@ README_old.Rmd
 SampleFLIRCSQ.csq
 /output
 .git*
+tempfile
+.gitignore
