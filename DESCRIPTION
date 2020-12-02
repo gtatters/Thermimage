@@ -25,4 +25,4 @@ Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage
 BugReports: http://github.com/gtatters/Thermimage/issues
 Encoding: UTF-8
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1

@@ -66,7 +66,7 @@ Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi:
 
 ## OS Requirements
 * Thermimage was developed on OSX, and works well on Linux.  Many features in Windows will require installation of command line tools that may or may not work as effectively.  The internal R functions should operate fine in Windows.
-* Exiftool is required for certain functions.  Installation instructions can be found here: http://www.sno.phy.queensu.ca/~phil/exiftool/install.html
+* Exiftool is required for certain functions.  Installation instructions can be found here: http://www.sno.phy.queensu.ca/~phil/exiftool/install.html (Windows users might find his instructions difficult to follow, so perhaps try this link: https://oliverbetz.de/pages/Artikel/ExifTool-for-Windows).  I prefer the simple solution of installing exiftool.exe directly into the windows folder and then verifying it has security privileges to run.
 * Imagemagick is required for certain functions.  Installation instructions can be found here: https://www.imagemagick.org/script/download.php
 * Perl is required for certain functions.  Installation instructions can be found here: https://www.perl.org/get.html
 
