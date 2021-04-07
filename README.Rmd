@@ -49,12 +49,12 @@ Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image Analysis.doi:
 
 * From CRAN (stable releases 1.0.+):
 
-```{r}
+```{r, message=FALSE}
 # install.packages("Thermimage", repos='http://cran.us.r-project.org')
 ```
 
 * Development version from Github:
-```{r}
+```{r, message=FALSE}
 # library("devtools"); install_github("gtatters/Thermimage",dependencies=TRUE)
 ```
 
@@ -84,7 +84,7 @@ Normally, these thermal images require access to software that only runs on Wind
 To load a FLIR JPG, you first must install Exiftool as per instructions above.
 Open sample flir jpg included with Thermimage package:
 
-```{r}
+```{r, message=FALSE}
 library(Thermimage)
 f<-paste0(system.file("extdata/IR_2412.jpg", package="Thermimage"))
 img<-readflirJPG(f, exiftoolpath="installed")
@@ -153,7 +153,7 @@ Now you have the img loaded, look at the values:
 str(img)
 ```
 
-If stored with a TIFF header, the data load in as a pre-allocated matrix of the same dimensions of the thermal image, but the values are integers values, in this case ~18000.  The data are stored as in binary/raw format at 2^16 bits of resolution = 65535 possible values, starting at 1.  These are not temperature values.  They are, in fact, radiance values or absorbed infrared energy values in arbitrary units.  That is what the calibration constants are for.  The conversion to temperature is a complicated algorithm, incorporating Plank's law and the Stephan Boltzmann relationship, as well as atmospheric absorption, camera IR absorption, emissivity and distance to namea  few.  Each of these raw/binary values can be converted to temperature, using the raw2temp function:
+If stored with a TIFF header, the data load in as a pre-allocated matrix of the same dimensions of the thermal image, but the values are integers values, in this case ~18000.  The data are stored as in binary/raw format at 2^16 bits of resolution = 65536 possible values, starting at 0. These are not temperature values.  They are, in fact, radiance values or absorbed infrared energy values in arbitrary units.  That is what the calibration constants are for.  The conversion to temperature is a complicated algorithm, incorporating Plank's law and the Stephan Boltzmann relationship, as well as atmospheric absorption, camera IR absorption, emissivity and distance to namea  few.  Each of these raw/binary values can be converted to temperature, using the raw2temp function:
 
 ```{r}
 temperature<-raw2temp(img, ObjectEmissivity, OD, ReflT, AtmosT, IRWinT, IRWinTran, RH,
@@ -256,7 +256,7 @@ Create a lookup variable to convert the raw binary to actual temperature estimat
 
 ```{r}
 suppressWarnings(
-templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
+templookup<-raw2temp(raw=0:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
 )
 plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```

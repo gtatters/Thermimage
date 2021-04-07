@@ -30,17 +30,17 @@ readflirjpg. See issues
 
 # Features
 
-  - Functions for importing FLIR image and video files (limited) into R.
-  - Functions for converting thermal image data from FLIR based files,
+-   Functions for importing FLIR image and video files (limited) into R.
+-   Functions for converting thermal image data from FLIR based files,
     incorporating calibration information stored within each radiometric
     image file.
-  - Functions for exporting calibrated thermal image data for analysis
+-   Functions for exporting calibrated thermal image data for analysis
     in open source platforms, such as ImageJ.
-  - Functions for running command line conversion tools to prepare FLIR
+-   Functions for running command line conversion tools to prepare FLIR
     thermal image files for direct import into ImageJ.
-  - Functions for steady state estimates of heat exchange from surface
+-   Functions for steady state estimates of heat exchange from surface
     temperatures estimated by thermal imaging.
-  - Functions for modelling heat exchange under various convective,
+-   Functions for modelling heat exchange under various convective,
     short-wave, and long-wave radiative heat flux, useful in thermal
     ecology studies.
 
@@ -48,25 +48,21 @@ readflirjpg. See issues
 
 Glenn J. Tattersall. (2017, December 3). Thermimage: Thermal Image
 Analysis.doi: 10.5281/zenodo.1069704 (URL:
-<http://doi.org/10.5281/zenodo.1069704>), R package, \<URL:
-<https://CRAN.R-project.org/package=Thermimage>\>.
+<http://doi.org/10.5281/zenodo.1069704>), R package, &lt;URL:
+<https://CRAN.R-project.org/package=Thermimage>&gt;.
 [![DOI](https://zenodo.org/badge/33262273.svg)](https://zenodo.org/badge/latestdoi/33262273)
 
 # Installation
 
-## On current R (\>= 3.0.0)
+## On current R (&gt;= 3.0.0)
 
-  - From CRAN (stable releases 1.0.+):
-
-<!-- end list -->
+-   From CRAN (stable releases 1.0.+):
 
 ``` r
 # install.packages("Thermimage", repos='http://cran.us.r-project.org')
 ```
 
-  - Development version from Github:
-
-<!-- end list -->
+-   Development version from Github:
 
 ``` r
 # library("devtools"); install_github("gtatters/Thermimage",dependencies=TRUE)
@@ -74,17 +70,17 @@ Analysis.doi: 10.5281/zenodo.1069704 (URL:
 
 ## Package Imports
 
-  - Imports: tiff, png
+-   Imports: tiff, png
 
-  - Suggests: ggplot2, fields, reshape
+-   Suggests: ggplot2, fields, reshape
 
 ## OS Requirements
 
-  - Thermimage was developed on OSX, and works well on Linux. Many
+-   Thermimage was developed on OSX, and works well on Linux. Many
     features in Windows will require installation of command line tools
     that may or may not work as effectively. The internal R functions
     should operate fine in Windows.
-  - Exiftool is required for certain functions. Installation
+-   Exiftool is required for certain functions. Installation
     instructions can be found here:
     <http://www.sno.phy.queensu.ca/~phil/exiftool/install.html> (Windows
     users might find his instructions difficult to follow, so perhaps
@@ -93,10 +89,10 @@ Analysis.doi: 10.5281/zenodo.1069704 (URL:
     prefer the simple solution of installing exiftool.exe directly into
     the windows folder and then verifying it has security privileges to
     run.
-  - Imagemagick is required for certain functions. Installation
+-   Imagemagick is required for certain functions. Installation
     instructions can be found here:
     <https://www.imagemagick.org/script/download.php>
-  - Perl is required for certain functions. Installation instructions
+-   Perl is required for certain functions. Installation instructions
     can be found here: <https://www.perl.org/get.html>
 
 # Import, Export, Image Processing
@@ -235,8 +231,8 @@ str(img)
 If stored with a TIFF header, the data load in as a pre-allocated matrix
 of the same dimensions of the thermal image, but the values are integers
 values, in this case \~18000. The data are stored as in binary/raw
-format at 2^16 bits of resolution = 65535 possible values, starting at
-1. These are not temperature values. They are, in fact, radiance values
+format at 2^16 bits of resolution = 65536 possible values, starting at
+0. These are not temperature values. They are, in fact, radiance values
 or absorbed infrared energy values in arbitrary units. That is what the
 calibration constants are for. The conversion to temperature is a
 complicated algorithm, incorporating Plank’s law and the Stephan
@@ -383,7 +379,7 @@ The raw file can be found here:
 The .raw file is simply the pixel data saved in raw format but with real
 32-bit precision. This means that the temperature data (negative or
 positive values) are encoded in 4 byte chunks. ImageJ has a plethora of
-import functions, and the File–\>Import–\>Raw option provides great
+import functions, and the File–&gt;Import–&gt;Raw option provides great
 flexibility. Once opening the .raw file in ImageJ, set the width,
 height, number of images (i.e. frames or stacks), byte storage order
 (little endian), and hyperstack (if desired):
@@ -430,7 +426,7 @@ range.
 
 ``` r
 suppressWarnings(
-templookup<-raw2temp(raw=1:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
+templookup<-raw2temp(raw=0:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
 )
 plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```
@@ -447,7 +443,7 @@ raw2temp function repeatedly. Thus, for a raw binary value of 17172,
 templookup[c(17172, 18273, 24932)]
 ```
 
-    ## [1] 18.30964 24.77935 57.07821
+    ## [1] 18.30355 24.77367 57.07398
 
 We will use the templookup later on, but first to detect where the image
 frames can be found in the video file. Using the width and height
@@ -536,7 +532,7 @@ head(alldata)
 head(alltemperature)
 ```
 
-    ## [1] 22.46279 22.24723 22.10131 22.22390 22.22390 22.41040
+    ## [1] 22.45697 22.24140 22.09547 22.21807 22.21807 22.40458
 
 I recommend converting the binary and/or temperature variables to a
 matrix class, where each column represents a separate image frame, while
@@ -620,6 +616,7 @@ cd ~/IRconvert/scripts
 ls
 ```
 
+    ## AVIClean
     ## CompleteCSQConvert
     ## CompleteFLIRJPGConvert
     ## CompleteSEQConvert
@@ -734,35 +731,35 @@ The information below is duplicated at:
 Before getting started ensure you have the following information
 available:
 
-  - Surface temperatures, Ts (degrees C - note: all temperature units
+-   Surface temperatures, Ts (degrees C - note: all temperature units
     are in degrees C): obtain from the thermal image.
-  - Ambient temperatures, Ta (degrees C): usually meausred independently
+-   Ambient temperatures, Ta (degrees C): usually meausred independently
     with a thermometer
-  - Characteristic dimension of the object or animal, L (m)
-  - Surface Area, A (m^2)
-  - Shape of object: choose from “sphere”, “hcylinder”, “vcylinder”,
+-   Characteristic dimension of the object or animal, L (m)
+-   Surface Area, A (m^2)
+-   Shape of object: choose from “sphere”, “hcylinder”, “vcylinder”,
     “hplate”, “vplate”
 
 ## Required if working outdoors with solar radiation
 
-  - Surface reflectance, rho, which could be measured or estimated
+-   Surface reflectance, rho, which could be measured or estimated
     (0-1): an average reflectance of short-wave, mostly visible light
-  - Solar radiation (SE=abbrev for solar energy), W/m2
-  - Cloud cover (from 0 to 1), an estimate of fractional cloud coverage
+-   Solar radiation (SE=abbrev for solar energy), W/m2
+-   Cloud cover (from 0 to 1), an estimate of fractional cloud coverage
     of sky
 
 ## Can be estimated or provided through functions in Thermimage:
 
-  - Ground Temperature, Tg (degrees C) - estimated from air temperature
+-   Ground Temperature, Tg (degrees C) - estimated from air temperature
     if not provided
-  - Incoming infrared radiation, Ld (W/m^2; will be estimated from Air
+-   Incoming infrared radiation, Ld (W/m^2; will be estimated from Air
     Temperature)
-  - Incoming infrared radiation, Lu (W/m^2; will be estimated from
+-   Incoming infrared radiation, Lu (W/m^2; will be estimated from
     Ground Temperature)
-  - Wind speed, V (m/s) - I tend to model heat exchange under different
+-   Wind speed, V (m/s) - I tend to model heat exchange under different
     V (0.1 to 10 m/s)
-  - Type of convective heat exchange to be modelled (free or forced)
-  - Convection coefficients (c, n, a, b, m)
+-   Type of convective heat exchange to be modelled (free or forced)
+-   Convection coefficients (c, n, a, b, m)
 
 ### Ground Temperature Estimation and Incoming Infrared Radiation
 
@@ -795,10 +792,10 @@ estimate these sources of radiation.
 Wind speed should be measured but is usually highly variable when
 measured. One alternative is to model it under different scenarios. Free
 convection is applied in still air (wind speed = 0). Forced convection
-is for wind speed \> 0.
+is for wind speed &gt; 0.
 
 It might be sufficient to model convection in low air flow conditions
-(\<=0.1 m/s) using forced convection with wind speed set to 0.1.
+(&lt;=0.1 m/s) using forced convection with wind speed set to 0.1.
 
 The shape is determined by the user, estimating the best approximation
 of sphere, cylinder, or plate.  
@@ -841,13 +838,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 15.695788 20.53600 20.64937 409.3872 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2  7.259059 12.48152 11.73149 369.6221 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 10.506951 15.69958 14.84824 358.7839 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 21.839280 28.62813 26.55487 389.7182 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 16.252300 22.75283 21.28581 415.9927 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 38.039638 42.94939 42.44800 364.3273 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
+    ## 1 15.44832 19.12140 19.96637 373.3925 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 45.78583 51.19474 51.57839 478.7244 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 29.33757 34.56983 33.84944 372.8816 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 33.70964 39.39659 38.19331 370.5509 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 25.03136 31.20339 30.78671 475.6489 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 22.55285 27.74039 26.35575 314.2893 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
     ##      b    m   type     shape
     ## 1 0.58 0.25 forced hcylinder
     ## 2 0.58 0.25 forced hcylinder
@@ -992,11 +989,11 @@ transfer, analagous to qrad, except for convective heat transfer.
 Positive values mean heat is gained by convection, negative values mean
 heat is lost by convection. Included in the function is the ability to
 estimate free convection (which occurs at 0 wind speed) or forced
-convection (wind speed \>=0.1 m/s). Unless working in a completely still
-environment, it is more appropriate to used “forced” convection down to
-0.1 m/s wind speed (see Gates Biophysical Ecology).
+convection (wind speed &gt;=0.1 m/s). Unless working in a completely
+still environment, it is more appropriate to used “forced” convection
+down to 0.1 m/s wind speed (see Gates Biophysical Ecology).
 
-Typical wind speeds indoors are likely \<0.5 m/s, but outside can vary
+Typical wind speeds indoors are likely &lt;0.5 m/s, but outside can vary
 wildly.
 
 In addition to needing surface temperature, air temperature, and
@@ -1083,25 +1080,25 @@ data frame. Using the dataframe, d we constructed earlier
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 300.4173 263.2662 252.4712 269.7013 297.2009 257.0860 296.0762 288.3942
-    ##  [9] 235.7865 393.7093 359.7002 241.5097 403.2062 311.8057 312.1354 227.8789
-    ## [17] 326.3942 241.2814 238.8371 249.8058
+    ##  [1] 273.2846 362.7343 262.6148 257.4169 353.2817 208.6382 286.3129 336.7839
+    ##  [9] 243.8927 365.5878 270.0436 284.7245 321.5421 356.6488 234.9321 253.6223
+    ## [17] 222.5904 273.7318 210.6600 267.4004
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -19.61883 -21.68877 -21.48731 -29.85069 -28.35593 -19.78476 -21.89122
-    ##  [8] -21.10624 -22.40802 -13.48246 -17.66874 -15.93272 -21.54421 -14.60746
-    ## [15] -20.52957 -21.60572 -17.38317 -21.00969 -14.29260 -21.95103
+    ##  [1] -13.89765 -22.28469 -21.48639 -23.80722 -26.46118 -21.31884 -11.99879
+    ##  [8] -14.65453 -27.97350 -24.49832 -26.62839 -29.05158 -17.44484 -20.87845
+    ## [15] -22.09957 -23.79718 -20.72078 -20.83813 -18.89568 -20.69957
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -49.96032 -54.54499 -53.97843 -69.53655 -67.04927 -49.42779 -54.40767
-    ##  [8] -53.66243 -55.38669 -36.75405 -45.46463 -41.74907 -52.76356 -39.88531
-    ## [15] -50.95720 -53.29068 -44.95068 -52.60893 -38.99984 -54.21910
+    ##  [1] -37.92561 -54.07694 -53.13879 -57.49464 -62.98287 -53.08949 -33.67652
+    ##  [8] -39.01795 -65.31642 -59.23893 -63.78692 -68.38838 -45.24007 -52.50790
+    ## [15] -54.64254 -57.62863 -51.16164 -51.93705 -47.65185 -52.15802
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1110,20 +1107,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 15.695788 20.53600 20.64937 409.3872 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2  7.259059 12.48152 11.73149 369.6221 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 10.506951 15.69958 14.84824 358.7839 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 21.839280 28.62813 26.55487 389.7182 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 16.252300 22.75283 21.28581 415.9927 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6 38.039638 42.94939 42.44800 364.3273 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ##      b    m   type     shape     qrad     qconv    qtotal
-    ## 1 0.58 0.25 forced hcylinder 120.1669 -19.98413 100.18278
-    ## 2 0.58 0.25 forced hcylinder 105.3065 -21.81799  83.48850
-    ## 3 0.58 0.25 forced hcylinder 100.9885 -21.59137  79.39709
-    ## 4 0.58 0.25 forced hcylinder 107.8805 -27.81462  80.06589
-    ## 5 0.58 0.25 forced hcylinder 118.8803 -26.81971  92.06063
-    ## 6 0.58 0.25 forced hcylinder 102.8344 -19.77112  83.06330
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
+    ## 1 15.44832 19.12140 19.96637 373.3925 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 45.78583 51.19474 51.57839 478.7244 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 29.33757 34.56983 33.84944 372.8816 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 33.70964 39.39659 38.19331 370.5509 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 25.03136 31.20339 30.78671 475.6489 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 22.55285 27.74039 26.35575 314.2893 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##      b    m   type     shape      qrad     qconv    qtotal
+    ## 1 0.58 0.25 forced hcylinder 109.31383 -15.17024  94.14359
+    ## 2 0.58 0.25 forced hcylinder 145.09370 -21.63077 123.46293
+    ## 3 0.58 0.25 forced hcylinder 105.04591 -21.25552  83.79040
+    ## 4 0.58 0.25 forced hcylinder 102.96675 -22.99786  79.96890
+    ## 5 0.58 0.25 forced hcylinder 141.31266 -25.19315 116.11952
+    ## 6 0.58 0.25 forced hcylinder  83.45528 -21.23579  62.21949
 
 ### Test the equations out for consistency
 
@@ -1172,8 +1169,8 @@ estimates of radiative heat loss.
 
     ## [1] -192.7086
 
-compare to calculated value of -191.67 W/m2 - which is really close\!
-The difference lies in estimates of air kinematic viscosity used.  
+compare to calculated value of -191.67 W/m2 - which is really close! The
+difference lies in estimates of air kinematic viscosity used.  
 Total area specific heat loss for the proximal area of the bill
 (Watts/m2)
 
@@ -1193,7 +1190,7 @@ qtotal.A*A
     ## [1] -2.679343
 
 Total heat loss for the proximal area of the bill (Watts) can be as much
-as 2.6 Watts\!  
+as 2.6 Watts!  
 This lines up well with the published values in Tattersall et al (2009).
 This was confirmed in van de Van (2016) where they recalculated the area
 specific heat flux from toucan bills to be \~65 W/m2, but they used free
@@ -1388,24 +1385,24 @@ Darwin’s finches. Functional Ecology 2017; 00:1–11.
 The following open source programs and programmers were critical to the
 development of Thermimage.
 
-  - Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
+-   Exiftool: <http://www.sno.phy.queensu.ca/~phil/exiftool/>
 
-  - Imagemagick: <http://imagemagick.org>
+-   Imagemagick: <http://imagemagick.org>
 
-  - Perl: <http://www.perl.org>
+-   Perl: <http://www.perl.org>
 
-  - raw2temp, temp2raw:
+-   raw2temp, temp2raw:
     <https://github.com/gtatters/ThermimageCalibration>
 
 EEVBlog:
 
-  - raw to temperature conversion:
+-   raw to temperature conversion:
     <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.135>
 
-  - magicbyte import:
+-   magicbyte import:
     <http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=4898.0>
 
-  - fileformat:
+-   fileformat:
     <https://www.eevblog.com/forum/thermal-imaging/csq-file-format/>
 
 # Alternative Hex Stickers
@@ -1414,19 +1411,19 @@ EEVBlog:
 
 # Previous release notes
 
-  - 2019-12-20: Version 4.1.0
-      - added the option to split thermal video files based on different
+-   2019-12-20: Version 4.1.0
+    -   added the option to split thermal video files based on different
         filetype/header types. See issue
         [\#9](https://github.com/gtatters/Thermimage/issues/9).
-  - 2019-11-26: Version 4.0.1
-      - fixed problems with system2 piping calls to ffmpeg on windows
+-   2019-11-26: Version 4.0.1
+    -   fixed problems with system2 piping calls to ffmpeg on windows
         machines. See issue
         [\#8](https://github.com/gtatters/Thermimage/issues/8). Added
         common perl script to package to facilitate splitting fff, tiff,
         jpegls filetypes. Minor changes to **convertflirVID()** and
         **ffmpegcall()** functions.
-  - 2019-10-31: Version 4.0.0
-      - Fixed an error/issue
+-   2019-10-31: Version 4.0.0
+    -   Fixed an error/issue
         [\#6](https://github.com/gtatters/Thermimage/issues/6) in
         calculation of the atmospheric tau values, and added the option
         for the user to specify the 5 atmospheric constants (ATA1, ATA2,
@@ -1434,15 +1431,15 @@ EEVBlog:
         alterations to raw2temp, temp2raw, and flirsettings. Earlier
         versions will have slight error in temperature conversion that
         could be significant for long distances. Users are advised to
-        upgrade if they are using object distances \>3m for
+        upgrade if they are using object distances &gt;3m for
         calculations.
-  - 2019-08-17: Version 3.2.2
-      - Added headerindex choice in readflirJPG function as a workaround
+-   2019-08-17: Version 3.2.2
+    -   Added headerindex choice in readflirJPG function as a workaround
         for images that have been captured in dual digital/thermal mode.
         Not fully tested. Default headerindex = 1 so should not break
         other code.
-  - 2019-05-17: Version 3.2.0
-      - Fixed an issue
+-   2019-05-17: Version 3.2.0
+    -   Fixed an issue
         [\#3](https://github.com/gtatters/Thermimage/issues/3) with
         **getTimes()** not working, based on inaccurate
         **frameLocates()**. Completely re-wrote the **frameLocates()**,
@@ -1450,40 +1447,40 @@ EEVBlog:
         to search raw bytes, rather than integers in files and return
         hopefully more robust frame and times. Note: this series of
         functions are hacks and users are advised to use with caution.
-  - 2019-03-06: Version 3.1.4
-      - Fixed an issue
+-   2019-03-06: Version 3.1.4
+    -   Fixed an issue
         [\#2](https://github.com/gtatters/Thermimage/issues/2) with
         **frameLocates()**. This function may not remain in the package
         in the future, especially if file types change. Recommend users
         consider **convertflirVID()** or **convertflirJPG()** instead to
         convert files to an easier to import file type.
-  - 2019-02-12: Version 3.1.3
-      - Updated help information to point users to the issues link
+-   2019-02-12: Version 3.1.3
+    -   Updated help information to point users to the issues link
         (<https://github.com/gtatters/Thermimage/issues>)
-  - 2018-10-14: Version 3.1.2
-      - Removed stop check in readflirJPG and flirsettings functions for
+-   2018-10-14: Version 3.1.2
+    -   Removed stop check in readflirJPG and flirsettings functions for
         troubleshooting custom pathing.
-  - 2018-09-08: Version 3.1.1
-      - Added minor change to readflirJPG function to accomodate
+-   2018-09-08: Version 3.1.1
+    -   Added minor change to readflirJPG function to accomodate
         whitespace in file pathing. See Issue
         [\#1](https://github.com/gtatters/Thermimage/issues/1)
-  - 2017-11-28: Version 3.1.0
-      - Added three new functions for converting FLIR jpg, seq, and csq
+-   2017-11-28: Version 3.1.0
+    -   Added three new functions for converting FLIR jpg, seq, and csq
         files calling on command line tools.
-  - 2017-10-04: Version 3.0.2
-      - Minor change to getFrames function to provide reverse ordering
+-   2017-10-04: Version 3.0.2
+    -   Minor change to getFrames function to provide reverse ordering
         of vector.
-  - 2017-03-24: Version 3.0.1
-      - Minor fix to frameLocates to allow functionality with certain
+-   2017-03-24: Version 3.0.1
+    -   Minor fix to frameLocates to allow functionality with certain
         fcf files.
-      - Minor edits to help files. Cautionary notes added to hconv()
+    -   Minor edits to help files. Cautionary notes added to hconv()
         regarding limitations to estimating convection coefficients
         without considering turbulence vs. laminar effects
-  - March 2017: Version 3.0.0
-      - Changes in this release include functions for importing thermal
+-   March 2017: Version 3.0.0
+    -   Changes in this release include functions for importing thermal
         video files and exporting for ImageJ functionality
-      - Currently testing seq and fcf imports. Please send sample files
+    -   Currently testing seq and fcf imports. Please send sample files
         for testing.
-  - October 2016: Version 2.2.3
-      - Changes in this release include readflirjpg and flirsettings
+-   October 2016: Version 2.2.3
+    -   Changes in this release include readflirjpg and flirsettings
         functions for processing flir jpg meta tag info.
