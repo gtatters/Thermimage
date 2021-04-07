@@ -256,7 +256,7 @@ Create a lookup variable to convert the raw binary to actual temperature estimat
 
 ```{r}
 suppressWarnings(
-templookup<-raw2temp(raw=0:65535, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
+templookup<-raw2temp(raw=1:65536, E=camvals$Info$Emissivity, OD=camvals$Info$ObjectDistance, RTemp=camvals$Info$ReflectedApparentTemperature, ATemp=camvals$Info$AtmosphericTemperature, IRWTemp=camvals$Info$IRWindowTemperature, IRT=camvals$Info$IRWindowTransmission, RH=camvals$Info$RelativeHumidity, PR1=camvals$Info$PlanckR1,PB=camvals$Info$PlanckB,PF=camvals$Info$PlanckF,PO=camvals$Info$PlanckO,PR2=camvals$Info$PlanckR2)
 )
 plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimated Temperature (C)")
 ```
@@ -264,7 +264,8 @@ plot(templookup, type="l", xlab="Raw Binary 16 bit Integer Value", ylab="Estimat
 The advantage of using the templookup variable is in its index capacity.  For computations involving large files, this is most efficient way to convert the raw binary values rapidly without having to call the raw2temp function repeatedly.  Thus, for a raw binary value of 17172, 18273, and 24932:
 
 ```{r}
-templookup[c(17172, 18273, 24932)]
+templookup[c(17172, 18273, 24932)-1]
+# subtract - 1, since R uses 1 rather than 0 as the base starting index value
 ```
 
 
@@ -290,7 +291,7 @@ Interval
 
 ```
 
-This particluar sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function might not accurately render the time on the first frame.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
+This particular sequence was actually captured at 0.03 sec intervals, but the sample file in the package was truncated to only two frames to minimise online size requirements for CRAN.  At present, the getTimes function might not accurately render the time on the first frame.  On the original 100 frame file, it accurately captures the real time stamps, so the error is appears to be how FLIR saves time stamps (save time vs. modification time vs. original time appear highly variable in .seq and .fcf files).  Precise time capture is not crucial but is helpful for verifying data conversion.
 
 After extracting times, then extract the frame data, with the getFrames function:
 
