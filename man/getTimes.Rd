@@ -59,9 +59,10 @@ Glenn J Tattersall
 \code{\link{cumulDiff}}
 }
 \examples{
-
+w=640
+h=480
 f<-system.file("extdata", "SampleSEQ.seq", package = "Thermimage")
-x<-frameLocates(f)
+x<-frameLocates(f, w=w, h=h)
 getTimes(f, x$h.start)
 
 # only returns the first frame of data, must use lapply to get all frames

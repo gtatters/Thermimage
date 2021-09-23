@@ -5,8 +5,8 @@ frameLocates<-function(vidfile="", w=640, h=480)
   f.start<-NULL
   h.start<-NULL
   
-  w.hex.be<-formatC(as.character(as.hexmode(w), width=4, format="s"))
-  h.hex.be<-formatC(as.character(as.hexmode(h), width=4, format="s"))
+  w.hex.be<-formatC(format(as.hexmode(w), width=4, format="s"))
+  h.hex.be<-formatC(format(as.hexmode(h), width=4, format="s"))
   
   w.hex.le<-c(substr(w.hex.be, 3,4), substr(w.hex.be, 1,2))
   h.hex.le<-c(substr(h.hex.be, 3,4), substr(h.hex.be, 1,2))

@@ -48,7 +48,7 @@ Glenn J Tattersall
 w<-640
 h<-480
 f<-system.file("extdata", "SampleSEQ.seq", package = "Thermimage")
-x<-frameLocates(f)
+x<-frameLocates(f, w=w, h=h)
 suppressWarnings(templookup<-raw2temp(1:65535))
 alldata<-unlist(lapply(x$f.start, getFrames, vidfile=f, w=w, h=h))
 alldata<-matrix(alldata, nrow=w*h, byrow=FALSE)

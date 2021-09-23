@@ -74,7 +74,7 @@ See convertflirVID function for an alternative to getFrames.  The latter is load
 w<-640
 h<-480
 f<-system.file("extdata", "SampleSEQ.seq", package = "Thermimage")
-x<-frameLocates(f)
+x<-frameLocates(f, w=w, h=h)
 
 # Slow approach:
 system.time({
