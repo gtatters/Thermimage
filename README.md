@@ -21,12 +21,9 @@ sources can be found:
 
 # Current release notes
 
-2020-08-20: Version 4.1.2 is on Github (development version) - added
-error warning when trying to load a non-radiometric image file with
-readflirjpg. See issues
-[\#7](https://github.com/gtatters/Thermimage/issues/7),
-[\#10](https://github.com/gtatters/Thermimage/issues/10),
-[\#13](https://github.com/gtatters/Thermimage/issues/13).
+2021-09-22: Version 4.1.3 is on Github (development version) - minor fix
+to frameLocates() function to incorporate changes to R-devel’s use of
+the as.character() function.
 
 # Features
 
@@ -134,11 +131,11 @@ head(cbind(cams$Info), 20) # Large amount of Info, show just the first 20 tages 
 ```
 
     ##                       [,1]    
-    ## ExifToolVersionNumber 11.62   
+    ## ExifToolVersionNumber 12.26   
     ## FileName              2412    
     ## Directory             ".4.0"  
     ## FileSize              638     
-    ## FilePermissions       "-"     
+    ## FilePermissions       "--"    
     ## FileType              ""      
     ## FileTypeExtension     ""      
     ## MIMEType              ""      
@@ -173,9 +170,9 @@ cbind(unlist(cams$Dates))
 ```
 
     ##                          [,1]                 
-    ## FileModificationDateTime "2020-08-20 09:11:12"
-    ## FileAccessDateTime       "2020-09-12 08:56:16"
-    ## FileInodeChangeDateTime  "2020-08-20 09:11:14"
+    ## FileModificationDateTime "2021-09-23 18:46:07"
+    ## FileAccessDateTime       "2021-09-23 19:08:42"
+    ## FileInodeChangeDateTime  "2021-09-23 18:46:09"
     ## ModifyDate               "2013-05-09 16:22:23"
     ## CreateDate               "2013-05-09 16:22:23"
     ## DateTimeOriginal         "2013-05-09 22:22:23"
@@ -495,7 +492,7 @@ Interval
 
     ## [1] 3.97
 
-This particluar sequence was actually captured at 0.03 sec intervals,
+This particular sequence was actually captured at 0.03 sec intervals,
 but the sample file in the package was truncated to only two frames to
 minimise online size requirements for CRAN. At present, the getTimes
 function might not accurately render the time on the first frame. On the
@@ -649,6 +646,7 @@ ls
     ## Sample Exiftool Commands.docx
     ## convertcsq.pl
     ## ffmpegscript
+    ## flirclean.pl
     ## imagejscript_rad2temp
     ## scrapcode
     ## split.pl
@@ -842,13 +840,13 @@ d<-data.frame(Ta, Ts, Tg, SE, RH, rho, cloud, A, V, L, c, n, a, b, m, type, shap
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 16.101802 21.85128 20.91544 397.8211 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 39.502525 43.19240 45.07458 460.5007 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 28.171210 30.48928 33.01434 400.2586 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 24.373977 28.90722 30.12294 475.1210 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 22.805322 28.76109 27.61677 397.6402 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6  9.132699 13.37436 14.22392 420.7618 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
+    ## 1 37.38083 44.59469 41.56023 345.4051 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 15.47537 19.37240 20.29106 397.9906 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 14.92285 20.06344 21.88456 575.3485 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 18.84622 24.72091 22.84014 330.0754 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 40.79157 44.78575 47.09113 520.6253 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 31.56454 36.71692 35.82769 352.3261 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
     ##      b    m   type     shape
     ## 1 0.58 0.25 forced hcylinder
     ## 2 0.58 0.25 forced hcylinder
@@ -1084,26 +1082,26 @@ data frame. Using the dataframe, d we constructed earlier
 (qrad.A<-with(d, qrad(Ts, Ta, Tg, RH, E=0.96, rho, cloud, SE))) 
 ```
 
-    ##  [1] 284.5071 356.2274 306.3205 362.7752 281.9176 315.3750 180.3268 375.8116
-    ##  [9] 151.4512 265.5561 288.4601 304.9941 304.0410 224.6164 303.6671 321.6938
-    ## [17] 304.5803 228.4056 215.1429 284.8492
+    ##  [1] 223.3080 294.9937 453.6566 220.0144 411.0761 243.8252 355.1769 262.0881
+    ##  [9] 305.8745 132.7509 222.1094 310.3568 278.9691 222.1297 288.9319 317.8934
+    ## [17] 335.8905 349.6736 298.8568 308.0313
 
 ``` r
 (qconv.free.A<-with(d, qconv(Ts, Ta, V, L, c, n, a, b, m, type="free", shape)))
 ```
 
-    ##  [1] -24.323741 -13.838388  -7.769804 -17.997502 -25.332816 -16.701559
-    ##  [7] -17.164507 -12.677433 -19.909301 -20.682238 -22.505651 -17.062477
-    ## [13]  -6.223557 -17.734366 -10.689344 -14.160665 -23.437294 -30.660768
-    ## [19] -24.762668 -17.746055
+    ##  [1] -32.011300 -14.964561 -21.161662 -24.950908 -15.273883 -21.059492
+    ##  [7] -15.632757 -18.385954 -19.560876  -9.694245 -17.134162 -30.188041
+    ## [13] -10.999257 -18.919255 -29.347475 -19.447522 -14.677663 -11.822670
+    ## [19] -19.592674 -19.094969
 
 ``` r
 (qconv.forced.A<-with(d, qconv(Ts, Ta, V, L,  c, n, a, b, m, type, shape)))
 ```
 
-    ##  [1] -59.31430 -37.09616 -23.57205 -46.29475 -60.93344 -44.17967 -44.52785
-    ##  [8] -34.69588 -50.32406 -52.19202 -55.83538 -44.08941 -19.71163 -44.92674
-    ## [15] -30.82425 -37.79257 -56.43199 -71.86034 -59.90349 -45.37734
+    ##  [1] -72.66946 -40.23653 -53.11496 -60.39392 -40.10807 -52.20461 -41.20389
+    ##  [8] -47.08005 -49.12654 -27.91430 -44.27042 -69.87375 -31.01543 -47.84861
+    ## [15] -68.37307 -49.24017 -38.96378 -33.13332 -49.80283 -48.21995
 
 ``` r
 qtotal<-A*(qrad.A + qconv.forced.A) # Multiply by area to obtain heat exchange in Watts
@@ -1112,20 +1110,20 @@ d<-data.frame(d, qrad=qrad.A*A, qconv=qconv.forced.A*A, qtotal=qtotal)
 head(d)
 ```
 
-    ##          Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
-    ## 1 16.101802 21.85128 20.91544 397.8211 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 2 39.502525 43.19240 45.07458 460.5007 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 3 28.171210 30.48928 33.01434 400.2586 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 4 24.373977 28.90722 30.12294 475.1210 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 5 22.805322 28.76109 27.61677 397.6402 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ## 6  9.132699 13.37436 14.22392 420.7618 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
-    ##      b    m   type     shape     qrad      qconv    qtotal
-    ## 1 0.58 0.25 forced hcylinder 113.8028 -23.725719  90.07712
-    ## 2 0.58 0.25 forced hcylinder 142.4909 -14.838464 127.65248
-    ## 3 0.58 0.25 forced hcylinder 122.5282  -9.428818 113.09936
-    ## 4 0.58 0.25 forced hcylinder 145.1101 -18.517900 126.59216
-    ## 5 0.58 0.25 forced hcylinder 112.7670 -24.373377  88.39366
-    ## 6 0.58 0.25 forced hcylinder 126.1500 -17.671867 108.47815
+    ##         Ta       Ts       Tg       SE  RH rho cloud   A V   L     c     n a
+    ## 1 37.38083 44.59469 41.56023 345.4051 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 2 15.47537 19.37240 20.29106 397.9906 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 3 14.92285 20.06344 21.88456 575.3485 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 4 18.84622 24.72091 22.84014 330.0754 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 5 40.79157 44.78575 47.09113 520.6253 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ## 6 31.56454 36.71692 35.82769 352.3261 0.5 0.1     0 0.4 1 0.1 0.174 0.618 1
+    ##      b    m   type     shape      qrad     qconv    qtotal
+    ## 1 0.58 0.25 forced hcylinder  89.32319 -29.06778  60.25541
+    ## 2 0.58 0.25 forced hcylinder 117.99746 -16.09461 101.90285
+    ## 3 0.58 0.25 forced hcylinder 181.46263 -21.24599 160.21665
+    ## 4 0.58 0.25 forced hcylinder  88.00578 -24.15757  63.84821
+    ## 5 0.58 0.25 forced hcylinder 164.43043 -16.04323 148.38720
+    ## 6 0.58 0.25 forced hcylinder  97.53009 -20.88184  76.64825
 
 ### Test the equations out for consistency
 
@@ -1415,6 +1413,13 @@ EEVBlog:
 <img src='Uploads/ThermimageSticker3.png' height="138.5">
 
 # Previous release notes
+
+2020-08-20: Version 4.1.2 is on Github (development version) - added
+error warning when trying to load a non-radiometric image file with
+readflirjpg. See issues
+[\#7](https://github.com/gtatters/Thermimage/issues/7),
+[\#10](https://github.com/gtatters/Thermimage/issues/10),
+[\#13](https://github.com/gtatters/Thermimage/issues/13).
 
 -   2019-12-20: Version 4.1.0
     -   added the option to split thermal video files based on different
