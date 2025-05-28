@@ -14,7 +14,7 @@ Description: A collection of functions and routines for inputting thermal
     functions for converting thermal image, videos, rewriting and exporting.  
     v3.1. Added new functions to convert files. v3.2.  Fixed the various functions related to finding frame times.
     v4.0. fixed an error in atmospheric attenuation constants, affecting raw2temp and temp2raw functions.
-    Recommend update for use with long distance calculations. v.4.1.3. changed to frameLocates to reflect change to as.character() to format().
+    Recommend update for use with long distance calculations. v.4.1.3 changed to frameLocates to reflect change to as.character() to format().
 License: GPL (>=2)
 Depends: R (>= 2.10)
 SystemRequirements: exiftool, perl, ffmpeg, imagemagick
@@ -23,6 +23,6 @@ Imports: tiff, png
 LazyData: true
 Maintainer: Glenn J. Tattersall <gtatters@brocku.ca>
 URL: https://cran.r-project.org/package=Thermimage, https://github.com/gtatters/Thermimage
-BugReports: http://github.com/gtatters/Thermimage/issues
+BugReports: https://github.com/gtatters/Thermimage/issues
 Encoding: UTF-8
 RoxygenNote: 7.1.1
